@@ -42,7 +42,7 @@ public:
 	bool init(int classID, CCPoint pos);
 	static ball* create(int classID, CCPoint pos);
     
-	void setVisible(bool bVisible, bool bPlayAction);
+	void setVisible(bool bVisible, bool bPlayAction, bool bAllAction = true);
 	void setBallState(BallStates value);
 	void setBallClass(int value);
     void setBallAddition();

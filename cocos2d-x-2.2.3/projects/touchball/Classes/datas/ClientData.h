@@ -14,6 +14,7 @@
 #include "ballData.h"
 #include "propsData.h"
 #include "mapData.h"
+#include "awardBallData.h"
 
 using namespace cocos2d;
 
@@ -60,6 +61,7 @@ struct mapCfg       : mapData
         vMapCell.clear();
     }
 };
+struct awardBallCfg : awardBallData{};
 
 
 class ClientData: public cocos2d::CCObject
@@ -75,15 +77,18 @@ public:
     vector<float>   spliteUchar2Float(unsigned char *data,char C = ';');
     KeyValueVector  spliteUchar2KeyValue(unsigned char* data, char C1 = ';', char C2 = ',', bool bCalcRate = true);
 public:
-    const levelCfg*   getLevelCfg(int key);
-    const ballCfg*    getBallCfg(int key);
-    const propsCfg*   getPropsCfg(int key);
-    const mapCfg*     getMapCfg(int key);
+    const levelCfg*     getLevelCfg(int key);
+    const ballCfg*      getBallCfg(int key);
+    const propsCfg*     getPropsCfg(int key);
+    const mapCfg*       getMapCfg(int key);
+    const awardBallCfg* getAwardBallCfg(int key);
+    const awardBallCfg* getAwardBallCfgByBallType(int key); 
     
-    const map<int, levelCfg>&  getLevelList();
-    const map<int, ballCfg>&   getBallList();
-    const map<int, propsCfg>&  getPropsList();
-    const map<int, mapCfg>&    getMapList();
+    const map<int, levelCfg>&       getLevelList();
+    const map<int, ballCfg>&        getBallList();
+    const map<int, propsCfg>&       getPropsList();
+    const map<int, mapCfg>&         getMapList();
+    const map<int, awardBallCfg>&   getAwardBallList();
 private:
     bool initData();
     void releaseData();
@@ -92,11 +97,14 @@ private:
     bool loadBallsData();
     bool loadPropsData();
     bool loadMapData();
+    bool loadAwardBallData();
 private:
-    std::map<int, levelCfg> m_mLevelCfg;
-    std::map<int, ballCfg> m_mBallCfg;
-    std::map<int, propsCfg> m_mPropsCfg;
-    std::map<int, mapCfg> m_mMapCfg;
+    map<int, levelCfg>      m_mLevelCfg;
+    map<int, ballCfg>       m_mBallCfg;
+    map<int, propsCfg>      m_mPropsCfg;
+    map<int, mapCfg>        m_mMapCfg;
+    map<int, awardBallCfg>  m_mAwardBallCfg;
+    map<int, int>           m_mBallKeyAwardBallCfg;
 };
 
 extern	ClientData* g_clientData;

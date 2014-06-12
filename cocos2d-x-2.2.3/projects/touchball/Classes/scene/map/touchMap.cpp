@@ -21,6 +21,7 @@ touchMap::~touchMap(void)
 {
 	CC_SAFE_DELETE(m_actionBalls);
     CC_SAFE_DELETE(m_PathFinder);
+    m_mShapes.clear();
 }
 
 
@@ -60,24 +61,12 @@ bool touchMap::checkOver()
 
 void touchMap::remove(CCArray *balls)
 {
+    m_ActionCount = 0;
 	for (int i = 0; i < balls->count(); i++){
 		ball *temp = (ball*) balls->objectAtIndex(i);
 		this->getBallManager()->playHide(temp);
 		this->playAction(temp);
 	}
-}
-
-bool touchMap::checkAwardBall(CCArray* balls)
-{
-    /*m_actionBalls
-	for (int i = 0; i < balls->count(); i++){
-        
-		ball *temp = (ball*) balls->objectAtIndex(i);
-		this->getBallManager()->playHide(temp);
-		this->playAction(temp);
-	}
-     */
-    return true;
 }
 
 bool touchMap::checkRemove()
@@ -87,20 +76,27 @@ bool touchMap::checkRemove()
 	if (pLevelCfg)
         removeCount = pLevelCfg->RemoveCount;
     
-    CCLog("set remove count %d", removeCount);
+    
+    m_mShapes.clear();
+    
     CCArray *balls = new CCArray();
-
 	CCDictElement *pElement;
 	CCDICT_FOREACH(m_actionBalls, pElement) {
 		ball *pball = (ball*) pElement->getObject();
-		CCPoint pos = pball->getPos();
-		CCArray *removeBalls = m_BallManager->checkRemove(pos.x, pos.y, removeCount);
+        int shape = 0;
+		CCArray *removeBalls = m_BallManager->checkRemove(pball, removeCount, shape);
         
-        CCLog("RemoveData %d", removeBalls->count());
 		if (removeBalls->count() >= removeCount - 1){
-			balls->addObjectsFromArray(removeBalls);
-			balls->addObject(pball);
-            CCLog("add remove ball %d", pball->getClassID());
+            if (shape)
+                m_mShapes[m_BallManager->getKey(pball->getPos().x, pball->getPos().y)] = shape;
+            for (int i = 0; i < removeBalls->count(); i++) {
+                ball* tempball = (ball*) removeBalls->objectAtIndex(i);
+                if (balls->containsObject(tempball)) continue;
+                balls->addObject(tempball);
+            }
+            if (! balls->containsObject(pball)) {
+                balls->addObject(pball);
+            }
 		}
 		removeBalls->removeAllObjects();
 		CC_SAFE_DELETE(removeBalls);
@@ -108,7 +104,8 @@ bool touchMap::checkRemove()
 
 	bool result = balls->count() >= removeCount;
 	if (result){
-        checkAwardBall(balls);
+        //map<ball *, int> mCheckBalls;
+        //m_BallManager->getRemoveBall(balls, mCheckBalls);
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
         remove(balls);
 	}
@@ -129,11 +126,11 @@ void touchMap::onShowComplete(CCObject *pball)
 {
 	if (! onEnterEvent(pball)) return;
 
-	if (checkOver())
-		CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_GAME_COMPLETE, (CCObject*)this);
-	else{
-		checkRemove();
-	}
+    if (! checkRemove())
+    {
+        if (checkOver())
+            CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_GAME_COMPLETE, (CCObject*)this);
+    }
 	
 	m_actionBalls->removeAllObjects();
 }
@@ -142,8 +139,33 @@ void touchMap::onHideComplete(CCObject *pball)
 {
 	if (! onEnterEvent(pball)) return;
 
-	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_NEXT, (CCObject*)this);
 	m_actionBalls->removeAllObjects();
+    
+    //检查是否出现奖励球
+    bool bShow = false;
+    for (map<int, int>::iterator it = m_mShapes.begin(); it != m_mShapes.end(); it++) {
+        int px = it->first % GAMEMAPSIZE_WIDTH;
+        int py = it->first / GAMEMAPSIZE_WIDTH;
+        ball* pball = m_BallManager->getBall(px, py);
+        if (! pball) continue;
+        const ballCfg* pballCfg = g_clientData->getBallCfg(pball->getClassID());
+        if (! pballCfg) continue;
+        
+        int shape = it->second;
+        const awardBallCfg* pawardBallCfg = g_clientData->getAwardBallCfg(shape);
+        if (! pawardBallCfg) continue;
+        
+        int id = (pballCfg->nBasicBall / 100) + pawardBallCfg->BallType * 10;
+        const ballCfg* pawardCfg = g_clientData->getBallCfg(id);
+        if (! pawardCfg) continue;
+        
+		playAction(pball);
+        m_BallManager->playShow(id, px, py);
+        bShow = true;
+    }
+    
+    if (! bShow)
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_NEXT, (CCObject*)this);
 }
 
 void touchMap::onMoveComplete(ball *pball)
@@ -166,8 +188,8 @@ void touchMap::addEventLister(CCObject *pball)
 
 void touchMap::playAction(ball *pball)
 {
-	++m_ActionCount;
-	m_actionBalls->setObject(pball, pball->getID());
+	m_ActionCount++;
+ 	m_actionBalls->setObject(pball, pball->getID());
 }
 
 ///////////////////////update
@@ -196,11 +218,7 @@ bool touchMap::onUpdateMove(float dt)
 {
     int nextPos = m_PathFinder->getNextNode();
     if (nextPos >= 0){
-        int curp = getCurMovePos();
-        CCLog("cur pos %d", curp);
         ball *pball = m_BallManager->getBall(getCurMovePos());
-        CCLog("class %d", pball->getClassID());
-        CCLog("next pos %d", nextPos);
         m_BallManager->hide(pball->getID());
         setCurMovePos(nextPos);
         m_BallManager->show(pball->getClassID(), nextPos);
@@ -221,7 +239,7 @@ void touchMap::registerWithTouchDispatcher(void)
 
 CCPoint touchMap::getLocalPoint(CCPoint value)
 {
-	float s = MAPCELL_SIZE * TEXTURESCALE;
+	float s = MAPCELL_SIZE * TEXTURESCALE * GAMESCALE;
 	return CCPointMake(floor(value.x / s), floor(value.y / s));
 }
 
@@ -246,6 +264,7 @@ bool touchMap::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 			//move
             setCurMovePos(oldSel);
             setMapState(MapStateMove);
+            getBallManager()->setSelectId(-1);
 		}
 	}
     
@@ -259,7 +278,6 @@ void touchMap::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 void touchMap::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    
 }
 
 void touchMap::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)

@@ -1,5 +1,5 @@
-#ifndef CFG_BALLDATA_H
-#define CFG_BALLDATA_H
+#ifndef CFG_AWARDBALLDATA_H
+#define CFG_AWARDBALLDATA_H
 
 /************************************************************************/
 /* Author: daijunhua                                                    */
@@ -9,16 +9,14 @@
 #pragma pack(push)
 #pragma pack(1)
 
-struct ballData
+struct awardBallData
 {
-	//球id
-	int BallId;
+	//出现形状条件
+	int ShapeCondition;
 	//球种类
 	int BallType;
-	//是否可以移动
-	int CanMove;
-	//消除后变为
-	int PreBall;
+	//出现个数条件
+	int CountCondition;
 };
 
 #pragma pack(pop)

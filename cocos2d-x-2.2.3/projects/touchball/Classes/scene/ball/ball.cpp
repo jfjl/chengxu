@@ -27,7 +27,7 @@ ball::~ball(void)
 
 CCString* ball::getImage(int classId)
 {
-    int imageId = (int) (classId / 100) - 1;
+    int imageId = (int) (classId / 1000) - 1;
 	CCString *imgName = CCString::createWithFormat("ball_%d.png", imageId);
     return imgName;
 }
@@ -67,9 +67,21 @@ ball* ball::create(int classID, CCPoint pos)
 	return pRet;
 }
 
-void ball::setVisible(bool bVisible, bool bPlayAction)
+void ball::setVisible(bool bVisible, bool bPlayAction, bool bAllAction)
 {
+    if (! bVisible && ! bAllAction)
+    {
+        const ballCfg* pBallCfg = g_clientData->getBallCfg(m_ClassID);
+        if (pBallCfg && pBallCfg->PreBall)
+        {
+            setBallClass(pBallCfg->PreBall);
+            CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ACTION_HIDECOMPLETE, (CCObject*)this);
+            return;
+        }
+    }
+    
 	if (this->isVisible() == bVisible) return;
+    
 	CCSprite::setVisible(bVisible);
     
 	if (bVisible){
@@ -107,7 +119,6 @@ void ball::setBallClass(int value)
 	//if (value > 6) return;
 	CCString *imgName = getImage(m_ClassID);
     CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(imgName->getCString());
-    CCLog("set ball class %d", value);
 	if (frame != NULL)
 		this->setDisplayFrame(frame);
     
@@ -120,20 +131,62 @@ void ball::setBallAddition()
     m_pLabel->setString("");
     
     const ballCfg* pBallCfg = g_clientData->getBallCfg(m_ClassID);
-    if (pBallCfg && pBallCfg->nRemoveCount) {
-        if (! pBallCfg->CanMove)
-        {
-            char s[32];
-            sprintf(s, "nm %d", pBallCfg->nRemoveCount);
-            m_pLabel->setString(s);
-        }
-        else
-        {
-            char s[32];
-            sprintf(s, "%d", pBallCfg->nRemoveCount);
-            m_pLabel->setString(s);
-        }
+    char s[32];
+    
+    switch (pBallCfg->BallType) {
+        case BALLTYPE_ROW:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "r nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "r %d", pBallCfg->nRemoveCount);
+            }
+            break;
+        case BALLTYPE_COL:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "c nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "c %d", pBallCfg->nRemoveCount);
+            }
+            break;
+        case BALLTYPE_X:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "x nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "x %d", pBallCfg->nRemoveCount);
+            }
+            break;
+        case BALLTYPE_AROUND:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "a nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "a %d", pBallCfg->nRemoveCount);
+            }
+            break;
+        default:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "%d", pBallCfg->nRemoveCount);
+            }
+            break;
     }
+    
+    m_pLabel->setString(s);
 }
 
 void ball::onShow()
@@ -165,15 +218,7 @@ void ball::onHide()
 }
 
 void ball::playHide()
-{
-    const ballCfg* pBallCfg = g_clientData->getBallCfg(m_ClassID);
-    if (pBallCfg && pBallCfg->PreBall)
-    {
-        setBallClass(pBallCfg->PreBall);
-        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ACTION_HIDECOMPLETE, (CCObject*)this);
-        return;
-    }
-    
+{    
 	this->setBallState(BallStatePlayDelete);
 	this->setScale(TEXTURESCALE);
 

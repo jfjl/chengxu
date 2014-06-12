@@ -41,7 +41,6 @@ private:
 	bool checkOver();
 	void remove(CCArray *balls);
 	bool checkRemove();
-    bool checkAwardBall(CCArray* balls);
 	bool onEnterEvent(CCObject *pball);
 	void onShowComplete(CCObject *pball);
 	void onHideComplete(CCObject *pball);
@@ -70,5 +69,6 @@ public:
     
 private:
     int m_level;
+    std::map<int, int> m_mShapes;
 };
 #endif /* defined(__ppball__touchMap__) */

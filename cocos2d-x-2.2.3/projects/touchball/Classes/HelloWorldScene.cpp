@@ -28,6 +28,8 @@ bool HelloWorld::init()
         return false;
     }
     
+    srand((unsigned)time(NULL));
+    
     new ClientData();
     
     //scene
@@ -41,9 +43,9 @@ bool HelloWorld::init()
     
     this->schedule(schedule_selector(HelloWorld::onUpdate), 0.1f);
 
-//    setScale(1.4);
-//    this->setAnchorPoint(ccp(0, 0));
-//    this->setPosition(ccp(0, 0));
+    setScale(2);
+    this->setAnchorPoint(ccp(0, 0));
+    this->setPosition(ccp(0, 0));
 
     return true;
 }

@@ -53,6 +53,12 @@ bool ClientData::initData()
         return false;
     }
     
+    if (! loadAwardBallData())
+    {
+        CCLOG("load awardball data failed");
+        return false;
+    }
+    
     CCLOG("load bin complete");
     return true;
 }
@@ -198,7 +204,8 @@ bool ClientData::loadBallsData()
                 ballCfg sCfg;
                 if (sReader.Read(&sCfg,sizeof(ballData)))
                 {
-                    sCfg.nBasicBall = sCfg.BallId;
+                    sCfg.nRemoveCount = 1;
+                    sCfg.nBasicBall = (sCfg.BallId / 1000) * 1000;
                     m_mBallCfg[sCfg.BallId]=sCfg;
                 }
                 else
@@ -211,24 +218,12 @@ bool ClientData::loadBallsData()
         }
     }
     
-    for (map<int, ballCfg>::iterator it = m_mBallCfg.begin(); it != m_mBallCfg.end(); it++)
-    {
-        if (! it->second.PreBall) continue;
+    for (map<int, ballCfg>::iterator it = m_mBallCfg.begin(); it != m_mBallCfg.end(); it++) {
+        const ballCfg* temp = getBallCfg(it->second.PreBall);
         
-        int ballid = it->second.PreBall;
-        while (ballid) {
-            map<int, ballCfg>::iterator ittemp = m_mBallCfg.find(ballid);
-            if (ittemp != m_mBallCfg.end())
-            {
-                it->second.nRemoveCount++;
-                ballid = ittemp->second.PreBall;
-                if (! ballid)
-                    it->second.nBasicBall = ittemp->second.BallId;
-            }
-            else
-            {
-                ballid = 0;
-            }
+        while (temp) {
+            it->second.nRemoveCount++;
+            temp = getBallCfg(temp->PreBall);
         }
     }
     delete [] buffer;
@@ -302,6 +297,41 @@ bool ClientData::loadMapData()
     return bOK;
 }
 
+bool ClientData::loadAwardBallData()
+{
+    HawkBinCfgFile sReader;
+    unsigned long len=0;
+    unsigned char * buffer =CCFileUtils::sharedFileUtils()->getFileData("awardBallData.bin", "rb", &len);
+    
+    bool bOK=false;
+    if (sReader.LoadFromMem(buffer, len))
+    {
+        Int32 iCount = 0;
+        if(sReader.Read(&iCount,sizeof(iCount)))
+        {
+            bOK=true;
+            for (Int32 i=0;i<iCount;i++)
+            {
+                awardBallCfg sCfg;
+                if (sReader.Read(&sCfg,sizeof(awardBallData)))
+                {
+                    m_mAwardBallCfg[sCfg.ShapeCondition]=sCfg;
+                    m_mBallKeyAwardBallCfg[sCfg.BallType] = sCfg.ShapeCondition;
+                }
+                else
+                {
+                    bOK=false;
+                    break;
+                }
+            }
+            
+        }
+    }
+    delete [] buffer;
+    return bOK;
+}
+
+
 const levelCfg* ClientData::getLevelCfg(int key)
 {
     map<int, levelCfg>::iterator iter = m_mLevelCfg.find(key);
@@ -338,6 +368,25 @@ const mapCfg* ClientData::getMapCfg(int key)
     return NULL;
 }
 
+const awardBallCfg* ClientData::getAwardBallCfg(int key)
+{
+    map<int, awardBallCfg>::iterator iter = m_mAwardBallCfg.find(key);
+    if (iter != m_mAwardBallCfg.end())
+        return &iter->second;
+    
+    return NULL;
+}
+
+const awardBallCfg* ClientData::getAwardBallCfgByBallType(int key)
+{
+    map<int, int>::iterator iter = m_mBallKeyAwardBallCfg.find(key);
+    if (iter != m_mBallKeyAwardBallCfg.end())
+    {
+        return getAwardBallCfg(iter->second);
+    }
+    return NULL;
+}
+
 const map<int, levelCfg>& ClientData::getLevelList()
 {
     return m_mLevelCfg;
@@ -356,5 +405,10 @@ const map<int, propsCfg>& ClientData::getPropsList()
 const map<int, mapCfg>& ClientData::getMapList()
 {
     return m_mMapCfg;
+}
+
+const map<int, awardBallCfg>& ClientData::getAwardBallList()
+{
+    return m_mAwardBallCfg;
 }
 

@@ -30,10 +30,11 @@
 		0185F8B419418EBF00AFB4C9 /* ClientData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0185F8AD19418EBF00AFB4C9 /* ClientData.cpp */; };
 		01DC50E619455C2F00375ABF /* 1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50E419455C2F00375ABF /* 1.plist */; };
 		01DC50E719455C2F00375ABF /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50E519455C2F00375ABF /* 1.png */; };
-		01DC50F31945B5BA00375ABF /* ballData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50EF1945B5BA00375ABF /* ballData.bin */; };
-		01DC50F41945B5BA00375ABF /* levelData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50F01945B5BA00375ABF /* levelData.bin */; };
-		01DC50F51945B5BA00375ABF /* mapData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50F11945B5BA00375ABF /* mapData.bin */; };
-		01DC50F61945B5BA00375ABF /* propsData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50F21945B5BA00375ABF /* propsData.bin */; };
+		01DC51111946BE9C00375ABF /* awardBallData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC510C1946BE9C00375ABF /* awardBallData.bin */; };
+		01DC51121946BE9C00375ABF /* ballData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC510D1946BE9C00375ABF /* ballData.bin */; };
+		01DC51131946BE9C00375ABF /* levelData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC510E1946BE9C00375ABF /* levelData.bin */; };
+		01DC51141946BE9C00375ABF /* mapData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC510F1946BE9C00375ABF /* mapData.bin */; };
+		01DC51151946BE9C00375ABF /* propsData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC51101946BE9C00375ABF /* propsData.bin */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
 		15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88E1682F7D5002FB0C5 /* b2CollideEdge.cpp */; };
@@ -350,14 +351,16 @@
 		0185F8AE19418EBF00AFB4C9 /* ClientData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientData.h; sourceTree = "<group>"; };
 		01DC50E419455C2F00375ABF /* 1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 1.plist; sourceTree = "<group>"; };
 		01DC50E519455C2F00375ABF /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		01DC50EB1945B59F00375ABF /* ballData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ballData.h; sourceTree = "<group>"; };
-		01DC50EC1945B59F00375ABF /* levelData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelData.h; sourceTree = "<group>"; };
-		01DC50ED1945B59F00375ABF /* mapData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapData.h; sourceTree = "<group>"; };
-		01DC50EE1945B59F00375ABF /* propsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = propsData.h; sourceTree = "<group>"; };
-		01DC50EF1945B5BA00375ABF /* ballData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ballData.bin; sourceTree = "<group>"; };
-		01DC50F01945B5BA00375ABF /* levelData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = levelData.bin; sourceTree = "<group>"; };
-		01DC50F11945B5BA00375ABF /* mapData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mapData.bin; sourceTree = "<group>"; };
-		01DC50F21945B5BA00375ABF /* propsData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = propsData.bin; sourceTree = "<group>"; };
+		01DC51071946BE8000375ABF /* awardBallData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = awardBallData.h; sourceTree = "<group>"; };
+		01DC51081946BE8000375ABF /* ballData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ballData.h; sourceTree = "<group>"; };
+		01DC51091946BE8000375ABF /* levelData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelData.h; sourceTree = "<group>"; };
+		01DC510A1946BE8000375ABF /* mapData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapData.h; sourceTree = "<group>"; };
+		01DC510B1946BE8000375ABF /* propsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = propsData.h; sourceTree = "<group>"; };
+		01DC510C1946BE9C00375ABF /* awardBallData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = awardBallData.bin; sourceTree = "<group>"; };
+		01DC510D1946BE9C00375ABF /* ballData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ballData.bin; sourceTree = "<group>"; };
+		01DC510E1946BE9C00375ABF /* levelData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = levelData.bin; sourceTree = "<group>"; };
+		01DC510F1946BE9C00375ABF /* mapData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mapData.bin; sourceTree = "<group>"; };
+		01DC51101946BE9C00375ABF /* propsData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = propsData.bin; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -992,10 +995,11 @@
 		0185F8AF19418EBF00AFB4C9 /* config */ = {
 			isa = PBXGroup;
 			children = (
-				01DC50EB1945B59F00375ABF /* ballData.h */,
-				01DC50EC1945B59F00375ABF /* levelData.h */,
-				01DC50ED1945B59F00375ABF /* mapData.h */,
-				01DC50EE1945B59F00375ABF /* propsData.h */,
+				01DC51071946BE8000375ABF /* awardBallData.h */,
+				01DC51081946BE8000375ABF /* ballData.h */,
+				01DC51091946BE8000375ABF /* levelData.h */,
+				01DC510A1946BE8000375ABF /* mapData.h */,
+				01DC510B1946BE8000375ABF /* propsData.h */,
 			);
 			path = config;
 			sourceTree = "<group>";
@@ -2096,10 +2100,11 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				01DC50EF1945B5BA00375ABF /* ballData.bin */,
-				01DC50F01945B5BA00375ABF /* levelData.bin */,
-				01DC50F11945B5BA00375ABF /* mapData.bin */,
-				01DC50F21945B5BA00375ABF /* propsData.bin */,
+				01DC510C1946BE9C00375ABF /* awardBallData.bin */,
+				01DC510D1946BE9C00375ABF /* ballData.bin */,
+				01DC510E1946BE9C00375ABF /* levelData.bin */,
+				01DC510F1946BE9C00375ABF /* mapData.bin */,
+				01DC51101946BE9C00375ABF /* propsData.bin */,
 				01DC50E419455C2F00375ABF /* 1.plist */,
 				01DC50E519455C2F00375ABF /* 1.png */,
 				010A244C1942FEC500C93CF4 /* ScoreDialog.ccbi */,
@@ -2187,23 +2192,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01DC51151946BE9C00375ABF /* propsData.bin in Resources */,
+				01DC51111946BE9C00375ABF /* awardBallData.bin in Resources */,
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				01DC50E719455C2F00375ABF /* 1.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				01DC50E619455C2F00375ABF /* 1.plist in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
-				01DC50F41945B5BA00375ABF /* levelData.bin in Resources */,
+				01DC51131946BE9C00375ABF /* levelData.bin in Resources */,
+				01DC51141946BE9C00375ABF /* mapData.bin in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
-				01DC50F31945B5BA00375ABF /* ballData.bin in Resources */,
-				01DC50F51945B5BA00375ABF /* mapData.bin in Resources */,
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
-				01DC50F61945B5BA00375ABF /* propsData.bin in Resources */,
+				01DC51121946BE9C00375ABF /* ballData.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

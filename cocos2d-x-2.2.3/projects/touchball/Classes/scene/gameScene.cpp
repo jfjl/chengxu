@@ -148,6 +148,13 @@ int gameScene::getRandomType()
     }
     else
     {
+        rate = rand() % 100;
+        for (size_t i = 0; i < pLevelCfg->vSpecialBallIds.size(); i++)
+        {
+            if (rate > pLevelCfg->vSpecialBallIds[i].value) continue;
+            return pLevelCfg->vSpecialBallIds[i].key;
+        }
+        
         int index = rand() % pLevelCfg->vBallIds.size();
         return pLevelCfg->vBallIds[index];
     }
@@ -172,14 +179,16 @@ void gameScene::randomShowBall()
     for (int i = 0; i < pos->size(); i++) {
 		ball *pball = m_TouchMap->getBallManager()->getBall(pos->at(i));
 		m_TouchMap->playAction(pball);
+        int classId = getRandomType();
 
-        m_TouchMap->getBallManager()->playShow(getRandomType(),
+        m_TouchMap->getBallManager()->playShow(classId,
                                            getXByPosKey(pos->at(i), m_TouchMap->getWidth()),
                                            getYByPosKey(pos->at(i), m_TouchMap->getWidth()));
     }
 
     for (int i = 0; i < NEXTCOUNT; i++){
-        m_BallMap->getBallManager()->show(getRandomType(),
+        int classId = getRandomType();
+        m_BallMap->getBallManager()->show(classId,
                                           getXByPosKey(i, m_BallMap->getWidth()),
                                           getYByPosKey(i, m_BallMap->getWidth()));
     }
@@ -199,7 +208,8 @@ void gameScene::randomShowBall(ballVector *balls)
 	}
     
 	for (int i = 0; i < NEXTCOUNT; i++){
-		m_BallMap->getBallManager()->show(getRandomType(),
+        int classid = getRandomType();
+		m_BallMap->getBallManager()->show(classid,
 			getXByPosKey(i, m_BallMap->getWidth()),
 			getYByPosKey(i, m_BallMap->getWidth()));
 	}

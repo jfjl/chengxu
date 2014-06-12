@@ -61,7 +61,7 @@ bool touchMap::checkOver()
 
 void touchMap::remove(CCArray *balls)
 {
-    m_ActionCount = 0;
+    setActionCount(balls->count());
 	for (int i = 0; i < balls->count(); i++){
 		ball *temp = (ball*) balls->objectAtIndex(i);
 		this->playAction(temp);
@@ -158,6 +158,7 @@ void touchMap::onHideComplete(CCObject *pball)
         const ballCfg* pawardCfg = g_clientData->getBallCfg(id);
         if (! pawardCfg) continue;
         
+        incActionCount();
 		playAction(pball);
         m_BallManager->playShow(id, px, py);
         bShow = true;
@@ -187,8 +188,12 @@ void touchMap::addEventLister(CCObject *pball)
 
 void touchMap::playAction(ball *pball)
 {
-	m_ActionCount++;
  	m_actionBalls->setObject(pball, pball->getID());
+}
+
+void touchMap::incActionCount()
+{
+    m_ActionCount++;
 }
 
 ///////////////////////update

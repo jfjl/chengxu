@@ -129,20 +129,16 @@ KeyValueVector ClientData::spliteUchar2KeyValue(unsigned char* data, char C1, ch
         vector<int> szInt = splitUchar2Int((unsigned char*)szStrng[i].c_str(), C2);
         if (szInt.size() != 2) continue;
 
+        maxValue += szInt[1];
+
         KeyValue mKeyValue;
         mKeyValue.key = szInt[0];
-        mKeyValue.value = szInt[1];
-        maxValue += szInt[1];
+        if (bCalcRate)
+            mKeyValue.value = maxValue;
+        else
+            mKeyValue.value = szInt[1];
         
         vKeyValue.push_back(mKeyValue);
-    }
-    
-    if (bCalcRate)
-    {
-        for (size_t i = 0; i < vKeyValue.size(); i++)
-        {
-            vKeyValue[i].value = vKeyValue[i].value * 100 / maxValue;
-        }
     }
     
     return vKeyValue;

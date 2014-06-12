@@ -152,10 +152,11 @@ int gameScene::getRandomType()
         for (size_t i = 0; i < pLevelCfg->vSpecialBallIds.size(); i++)
         {
             if (rate > pLevelCfg->vSpecialBallIds[i].value) continue;
-            return pLevelCfg->vSpecialBallIds[i].key;
+            int id = (pLevelCfg->vSpecialBallIds[i].key / 1000) * 1000 + 1; //pLevelCfg->vSpecialBallIds[i].key;
+            return id;
         }
 
-        int index = rand() % pLevelCfg->vBallIds.size();
+        int index = rand() % 3;//pLevelCfg->vBallIds.size();
         return pLevelCfg->vBallIds[index];
     }
 }
@@ -176,6 +177,7 @@ void gameScene::randomShowBall()
     
     std::vector<int> *pos = new std::vector<int>();
     getRandomPosition(m_TouchMap, pos, pLevelCfg->InitCount);
+    m_TouchMap->setActionCount(pos->size());
     for (int i = 0; i < pos->size(); i++) {
 		ball *pball = m_TouchMap->getBallManager()->getBall(pos->at(i));
 		m_TouchMap->playAction(pball);
@@ -198,6 +200,7 @@ void gameScene::randomShowBall(ballVector *balls)
 {
 	std::vector<int> *pos = new std::vector<int>();
 	getRandomPosition(m_TouchMap, pos);
+    m_TouchMap->setActionCount(pos->size());
 	for (int i = 0; i < pos->size(); i++) {
 		ball *srcball = balls->at(i);
 		ball *pball = m_TouchMap->getBallManager()->getBall(pos->at(i));

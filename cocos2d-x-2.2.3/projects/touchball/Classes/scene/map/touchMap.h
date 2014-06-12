@@ -61,6 +61,7 @@ public:
     void onUpate(float dt);
     
 	void playAction(ball *pball);
+    void incActionCount();
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);

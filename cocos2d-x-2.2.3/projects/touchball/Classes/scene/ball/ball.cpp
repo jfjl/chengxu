@@ -191,7 +191,7 @@ void ball::setBallAddition()
 
 void ball::onShow()
 {
-	CCSprite::setVisible(true);
+	//CCSprite::setVisible(true);
 	this->setScale(TEXTURESCALE);
 	this->setBallState(BallStateNormal);
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ACTION_SHOWCOMPLETE, (CCObject *)this);
@@ -211,7 +211,7 @@ void ball::playShow()
 
 void ball::onHide()
 {
-	CCSprite::setVisible(false);
+	//CCSprite::setVisible(false);
 	this->setScale(TEXTURESCALE);
 	this->setBallState(BallStateHide);
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ACTION_HIDECOMPLETE, (CCObject*)this);

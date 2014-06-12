@@ -64,8 +64,8 @@ void touchMap::remove(CCArray *balls)
     m_ActionCount = 0;
 	for (int i = 0; i < balls->count(); i++){
 		ball *temp = (ball*) balls->objectAtIndex(i);
-		this->getBallManager()->playHide(temp);
 		this->playAction(temp);
+		this->getBallManager()->playHide(temp);
 	}
 }
 
@@ -104,8 +104,7 @@ bool touchMap::checkRemove()
 
 	bool result = balls->count() >= removeCount;
 	if (result){
-        //map<ball *, int> mCheckBalls;
-        //m_BallManager->getRemoveBall(balls, mCheckBalls);
+        m_BallManager->getRemoveBall(balls);
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
         remove(balls);
 	}
@@ -155,7 +154,7 @@ void touchMap::onHideComplete(CCObject *pball)
         const awardBallCfg* pawardBallCfg = g_clientData->getAwardBallCfg(shape);
         if (! pawardBallCfg) continue;
         
-        int id = (pballCfg->nBasicBall / 100) + pawardBallCfg->BallType * 10;
+        int id = pballCfg->nBasicBall + pawardBallCfg->BallType * 10;
         const ballCfg* pawardCfg = g_clientData->getBallCfg(id);
         if (! pawardCfg) continue;
         

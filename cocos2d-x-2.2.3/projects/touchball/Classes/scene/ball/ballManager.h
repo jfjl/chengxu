@@ -55,18 +55,21 @@ public:
 	//remove
     int getRemoveShape(int curShape, int removeCount, int curType, std::vector<int>& vShapes);
 	CCArray* checkRemove(ball* pball, int removeCount, int& nShape);
-    void getRemoveBall(CCArray* balls, std::map<ball*, int>& mCheckBalls);
+    void getRemoveBall(CCArray* balls);
     
     //
 	ball* getBall(int x, int y);
     ball* getBall(int pos);
     void getVisibleBall(bool vis, CCArray *balls);
 private:
-    void getRemoveBallByRow(CCArray* balls, std::map<ball*, int>& mCheckBalls, ball* pball);
-    void getRemoveBallByCol(CCArray* balls, std::map<ball*, int>& mCheckBalls, ball* pball);
-    void getRemoveBallByX(CCArray* balls, std::map<ball*, int>& mCheckBalls, ball* pball);
-    void getRemoveBallByAround(CCArray* balls, std::map<ball*, int>& mCheckBalls, ball* pball);
-    void getRemoveBallBySame(CCArray* balls, std::map<ball*, int>& mCheckBalls, ball* pball);
+    void getRemoveBallByRow(ball* pball);
+    void getRemoveBallByCol(ball* pball);
+    void getRemoveBallByX(ball* pball);
+    void getRemoveBallByAround(ball* pball);
+    void getRemoveBallBySame(ball* pball);
+private:
+    std::map<ball*, int> m_mCheckBalls;
+    std::vector<ball*> m_vRemoveBalls;
 };
 
 #endif /* defined(__ppball__ballManager__) */

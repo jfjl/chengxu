@@ -154,7 +154,7 @@ int gameScene::getRandomType()
             if (rate > pLevelCfg->vSpecialBallIds[i].value) continue;
             return pLevelCfg->vSpecialBallIds[i].key;
         }
-        
+
         int index = rand() % pLevelCfg->vBallIds.size();
         return pLevelCfg->vBallIds[index];
     }

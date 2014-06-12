@@ -161,8 +161,13 @@ int ballManager::playShow(int classId, int x, int y)
     {
 		pball->setVisible(true, true);
     }
+    else
+    {
+        CCLog("FDSD");
+    }
 	pball->setBallClass(classId);
-	return pball->getID();    
+	
+    return pball->getID();
 }
 
 int ballManager::playHide(int x, int y)
@@ -294,95 +299,111 @@ CCArray* ballManager::checkRemove(ball* pball, int removeCount, int& nshape)
 	return result;
 }
 
-void ballManager::getRemoveBall(CCArray* balls, map<ball*, int>& mCheckBalls)
+void ballManager::getRemoveBall(CCArray* balls)
 {
-	for (int i = 0; i < balls->count(); i++){
-		ball *temp = (ball*) balls->objectAtIndex(i);
+    m_mCheckBalls.clear();
+    int index = 0;
+    while (index < balls->count()) {
+        index++;
+        CCLog("Index %d, count:%d", index-1, balls->count());
+		ball *temp = (ball*) balls->objectAtIndex(index-1);
         
         const ballCfg* pballCfg = g_clientData->getBallCfg(temp->getClassID());
         if (! pballCfg) continue;
-        const awardBallCfg* pawardBallCfg = g_clientData->getAwardBallCfg(pballCfg->BallType);
+        const awardBallCfg* pawardBallCfg = g_clientData->getAwardBallCfgByBallType(pballCfg->BallType);
         if (! pawardBallCfg) continue;
         
-        map<ball*, int>::iterator it = mCheckBalls.find(temp);
-        if (it != mCheckBalls.end()) continue;
+        map<ball*, int>::iterator it = m_mCheckBalls.find(temp);
+        if (it != m_mCheckBalls.end()) continue;
         
-        balls->addObject(temp);
-        mCheckBalls[temp] = 1;
+        CCLog("Special ball %d, %f, %f", pballCfg->BallType, temp->getPos().x, temp->getPos().y);
+        m_mCheckBalls[temp] = 1;
         
         switch (pballCfg->BallType) {
             case BALLTYPE_ROW:
-                getRemoveBallByRow(balls, mCheckBalls, temp);
+                getRemoveBallByRow(temp);
                 break;
             case BALLTYPE_COL:
-                getRemoveBallByCol(balls, mCheckBalls, temp);
+                getRemoveBallByCol(temp);
                 break;
             case BALLTYPE_X:
-                getRemoveBallByX(balls, mCheckBalls, temp);
+                getRemoveBallByX(temp);
                 break;
             case BALLTYPE_AROUND:
-                getRemoveBallByAround(balls, mCheckBalls, temp);
+                getRemoveBallByAround(temp);
                 break;
             case BALLTYPE_SAME:
-                getRemoveBallBySame(balls, mCheckBalls, temp);
+                getRemoveBallBySame(temp);
                 break;
+        }
+        
+        for (int i = 0; i < m_vRemoveBalls.size(); i++) {
+            if (balls->containsObject(m_vRemoveBalls[i])) continue;
+            balls->addObject(m_vRemoveBalls[i]);
         }
     }
 }
 
-void ballManager::getRemoveBallByRow(CCArray* balls, map<ball*, int>& mCheckBalls, ball* pball)
+void ballManager::getRemoveBallByRow(ball* pball)
 {
+    m_vRemoveBalls.clear();
     int px = pball->getPos().x;
     int py = pball->getPos().y;
+    
+    CCLog("get row balls %d", py);
     for (int i = 0; i < GAMEMAPSIZE_WIDTH; i++) {
         if (px == i) continue;
         ball* temp = getBall(i, py);
         if (! temp || ! temp->isVisible()) continue;
-        if (balls->containsObject(temp)) continue;
         
-        balls->addObject(temp);
+        m_vRemoveBalls.push_back(temp);
     }
 }
 
-void ballManager::getRemoveBallByCol(CCArray* balls, map<ball*, int>& mCheckBalls, ball* pball)
+void ballManager::getRemoveBallByCol(ball* pball)
 {
+    m_vRemoveBalls.clear();
     int px = pball->getPos().x;
     int py = pball->getPos().y;
+    CCLog("get col balls %d", px);
     for (int i = 0; i < GAMEMAPSIZE_HEIGHT; i++) {
         if (py == i) continue;
         ball* temp = getBall(px, i);
         if (! temp || ! temp->isVisible()) continue;
-        if (balls->containsObject(temp)) continue;
         
-        balls->addObject(temp);
+        m_vRemoveBalls.push_back(temp);
     }
 }
 
-void ballManager::getRemoveBallByX(CCArray* balls, map<ball*, int>& mCheckBalls, ball* pball)
+void ballManager::getRemoveBallByX(ball* pball)
 {
+    m_vRemoveBalls.clear();
     int px = pball->getPos().x;
     int py = pball->getPos().y;
+    CCLog("get x balls %d,%d", px, py);
     for (int i = 0; i < 4; i++) {
         px = px + BALLXREMOVEDIRS[i].x;
         py = py + BALLXREMOVEDIRS[i].y;
-        while (px >= 0 && px < GAMEMAPSIZE_WIDTH && py >= 0 && py < GAMEMAPSIZE_HEIGHT) {
-            
+        while (px >= 0 && px < GAMEMAPSIZE_WIDTH && py >= 0 && py < GAMEMAPSIZE_HEIGHT) {            
+            CCLog("X %d y%d", px, py);
             ball* temp = getBall(px, py);
-            if (! temp || ! temp->isVisible()) continue;
-            if (balls->containsObject(temp)) continue;
             
-            balls->addObject(temp);
-
             px = px + BALLXREMOVEDIRS[i].x;
             py = py + BALLXREMOVEDIRS[i].y;
+
+            if (! temp || ! temp->isVisible()) continue;
+            
+            m_vRemoveBalls.push_back(temp);
         }
     }
 }
 
-void ballManager::getRemoveBallByAround(CCArray* balls, map<ball*, int>& mCheckBalls, ball* pball)
+void ballManager::getRemoveBallByAround(ball* pball)
 {
+    m_vRemoveBalls.clear();
     int px = pball->getPos().x;
     int py = pball->getPos().y;
+    CCLog("get around balls %d, %d", px, py);
     for (int i = 0; i < 8; i++)
     {
         px = px + BALLAROUNDS[i].x;
@@ -390,33 +411,35 @@ void ballManager::getRemoveBallByAround(CCArray* balls, map<ball*, int>& mCheckB
         if (px >= 0 && px < GAMEMAPSIZE_WIDTH && py >= 0 && py < GAMEMAPSIZE_HEIGHT) {
             ball* temp = getBall(px, py);
             if (! temp || ! temp->isVisible()) continue;
-            if (balls->containsObject(temp)) continue;
             
-            balls->addObject(temp);
+            m_vRemoveBalls.push_back(temp);
         }
     }
 }
 
-void ballManager::getRemoveBallBySame(CCArray* balls, map<ball*, int>& mCheckBalls, ball* pball)
+void ballManager::getRemoveBallBySame(ball* pball)
 {
+    m_vRemoveBalls.clear();
     const ballCfg* pballCfg = g_clientData->getBallCfg(pball->getClassID());
     if (! pballCfg) return;
+    
     int basicId = pballCfg->nBasicBall;
     
+    CCLog("get samve balls %d", basicId);
     for (int i = 0; i < GAMEMAPSIZE_WIDTH; i++)
     {
         for (int j = 0; j < GAMEMAPSIZE_HEIGHT; j++)
         {
             ball* temp = getBall(i, j);
             if (! temp || ! temp->isVisible()) continue;
-            if (balls->containsObject(temp)) continue;
             
             pballCfg = g_clientData->getBallCfg(temp->getClassID());
             if (! pballCfg) continue;
             if (pballCfg->nBasicBall == basicId) continue;
             
-            balls->addObject(temp);
-            
+            m_vRemoveBalls.push_back(temp);
         }
     }
+    
+    return;
 }

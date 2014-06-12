@@ -315,6 +315,8 @@ bool ClientData::loadAwardBallData()
                 awardBallCfg sCfg;
                 if (sReader.Read(&sCfg,sizeof(awardBallData)))
                 {
+                    if (sCfg.ShapeCondition == 3)
+                        sCfg.ShapeCondition = 4;
                     m_mAwardBallCfg[sCfg.ShapeCondition]=sCfg;
                     m_mBallKeyAwardBallCfg[sCfg.BallType] = sCfg.ShapeCondition;
                 }

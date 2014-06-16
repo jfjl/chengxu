@@ -8,6 +8,7 @@
 
 #include "DialogManager.h"
 #include "ScoreDialog.h"
+#include "ScoreXDialog.h"
 #include "CongratulationDialog.h"
 
 DialogManager::DialogManager()
@@ -42,12 +43,21 @@ DialogManager* DialogManager::create(CCLayer* owner)
 
 BasicDialog* DialogManager::createDialog(std::string dialogName)
 {
+    BasicDialog* pDialog;
     if (dialogName == "ScoreDialog")
     {
-        return ScoreDialog::create();
+        pDialog = ScoreDialog::create();
+    }
+    else if(dialogName == "ScoreXDialog")
+    {
+        pDialog = ScoreXDialog::create();
+    }
+    if (pDialog)
+    {
+        CCLog("create dialog: %s", dialogName.c_str());
     }
     
-    return NULL;
+    return pDialog;
 }
 
 BasicDialog* DialogManager::getDialog(std::string dialogName)
@@ -65,7 +75,12 @@ BasicDialog* DialogManager::showDialog(std::string dialogName, CCNode* pParent)
     {
         pnode = createDialog(dialogName);
         
-        if (! pnode) return NULL;
+        if (! pnode)
+        {
+            CCLog("create dialog failed: %s", dialogName.c_str());
+            return NULL;
+            
+        }
     };
     
     pnode->onShow(pParent);

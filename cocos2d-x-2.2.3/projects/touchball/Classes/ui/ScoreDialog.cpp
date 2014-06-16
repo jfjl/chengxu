@@ -32,16 +32,24 @@ bool ScoreDialog::init()
     if (! CCLayer::init()){
         return false;
     }
-    CCNodeLoaderLibrary * nodeLoaderLibrary = cocos2d::extension::CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(nodeLoaderLibrary);
-    CCNode * node = (CCNode*)ccbReader->readNodeGraphFromFile("ScoreDialog.ccbi", this);
-    ccbReader->release();
-    if (! node) return false;
+    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
     
+    /* Create an autorelease CCBReader. */
+    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    
+    /* Read a ccbi file. */
+    CCNode * node = ccbReader->readNodeGraphFromFile("ScoreDialog.ccbi", this);
+    
+    ccbReader->release();
+    
+    if (! node) {
+        CCLog("load scoreDialog.ccbi failed");
+        return false;
+    }
     if(node != NULL) {
         this->addChild(node);
     }
-    
+
     return true;
 }
 

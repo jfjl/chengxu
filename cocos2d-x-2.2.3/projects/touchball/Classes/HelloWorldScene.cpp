@@ -39,7 +39,7 @@ bool HelloWorld::init()
     m_pDialogManager = DialogManager::create(this);
     //start
     m_pSceneManager->setCurScene("gameScene");
-    m_pDialogManager->showDialog("ScoreDialog", this);
+    m_pDialogManager->showDialog("ScoreXDialog", this);
     
     this->schedule(schedule_selector(HelloWorld::onUpdate), 0.1f);
 

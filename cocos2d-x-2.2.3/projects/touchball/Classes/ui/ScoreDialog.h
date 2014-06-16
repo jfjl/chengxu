@@ -24,7 +24,7 @@ public:
     ScoreDialog();
     ~ScoreDialog();
     
-    virtual void onShow(CCNode* pParent);
+    void onShow(CCNode* pParent);
     
     bool init();
     

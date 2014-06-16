@@ -174,6 +174,17 @@ void ball::setBallAddition()
                 sprintf(s, "a %d", pBallCfg->nRemoveCount);
             }
             break;
+        case BALLTYPE_SAME:
+            if (! pBallCfg->CanMove)
+            {
+                sprintf(s, "s nm %d", pBallCfg->nRemoveCount);
+            }
+            else
+            {
+                sprintf(s, "s %d", pBallCfg->nRemoveCount);
+            }
+            break;
+            
         default:
             if (! pBallCfg->CanMove)
             {

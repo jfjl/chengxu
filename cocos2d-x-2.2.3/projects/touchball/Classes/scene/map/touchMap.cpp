@@ -87,8 +87,6 @@ bool touchMap::checkRemove()
 		CCArray *removeBalls = m_BallManager->checkRemove(pball, removeCount, shape);
         
 		if (removeBalls->count() >= removeCount - 1){
-            if (shape)
-                m_mShapes[m_BallManager->getKey(pball->getPos().x, pball->getPos().y)] = shape;
             for (int i = 0; i < removeBalls->count(); i++) {
                 ball* tempball = (ball*) removeBalls->objectAtIndex(i);
                 if (balls->containsObject(tempball)) continue;
@@ -96,6 +94,8 @@ bool touchMap::checkRemove()
             }
             if (! balls->containsObject(pball)) {
                 balls->addObject(pball);
+                if (shape)
+                    m_mShapes[m_BallManager->getKey(pball->getPos().x, pball->getPos().y)] = shape;
             }
 		}
 		removeBalls->removeAllObjects();
@@ -265,6 +265,8 @@ bool touchMap::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	
 	if (id < 0 && oldSel >= 0){
 		if (checkMove(oldSel, p.x, p.y)){
+            CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_BALL_MOVE, (CCObject *)this);
+            
 			//move
             setCurMovePos(oldSel);
             setMapState(MapStateMove);

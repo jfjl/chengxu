@@ -53,7 +53,7 @@ public:
 	int playHide(ball *pball);
     
 	//remove
-    int getRemoveShape(int curShape, int removeCount, int curType, std::vector<int>& vShapes);
+    int getRemoveShape(int curShape, int removeCount, int curType);
 	CCArray* checkRemove(ball* pball, int removeCount, int& nShape);
     void getRemoveBall(CCArray* balls);
     
@@ -70,6 +70,7 @@ private:
 private:
     std::map<ball*, int> m_mCheckBalls;
     std::vector<ball*> m_vRemoveBalls;
+    std::vector<int> m_vShapes;
 };
 
 #endif /* defined(__ppball__ballManager__) */

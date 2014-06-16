@@ -28,6 +28,9 @@
 		018502231941A2A800AFB4C9 /* HawkDiskFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018502211941A2A800AFB4C9 /* HawkDiskFile.cpp */; };
 		0185022F1941A9F600AFB4C9 /* HawkZlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0185022D1941A9F600AFB4C9 /* HawkZlib.cpp */; };
 		0185F8B419418EBF00AFB4C9 /* ClientData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0185F8AD19418EBF00AFB4C9 /* ClientData.cpp */; };
+		019AFB7B194E9C3B00668C7F /* ScoreDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */; };
+		019AFB7E194EA41A00668C7F /* ScoreDialog.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */; };
+		019AFB81194EA9C000668C7F /* ScoreXDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019AFB7F194EA9C000668C7F /* ScoreXDialog.cpp */; };
 		01DC50E619455C2F00375ABF /* 1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50E419455C2F00375ABF /* 1.plist */; };
 		01DC50E719455C2F00375ABF /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 01DC50E519455C2F00375ABF /* 1.png */; };
 		01DC51111946BE9C00375ABF /* awardBallData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01DC510C1946BE9C00375ABF /* awardBallData.bin */; };
@@ -304,7 +307,6 @@
 /* Begin PBXFileReference section */
 		010A24451942E37600C93CF4 /* BasicDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BasicDialog.cpp; path = ../../Classes/ui/BasicDialog.cpp; sourceTree = "<group>"; };
 		010A24461942E37600C93CF4 /* BasicDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicDialog.h; path = ../../Classes/ui/BasicDialog.h; sourceTree = "<group>"; };
-		010A244C1942FEC500C93CF4 /* ScoreDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = ScoreDialog.ccbi; sourceTree = "<group>"; };
 		013156471941C9B700A0D808 /* ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ball.cpp; sourceTree = "<group>"; };
 		013156481941C9B700A0D808 /* ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ball.h; sourceTree = "<group>"; };
 		013156491941C9B700A0D808 /* ballManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ballManager.cpp; sourceTree = "<group>"; };
@@ -349,6 +351,10 @@
 		018502311941AA3300AFB4C9 /* HawkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HawkUtil.h; sourceTree = "<group>"; };
 		0185F8AD19418EBF00AFB4C9 /* ClientData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientData.cpp; sourceTree = "<group>"; };
 		0185F8AE19418EBF00AFB4C9 /* ClientData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientData.h; sourceTree = "<group>"; };
+		019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = ScoreDialog.ccbi; sourceTree = "<group>"; };
+		019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ScoreDialog.ccb; sourceTree = "<group>"; };
+		019AFB7F194EA9C000668C7F /* ScoreXDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreXDialog.cpp; path = ../../Classes/ui/ScoreXDialog.cpp; sourceTree = "<group>"; };
+		019AFB80194EA9C000668C7F /* ScoreXDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreXDialog.h; path = ../../Classes/ui/ScoreXDialog.h; sourceTree = "<group>"; };
 		01DC50E419455C2F00375ABF /* 1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 1.plist; sourceTree = "<group>"; };
 		01DC50E519455C2F00375ABF /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		01DC51071946BE8000375ABF /* awardBallData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = awardBallData.h; sourceTree = "<group>"; };
@@ -946,6 +952,8 @@
 				013156631941C9C400A0D808 /* ScoreDialog.h */,
 				010A24451942E37600C93CF4 /* BasicDialog.cpp */,
 				010A24461942E37600C93CF4 /* BasicDialog.h */,
+				019AFB7F194EA9C000668C7F /* ScoreXDialog.cpp */,
+				019AFB80194EA9C000668C7F /* ScoreXDialog.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1002,6 +1010,15 @@
 				01DC510B1946BE8000375ABF /* propsData.h */,
 			);
 			path = config;
+			sourceTree = "<group>";
+		};
+		019AFB79194E9C3B00668C7F /* ccb */ = {
+			isa = PBXGroup;
+			children = (
+				019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */,
+				019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */,
+			);
+			path = ccb;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
@@ -2101,13 +2118,13 @@
 			isa = PBXGroup;
 			children = (
 				01DC510C1946BE9C00375ABF /* awardBallData.bin */,
+				019AFB79194E9C3B00668C7F /* ccb */,
 				01DC510D1946BE9C00375ABF /* ballData.bin */,
 				01DC510E1946BE9C00375ABF /* levelData.bin */,
 				01DC510F1946BE9C00375ABF /* mapData.bin */,
 				01DC51101946BE9C00375ABF /* propsData.bin */,
 				01DC50E419455C2F00375ABF /* 1.plist */,
 				01DC50E519455C2F00375ABF /* 1.png */,
-				010A244C1942FEC500C93CF4 /* ScoreDialog.ccbi */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
 				1AFAF8BA16D35E4900DB1158 /* CloseSelected.png */,
 				1AFAF8BB16D35E4900DB1158 /* HelloWorld.png */,
@@ -2197,6 +2214,7 @@
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				01DC50E719455C2F00375ABF /* 1.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
+				019AFB7E194EA41A00668C7F /* ScoreDialog.ccb in Resources */,
 				01DC50E619455C2F00375ABF /* 1.plist in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				01DC51131946BE9C00375ABF /* levelData.bin in Resources */,
@@ -2210,6 +2228,7 @@
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				01DC51121946BE9C00375ABF /* ballData.bin in Resources */,
+				019AFB7B194E9C3B00668C7F /* ScoreDialog.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2298,6 +2317,7 @@
 				15A3D9A81682F7F9002FB0C5 /* cpHashSet.c in Sources */,
 				15A3D9A91682F7F9002FB0C5 /* cpPolyShape.c in Sources */,
 				15A3D9AA1682F7F9002FB0C5 /* cpShape.c in Sources */,
+				019AFB81194EA9C000668C7F /* ScoreXDialog.cpp in Sources */,
 				013156571941C9B700A0D808 /* gameScene.cpp in Sources */,
 				15A3D9AB1682F7F9002FB0C5 /* cpSpace.c in Sources */,
 				15A3D9AC1682F7F9002FB0C5 /* cpSpaceComponent.c in Sources */,

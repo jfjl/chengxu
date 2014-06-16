@@ -194,14 +194,17 @@ bool pathFinder::moveBall(int srcPosKey, int destPosKey)
     int destx = destPosKey % width;
     int desty = floor((double)destPosKey / width);
 
+    CCLog("form x = %d, y= %d", srcx, srcy);
+    CCLog("to x = %d, y = %d", destx, desty);
     CCArray* temp = new CCArray();
     
     for (int i = MAX(0, srcx - 1); i <= MIN(width - 1, srcx + 1); i++) {
         if (i == srcx) continue;
         
+        CCLog("i = %d", i);
         ball *destBall = m_Owner->getBall(i, srcy);
         if (destBall->isVisible()) continue;
-        if (inBlackList(srcy * m_MapSize->width + i)) continue;
+        if (inBlackList(srcy * width + i)) continue;
         
         int posKey = getPosKey(i, srcy);
         pathNode *pPathNode = addOpenNode(posKey, 10, getG(i, srcy, destx, desty), srcPosKey);

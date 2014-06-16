@@ -142,7 +142,7 @@ int gameScene::getRandomType()
     }
     
     int rate = rand() % 100;
-    if (rate <= 30)//pLevelCfg->MagicBallRate)
+    if (rate <= pLevelCfg->MagicBallRate)
     {
         return MAGICBALL_ID;
     }
@@ -152,7 +152,7 @@ int gameScene::getRandomType()
         for (size_t i = 0; i < pLevelCfg->vSpecialBallIds.size(); i++)
         {
             if (rate > pLevelCfg->vSpecialBallIds[i].value) continue;
-            int id = (pLevelCfg->vSpecialBallIds[i].key / 1000) * 1000 + 1; //pLevelCfg->vSpecialBallIds[i].key;
+            int id = pLevelCfg->vSpecialBallIds[i].key;//(pLevelCfg->vSpecialBallIds[i].key / 1000) * 1000 + 1; //pLevelCfg->vSpecialBallIds[i].key;
             return id;
         }
 

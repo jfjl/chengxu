@@ -49,17 +49,20 @@ pathFinder::pathFinder(void)
     , m_PathArray(NULL)
     , m_MapSize(NULL)
     , m_DestPosition(0)
+    , m_Owner(NULL)
+    , m_mBlackList(NULL)
 {
-    
 }
 
 pathFinder::~pathFinder(void)
 {
     clear();
+    m_mBlackList->removeAllObjects();
     CC_SAFE_DELETE(m_MapSize);
     CC_SAFE_DELETE(m_OpenList);
     CC_SAFE_DELETE(m_CloseList);
     CC_SAFE_DELETE(m_PathArray);
+    CC_SAFE_DELETE(m_mBlackList);
 }
 
 void pathFinder::clear()
@@ -67,7 +70,6 @@ void pathFinder::clear()
     m_CloseList->removeAllObjects();
     m_OpenList->removeAllObjects();
     m_PathArray->removeAllObjects();
-    m_mBlackList.clear();
 }
 
 bool pathFinder::init(ballMap* owner, int width, int height)
@@ -81,15 +83,16 @@ bool pathFinder::init(ballMap* owner, int width, int height)
     m_OpenList->retain();
     m_PathArray = CCArray::create();
     m_PathArray->retain();
+    m_mBlackList = CCDictionary::create();
+    m_mBlackList->retain();
     
     setDestPosition(-1);
     
     return true;
 }
 
-void pathFinder::initBlackList(int level)
+void pathFinder::initBlockList(int level)
 {
-    m_mBlackList.clear();
     const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
     if (! pLevelCfg)
         return;
@@ -98,11 +101,13 @@ void pathFinder::initBlackList(int level)
     if (! pMapCfg)
         return;
     
+    m_mBlackList->removeAllObjects();
     for (size_t i = 0; i < pMapCfg->vMapCell.size(); i++)
     {
         if (pMapCfg->vMapCell[i] == 0) continue;
         
-        m_mBlackList[i] = true;
+        pathNode *pNode = pathNode::create(i);
+        m_mBlackList->setObject(pNode, i);
     }
 }
 
@@ -121,6 +126,25 @@ int pathFinder::getPosKey(int x, int y)
 int pathFinder::getG(int fx, int fy, int tx, int ty)
 {
     return (abs(fx - tx) + abs(fy - ty)) * 10;
+}
+
+int pathFinder::getG(pathNode* parentNode)
+{
+    if (parentNode) {
+        return parentNode->getG() + 10;
+    }
+    
+    return 10;
+}
+
+int pathFinder::getH(int fx, int fy)
+{
+    int width = (int) getMapSize().width;
+//    int height= (int) getMapSize().height;
+
+    int tx  = m_DestPosition % width;
+    int ty  = floor((double)m_DestPosition / width);
+    return abs(tx - fx) + abs(ty - fy) * 10;
 }
 
 int pathFinder::compareF(pathNode *node1, pathNode *node2)
@@ -162,7 +186,6 @@ pathNode* pathFinder::addCloseNode(int posKey)
 
 int pathFinder::getOrder(CCArray *path, pathNode *node)
 {
-    CCObject *obj = NULL;
     for (int i = 0; i < path->count(); i++){
         if (compareF(dynamic_cast<pathNode*>(path->objectAtIndex(i)), node) > 0){
             path->insertObject(node, i);
@@ -174,13 +197,16 @@ int pathFinder::getOrder(CCArray *path, pathNode *node)
     return path->count() - 1;
 }
 
-bool pathFinder::inBlackList(int p)
+bool pathFinder::inBlockList(int p)
 {
-    map<int, bool>::iterator it = m_mBlackList.find(p);
-    if (it == m_mBlackList.end())
-        return false;
-    return true;
+    return m_mBlackList->objectForKey(p);
 }
+
+bool pathFinder::inCloselist(int p)
+{
+    return m_CloseList->objectForKey(p);
+}
+
 
 
 bool pathFinder::moveBall(int srcPosKey, int destPosKey)
@@ -193,21 +219,54 @@ bool pathFinder::moveBall(int srcPosKey, int destPosKey)
     int srcy  = floor((double)srcPosKey / width);
     int destx = destPosKey % width;
     int desty = floor((double)destPosKey / width);
+/*
+    pathNode* parentNode = dynamic_cast<pathNode*>(m_OpenList->objectForKey(srcPosKey));
+    if (! parentNode) return false;
 
-    CCLog("form x = %d, y= %d", srcx, srcy);
-    CCLog("to x = %d, y = %d", destx, desty);
+    CCArray* nearPos = new CCArray();
+    for (int i = 0; i < 4; i++) {
+        CCPoint p = PATHDIRS[i];
+        int tempx = MIN(MAX(0, srcx + p.x), width - 1);
+        int tempy = MIN(MAX(0, srcy + p.y), height - 1);
+
+        ball* destBall = m_Owner->getBall(tempx, tempy);
+        if (! destBall) continue;
+        
+        int posKey = getPosKey(tempx, tempy);
+        pathNode* node = addOpenNode(posKey, getG(parentNode), getH(tempx, tempy), srcPosKey);
+        nearPos->addObject(node);
+    }
+    
+    m_OpenList->removeObjectForKey(srcPosKey);
+    addCloseNode(srcPosKey);
+    
+    
+    int index = -1;
+    int minf = 0;
+    for (int i = 0; i < nearPos->count(); i++)
+    {
+        pathNode *pPathNode = dynamic_cast<pathNode *>(nearPos->objectAtIndex(i));
+        if (m)
+        if (moveBall(pPathNode->getPosKey(), destPosKey)){
+			temp->removeAllObjects();
+			CC_SAFE_DELETE(temp);
+            
+            return true;
+		}
+    }
+*/
+
     CCArray* temp = new CCArray();
     
     for (int i = MAX(0, srcx - 1); i <= MIN(width - 1, srcx + 1); i++) {
         if (i == srcx) continue;
         
-        CCLog("i = %d", i);
         ball *destBall = m_Owner->getBall(i, srcy);
         if (destBall->isVisible()) continue;
-        if (inBlackList(srcy * width + i)) continue;
+        if (inBlockList(srcy * width + i)) continue;
         
         int posKey = getPosKey(i, srcy);
-        pathNode *pPathNode = addOpenNode(posKey, 10, getG(i, srcy, destx, desty), srcPosKey);
+        pathNode *pPathNode = addOpenNode(posKey, getG(i, srcy, destx, desty), getH(i, srcy), srcPosKey);
         if (pPathNode == NULL) continue;
         
         if (i == destx && srcy == desty){
@@ -223,9 +282,9 @@ bool pathFinder::moveBall(int srcPosKey, int destPosKey)
         
         ball *destBall = m_Owner->getBall(srcx, i);
         if (destBall->isVisible()) continue;
-        
+        if (inBlockList(i * width + srcx)) continue;
         int posKey = getPosKey(srcx, i);
-        pathNode *pPathNode = addOpenNode(posKey, 10, getG(srcx, i, destx, desty), srcPosKey);
+        pathNode *pPathNode = addOpenNode(posKey, getG(srcx, i, destx, desty), getH(srcx, i), srcPosKey);
         if (pPathNode == NULL) continue;
         
         if (i == desty && srcx == destx){
@@ -238,7 +297,7 @@ bool pathFinder::moveBall(int srcPosKey, int destPosKey)
     }
     
     addCloseNode(srcPosKey);
-    
+/*
     for (int i = 0; i < temp->count(); i++)
     {
         pathNode *pPathNode = dynamic_cast<pathNode *>(temp->objectAtIndex(i));
@@ -249,7 +308,31 @@ bool pathFinder::moveBall(int srcPosKey, int destPosKey)
             return true;
 		}
     }
-	temp->removeAllObjects();
+*/
+    while (temp->count()) {
+        int index = -1;
+        pathNode* minfNode;
+        for (int i = temp->count() - 1; i >= 0; i--)
+        {
+            pathNode* pPathNode = dynamic_cast<pathNode *>(temp->objectAtIndex(i));
+            if (! pPathNode) continue;
+            if ((index >= 0) && (pPathNode->getF() >= minfNode->getF())) continue;
+            index = i;
+            minfNode = pPathNode;
+        }
+        if (minfNode) {
+            if (moveBall(minfNode->getPosKey(), destPosKey)) {
+                temp->removeAllObjects();
+                CC_SAFE_DELETE(temp);
+                return true;
+            }
+            else
+            {
+                temp->removeObject(minfNode);
+            }
+        }
+	}
+    temp->removeAllObjects();
 	CC_SAFE_DELETE(temp);
 
     return false;
@@ -273,10 +356,13 @@ void pathFinder::collectMovedPos(int destPosKey)
 
 bool pathFinder::toMoveBall(int srcPosKey, int destPosKey)
 {
+    CCLog("from p = %d", srcPosKey);
+    CCLog("to p = %d", destPosKey);
     addOpenNode(srcPosKey, 0, 0, -1);
 
     if (moveBall(srcPosKey, destPosKey)){
         collectMovedPos(destPosKey);
+        CCLOG("set dest %d", m_DestPosition);
         return true;
     }
     
@@ -297,6 +383,7 @@ int pathFinder::getNextNode()
         m_PathArray->removeLastObject();
         int posKey = node->getPosKey();
         CC_SAFE_DELETE(node);
+        
         return posKey;
     }else
         return -1;

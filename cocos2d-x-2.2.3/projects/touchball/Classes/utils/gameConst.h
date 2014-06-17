@@ -64,6 +64,7 @@ enum
 static const CCPoint BALLREMOVEDIRS[4] = {CCPointMake(1, 0), CCPointMake(0, 1),  CCPointMake(1, 1),  CCPointMake(1, -1)};
 static const CCPoint BALLXREMOVEDIRS[4] = {CCPointMake(-1, -1), CCPointMake(1, 1), CCPointMake(1, -1), CCPointMake(-1, 1)};
 static const CCPoint BALLAROUNDS[8] = {CCPointMake(-1, -1), CCPointMake(0, -1), CCPointMake(1, -1), CCPointMake(1, 0), CCPointMake(1, 1), CCPointMake(0, 1), CCPointMake(-1, 1), CCPointMake(-1, 0)};
+static const CCPoint PATHDIRS[4] = {CCPointMake(0, 1), CCPointMake(1, 0), CCPointMake(0, -1), CCPointMake(-1, 0)};
     /*static const int NEXTMAPSIZE_WIDTH  = 3;
     static const int NEXTMAPSIZE_HEIGHT = 1;
     static const int GAMEMAPSIZE_WIDTH  = 9;

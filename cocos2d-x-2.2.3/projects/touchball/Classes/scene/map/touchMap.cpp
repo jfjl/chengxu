@@ -249,7 +249,7 @@ CCPoint touchMap::getLocalPoint(CCPoint value)
 
 bool touchMap::checkMove(int srcPos, int x, int y)
 {
-    if (m_PathFinder->inBlackList(y*getWidth()+x)) return false;
+    if (m_PathFinder->inBlockList(y*getWidth()+x)) return false;
     
     return m_PathFinder->onMoveBall(srcPos, y*getWidth()+x);
 }
@@ -297,7 +297,7 @@ void touchMap::setLevel(int level)
     
     m_level = level;
     
-    m_PathFinder->initBlackList(level);
+    m_PathFinder->initBlockList(level);
 
     const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
     if (! pLevelCfg)
@@ -344,7 +344,7 @@ void touchMap::getRandomPosition(std::vector<int> *pos, int count)
     while (pos->size() < count && visballs->count() > 0){
         int index = rand() % visballs->count();
         int p = dynamic_cast<ball*>(visballs->objectAtIndex(index))->getID();
-        if (! m_PathFinder->inBlackList(p))
+        if (! m_PathFinder->inBlockList(p))
             pos->push_back(p);
         visballs->removeObjectAtIndex(index);
     }

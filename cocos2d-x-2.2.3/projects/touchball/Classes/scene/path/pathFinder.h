@@ -42,6 +42,8 @@ private:
     int getPosKey(int x, int y);
     int getOrder(CCArray *path, pathNode *node);
     int getG(int fx, int fy, int tx, int ty);
+    int getG(pathNode* parentNode);
+    int getH(int fx, int fy);
     int compareF(pathNode *node1, pathNode *node2);
     
     pathNode* addOpenNode(int posKey, int g, int h, int parentKey);
@@ -58,15 +60,16 @@ public:
     CC_SYNTHESIZE(int, m_DestPosition, DestPosition);
     
     bool init(ballMap* owner, int widht, int height);
-    void initBlackList(int level);
+    void initBlockList(int level);
     static pathFinder* create(ballMap* owner, int width, int height);
     
-    bool inBlackList(int p);
+    bool inBlockList(int p);
+    bool inCloselist(int p);
 
     bool onMoveBall(int srcPosKey, int destPosKey);
     int getNextNode();
 private:
-    std::map<int, bool> m_mBlackList;
+    CCDictionary* m_mBlackList;
 };
 
 #endif /* defined(__ppball__pathFinder__) */

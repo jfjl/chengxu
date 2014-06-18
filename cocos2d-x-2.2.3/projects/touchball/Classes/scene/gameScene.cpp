@@ -9,6 +9,7 @@
 #include "gameScene.h"
 #include "DialogEvent.h"
 #include "ClientData.h"
+#include "GameScript.h"
 
 gameScene::gameScene()
     : m_Level(0)
@@ -33,6 +34,7 @@ gameScene * gameScene::scene()
     gameScene* pRet = new gameScene;
     ballMap *pBallMap   = ballMap::create("next.png", NEXTMAPSIZE_WIDTH, NEXTMAPSIZE_HEIGHT);
     touchMap *pTouchMap = touchMap::create("back.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
+    g_gameScript->registerObject("touchMap", pTouchMap);
     
     pRet->init(pBallMap, pTouchMap);
     pRet->autorelease();
@@ -66,6 +68,8 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
     pTouchMap->setTouchEnabled(true);
 
 	srand(time(0));
+    
+    g_gameScript->registerObject("gameScene", this);
         
     return true;
 }
@@ -167,6 +171,14 @@ void gameScene::getRandomPosition(touchMap *ballMap, std::vector<int> *pos, int 
     ballMap->getRandomPosition(pos, count);
 }
 
+void gameScene::randomShowMask(vector<int>* pos)
+{
+    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(m_Level);
+    if (! pLevelCfg) return;
+    
+    
+}
+
 void gameScene::randomShowBall()
 {
     const levelCfg* pLevelCfg = g_clientData->getLevelCfg(m_Level);
@@ -195,6 +207,8 @@ void gameScene::randomShowBall()
                                           getXByPosKey(i, m_BallMap->getWidth()),
                                           getYByPosKey(i, m_BallMap->getWidth()));
     }
+    
+    randomShowMask(pos);
 }
 
 void gameScene::randomShowBall(ballVector *balls)
@@ -231,9 +245,38 @@ void gameScene::start(int level)
 void gameScene::next()
 {
 	ballVector *balls = m_BallMap->getBallManager()->getBallList();
+    CCLOG("%p", balls);
 	randomShowBall(balls);
 }
+////////////////////////////////////
 
+int gameScene::script_start(void* param)
+{
+	LuaScript* luaScript = (LuaScript*) param;
+	int result = 0;
+	
+	int paramCount = luaScript->getStackSize() - 1;
+	if (paramCount < 0) return result;
+    
+	int paramData[255];
+	int msgId = luaScript->getInteger(1);
+	for (int i = 0; i < paramCount; i++){
+		paramData[i] = luaScript->getInteger(i+2);
+	}
+	//postMessage(msgId, paramData);
+    
+	return result;
+    
+}
+
+void gameScene::scriptQuery(void* msg)
+{
+	ScriptMessage* sm = (ScriptMessage*) msg;
+	if (sm->query == "start"){
+//		DispatcherScriptMethod edsm = & gameScene::script_start;
+//		sm->script->pushMethod(this, static_cast<ScriptMethod>(edsm));
+	}
+}
 
 
 

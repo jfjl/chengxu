@@ -17,8 +17,11 @@ public:
 	LuaScript* getScript();
 
     void loadInitScript();
+    void registerObject(const char* name, ScriptObject* scriptObject);
 	int loadScript(const char* name, const char* strScript);
 	int excuteFunction(const char* funcName, ScriptObject* self, ScriptObject* target);
 };
+
+extern GameScript* g_gameScript;
 
 #endif

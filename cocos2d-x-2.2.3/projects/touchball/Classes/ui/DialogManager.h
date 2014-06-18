@@ -15,7 +15,7 @@
 using namespace cocos2d;
 using namespace extension;
 
-class DialogManager : public CCObject
+class DialogManager : public BasicObject, public CCObject
 {
 public:
     DialogManager(void);

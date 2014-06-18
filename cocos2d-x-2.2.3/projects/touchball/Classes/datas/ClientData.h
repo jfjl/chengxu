@@ -22,37 +22,35 @@ enum EventType
 {
     ET_ONPICK   = 1,
     ET_ONPUT    = 2,
+    ET_ONSHOW   = 3,
 };
-
-inline int getEventType(const char* eventName)
-{
-    if (strcmp("OnPick", eventName) == 0)
-    {
-        return ET_ONPICK;
-    }
-    else if (strcmp("OnPut", eventName) == 0)
-    {
-        return ET_ONPUT;
-    }
-    
-    return 0;
-}
 
 const char StrFuncHeader[] = "function ";
 const char StrFuncHeader2[] = "(self, target, ...)";
 const char StrFuncEnd[] = "end;";
 const char StrNilFunc[] = "nil;";
 
-inline const char* getEventFunction(const char* funcName, const char* funcContent)
+inline string getEventFunction(string funcName, string funcContent)
 {
-	if (funcContent != ""){
-    
-        return StrFuncHeader;
-		//return StrFuncHeader + funcName + StrFuncHeader2 + funcContent + StrFuncEnd;
-	}else{
+    if (funcContent != ""){
+        return StrFuncHeader + funcName + StrFuncHeader2 + funcContent + StrFuncEnd;
+	}
+    else{
 		return StrNilFunc;
 	}
+}
+
+inline string getFuncName(string configName, string eventName, int key)
+{
+    stringstream temp;
+    temp<<key;
+    string skey = temp.str();
     
+    configName.append("_");
+    configName.append(skey);
+    configName.append("_");
+    configName.append(eventName);
+    return configName;
 }
 
 struct KeyValue
@@ -63,6 +61,24 @@ struct KeyValue
 
 typedef vector<KeyValue> KeyValueVector;
 typedef map<int, KeyValue> KeyValueMap;
+
+class EventList
+{
+public:
+    map<string, string> mEventFuncs;
+public:
+    EventList()
+    {
+        mEventFuncs.clear();
+    }
+    
+    void addEventFunction(string configName, string eventName, int key, string funcContent)
+    {
+        string funcName = getFuncName(configName, eventName, key);
+        string func = getEventFunction(funcName, funcContent);
+        mEventFuncs[eventName] = func;
+    }
+};
 
 struct levelCfg		: levelData
 {
@@ -88,7 +104,15 @@ struct ballCfg		: ballData
         nRemoveCount = 1;
     }
 };
-struct propsCfg     : propsData {};
+struct propsCfg     : propsData
+{
+    EventList* pEventList;
+    
+    propsCfg()
+    {
+        pEventList = new EventList();
+    }
+};
 struct mapCfg       : mapData
 {
     vector<int> vMapCell;
@@ -135,6 +159,8 @@ private:
     bool loadPropsData();
     bool loadMapData();
     bool loadAwardBallData();
+    
+    void loadScript();
 private:
     map<int, levelCfg>      m_mLevelCfg;
     map<int, ballCfg>       m_mBallCfg;

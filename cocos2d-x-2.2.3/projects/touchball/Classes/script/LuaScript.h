@@ -90,7 +90,7 @@ public:
 
 	void registerFunction(const char* funcName, ScriptProc* proc, int tableIndex);
 	void registerMethod(const char* funcName, ScriptObject* sender, ScriptMethod* method, int tableIndex);
-	void registerObject(const char* objectName, ScriptObject* object, int tableIndex);
+	void registerObject(const char* objectName, ScriptObject* object, int tableIndex=LUA_GLOBALSINDEX);
 	void objectMT(const char* name);
 	
 	int call(const char* proc, int arg, int ret);

@@ -33,7 +33,14 @@ private:
 	void showBall(int classID, ball *pball);
 	
     void randomShowBall();
+    void randomShowMask(std::vector<int>* pos);
     void randomShowBall(ballVector *balls);
+
+private:
+	int script_start(void* param);
+protected:
+	virtual void scriptQuery(void* msg);
+
 public:
     gameScene();
     ~gameScene(void);

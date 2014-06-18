@@ -11,7 +11,7 @@
 
 #include "SceneData.h"
 
-class SceneManager : public CCObject
+class SceneManager : public BasicObject
 {
 public:
     SceneManager(CCNode* pOwner);

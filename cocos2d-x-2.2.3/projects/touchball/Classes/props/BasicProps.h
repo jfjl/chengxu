@@ -10,12 +10,12 @@
 #define __touchball__BasicProps__
 
 #include "gameConst.h"
-#include "ScriptObject.h"
+#include "BasicObject.h"
 #include "cocos2d.h"
 
 using namespace cocos2d;
 
-class BasicProps : public ScriptObject, public CCSprite
+class BasicProps : public BasicObject, public CCSprite
 {
 private:
     BasicProps();

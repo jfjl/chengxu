@@ -7,6 +7,7 @@
 //
 
 #include "ClientData.h"
+#include "GameScript.h"
 
 ClientData* g_clientData = 0;
 
@@ -60,6 +61,10 @@ bool ClientData::initData()
     }
     
     CCLOG("load bin complete");
+    
+    loadScript();
+    CCLOG("load script complete");
+    
     return true;
 }
 
@@ -244,6 +249,14 @@ bool ClientData::loadPropsData()
                 propsCfg sCfg;
                 if (sReader.Read(&sCfg,sizeof(propsData)))
                 {
+                    if (sCfg.OnPut)
+                    {
+                        sCfg.pEventList->addEventFunction("PropsConfig", "OnPut", sCfg.PropsId, (char*)sCfg.OnPut);
+                    }
+                    if (sCfg.OnShow)
+                    {
+                        sCfg.pEventList->addEventFunction("PropsConfig", "OnShow", sCfg.PropsId, (char*)sCfg.OnShow);
+                    }
                     m_mPropsCfg[sCfg.PropsId]=sCfg;
                 }
                 else
@@ -327,6 +340,15 @@ bool ClientData::loadAwardBallData()
     }
     delete [] buffer;
     return bOK;
+}
+
+void ClientData::loadScript()
+{
+    for (map<int, propsCfg>::iterator it = m_mPropsCfg.begin(); it != m_mPropsCfg.end(); it++) {
+        for (map<string, string>::iterator it2 = it->second.pEventList->mEventFuncs.begin(); it2 != it->second.pEventList->mEventFuncs.end(); it2++) {
+            g_gameScript->loadScript("test", it2->second.c_str());
+        }
+    }
 }
 
 

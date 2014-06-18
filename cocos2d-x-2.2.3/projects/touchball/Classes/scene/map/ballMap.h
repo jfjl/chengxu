@@ -10,8 +10,9 @@
 #define __ppball__ballMap__
 
 #include "ballManager.h"
+#include "BasicObject.h"
 
-class ballMap : public CCLayer
+class ballMap : public BasicObject, public CCLayer
 {
 protected:
 	CC_SYNTHESIZE(CCSprite*, m_Backgound, BackGround);

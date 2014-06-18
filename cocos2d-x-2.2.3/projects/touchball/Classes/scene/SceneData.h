@@ -10,10 +10,11 @@
 #define __touchball__SceneData__
 
 #include "cocos2d.h"
+#include "BasicObject.h"
 
 using namespace cocos2d;
 
-class SceneData : public CCLayer
+class SceneData : public BasicObject, public CCLayer
 {
 public:    
     virtual bool init();

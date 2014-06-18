@@ -35,6 +35,8 @@ struct levelData
 	int MagicBallRate;
 	//初始出现个数
 	int InitCount;
+	//遮罩道具出现几率
+	unsigned char PropsRate[32];
 };
 
 #pragma pack(pop)

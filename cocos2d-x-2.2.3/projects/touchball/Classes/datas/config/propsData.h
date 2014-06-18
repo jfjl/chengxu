@@ -15,6 +15,12 @@ struct propsData
 	int PropsId;
 	//道具类型
 	int PropsType;
+	//放置时发生事件
+	unsigned char OnPut[1024];
+	//显示时发生事件
+	unsigned char OnShow[1024];
+	//周围的球消时发生事件
+	unsigned char OnAroundRemove[1024];
 };
 
 #pragma pack(pop)

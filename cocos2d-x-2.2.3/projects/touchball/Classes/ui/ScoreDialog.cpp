@@ -29,7 +29,7 @@ void ScoreDialog::onShow(CCNode* pParent)
 
 bool ScoreDialog::init()
 {
-    if (! CCLayer::init()){
+    if (! BasicDialog::init()){
         return false;
     }
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();

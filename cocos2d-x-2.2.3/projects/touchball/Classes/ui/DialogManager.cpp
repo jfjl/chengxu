@@ -9,11 +9,13 @@
 #include "DialogManager.h"
 #include "ScoreDialog.h"
 #include "ScoreXDialog.h"
-#include "CongratulationDialog.h"
+#include "LevelDialog.h"
+
+DialogManager* g_dialogManager = 0;
 
 DialogManager::DialogManager()
 {
-    
+    g_dialogManager = this;
 }
 
 DialogManager::~DialogManager()
@@ -25,12 +27,9 @@ bool DialogManager::init(CCLayer* owner)
 {
     m_pOwner = owner;
     m_mDialogList.clear();
-/*
-    ScoreDialog *scoreDialog = ScoreDialog::create();
-    scoreDialog->setVisible(false);
-    m_Owner->addChild(scoreDialog);
-    m_DialogList->setObject(scoreDialog, "ScoreDialog");
- */
+
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(DialogManager::onHideDialog), EVENT_DIALOG_HIDE, NULL);
+    
     return true;
 }
 
@@ -41,26 +40,32 @@ DialogManager* DialogManager::create(CCLayer* owner)
     return pRet;
 }
 
-BasicDialog* DialogManager::createDialog(std::string dialogName)
+BasicDialog* DialogManager::createDialog(const char* dialogName)
 {
     BasicDialog* pDialog;
-    if (dialogName == "ScoreDialog")
+    if (strcasecmp(dialogName, "ScoreDialog") == 0)
     {
         pDialog = ScoreDialog::create();
     }
-    else if(dialogName == "ScoreXDialog")
+    else if (strcasecmp(dialogName, "ScoreXDialog") == 0)
     {
         pDialog = ScoreXDialog::create();
     }
+    else if (strcasecmp(dialogName, "LevelDialog") == 0)
+    {
+        pDialog = LevelDialog::create();
+    }
     if (pDialog)
     {
-        CCLog("create dialog: %s", dialogName.c_str());
+        pDialog->setName(dialogName);
+        m_mDialogList[dialogName] = pDialog;
+        CCLog("create dialog: %s", dialogName);
     }
     
     return pDialog;
 }
 
-BasicDialog* DialogManager::getDialog(std::string dialogName)
+BasicDialog* DialogManager::getDialog(const char* dialogName)
 {
     std::map<std::string,BasicDialog*>::iterator iter = m_mDialogList.find(dialogName);
     if (iter == m_mDialogList.end()) return NULL;
@@ -68,7 +73,7 @@ BasicDialog* DialogManager::getDialog(std::string dialogName)
     return iter->second;
 }
 
-BasicDialog* DialogManager::showDialog(std::string dialogName, CCNode* pParent)
+BasicDialog* DialogManager::showDialog(const char* dialogName, CCNode* pParent)
 {
     BasicDialog* pnode = getDialog(dialogName);
     if (! pnode)
@@ -77,7 +82,7 @@ BasicDialog* DialogManager::showDialog(std::string dialogName, CCNode* pParent)
         
         if (! pnode)
         {
-            CCLog("create dialog failed: %s", dialogName.c_str());
+            CCLog("create dialog failed: %s", dialogName);
             return NULL;
             
         }
@@ -87,10 +92,15 @@ BasicDialog* DialogManager::showDialog(std::string dialogName, CCNode* pParent)
     return pnode;
 }
 
-void DialogManager::hideDialog(std::string dialogName)
+void DialogManager::hideDialog(const char* dialogName)
 {
     BasicDialog* pnode = getDialog(dialogName);
     if (! pnode) return;
     
     pnode->onHide(true);
+}
+
+void DialogManager::onHideDialog(BasicDialog* pDialog)
+{
+    hideDialog(pDialog->getName());
 }

@@ -23,7 +23,7 @@ public:
 
     virtual void onUpdate(float dt);
 
-    virtual void onActivate(CCNode* pNode);
+    virtual void onActivate(CCNode* pNode, void* param);
     virtual void onDeactivate();
 };
 

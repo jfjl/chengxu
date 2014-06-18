@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "SceneManager.h"
 #include "DialogManager.h"
+#include "GameScript.h"
 
 class HelloWorld : public cocos2d::CCLayer
 {
@@ -18,10 +19,12 @@ public:
     CREATE_FUNC(HelloWorld);
 private:
     void onUpdate(float dt);
+    void onEnterGame(CCObject* pEvent);
     
 private:
     SceneManager* m_pSceneManager;
     DialogManager* m_pDialogManager;
+    GameScript* m_pGameScript;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -110,10 +110,11 @@ void gameScene::onUpdate(float dt)
     m_TouchMap->onUpate(dt);
 }
 
-void gameScene::onActivate(CCNode* pNode)
+void gameScene::onActivate(CCNode* pNode, void* param)
 {
-    SceneData::onActivate(pNode);
-    start(1);
+    SceneData::onActivate(pNode, param);
+    DialogEvent* pDialogEvent = (DialogEvent* ) param;
+    start(pDialogEvent->getvalue());
 }
 
 void gameScene::onDeactivate()
@@ -148,7 +149,7 @@ int gameScene::getRandomType()
     }
     else
     {
-        rate = rand() % 100;
+        rate = rand() % 1000;
         for (size_t i = 0; i < pLevelCfg->vSpecialBallIds.size(); i++)
         {
             if (rate > pLevelCfg->vSpecialBallIds[i].value) continue;

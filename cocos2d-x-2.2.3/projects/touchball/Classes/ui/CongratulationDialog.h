@@ -18,9 +18,8 @@ public:
     ~CongratulationDialog();
     
     bool init();
-    
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CongratulationDialog, create);
-
+    
     void onClickComplate(CCObject *node, CCControlEvent event);
 
     //CCBSelectorResolver

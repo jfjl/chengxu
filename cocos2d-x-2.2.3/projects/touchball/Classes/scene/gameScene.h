@@ -45,7 +45,7 @@ public:
     bool init(ballMap *pBallMap, touchMap *pTouchMap);
     
     void onUpdate(float dt);
-    void onActivate(CCNode* pNode);
+    void onActivate(CCNode* pNode, void* param);
     void onDeactivate();
     
     void start(int level);

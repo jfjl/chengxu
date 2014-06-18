@@ -36,7 +36,7 @@ void SceneData::onUpdate(float dt)
 }
 
 
-void SceneData::onActivate(CCNode* pNode)
+void SceneData::onActivate(CCNode* pNode, void* param)
 {
     pNode->addChild(this, 100);
 }

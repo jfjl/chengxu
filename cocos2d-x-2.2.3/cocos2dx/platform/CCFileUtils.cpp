@@ -589,7 +589,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
-    CCLOG("getPathForFilename = %s, fullPath = %s", filename.c_str(), path.c_str());
+    //CCLOG("getPathForFilename = %s, fullPath = %s", filename.c_str(), path.c_str());
     return path;
 }
 

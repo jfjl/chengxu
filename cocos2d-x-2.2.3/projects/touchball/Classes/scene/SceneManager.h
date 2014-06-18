@@ -11,7 +11,7 @@
 
 #include "SceneData.h"
 
-class SceneManager
+class SceneManager : public CCObject
 {
 public:
     SceneManager(CCNode* pOwner);
@@ -24,12 +24,14 @@ public:
     bool init();
     void onUpdate(float dt);
 
-    void setCurScene(const char* sSceneName);
+    void setCurScene(const char* sSceneName, void* param = NULL);
     
 private:
     CCNode* m_pOwner;
     std::map<const char*, SceneData*> m_mSceneList;
     SceneData* m_pActivateScene;
 };
+
+extern	SceneManager* g_sceneManager;
 
 #endif /* defined(__touchball__SceneManager__) */

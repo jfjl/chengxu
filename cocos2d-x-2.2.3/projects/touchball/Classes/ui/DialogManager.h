@@ -15,7 +15,7 @@
 using namespace cocos2d;
 using namespace extension;
 
-class DialogManager
+class DialogManager : public CCObject
 {
 public:
     DialogManager(void);
@@ -24,13 +24,17 @@ public:
     bool init(CCLayer* owner);
 	static DialogManager* create(CCLayer* owner);
     
-    BasicDialog* getDialog(std::string dialogName);
-    BasicDialog* showDialog(std::string dialogName, CCNode* pParent);
-    BasicDialog* createDialog(std::string dialogName);
-    void hideDialog(std::string dialogName);
+    BasicDialog* getDialog(const char* dialogName);
+    BasicDialog* showDialog(const char* dialogName, CCNode* pParent);
+    BasicDialog* createDialog(const char* dialogName);
+    void hideDialog(const char* dialogName);
+private:
+    void onHideDialog(BasicDialog* pDialog);
 private:
     CCLayer* m_pOwner;
     std::map<std::string, BasicDialog*> m_mDialogList;
 };
+
+extern DialogManager* g_dialogManager;
 
 #endif /* defined(__pball__DialogManager__) */

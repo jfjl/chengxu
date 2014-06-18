@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "ClientData.h"
+#include "LevelDialog.h"
 
 USING_NS_CC;
 
@@ -30,6 +31,9 @@ bool HelloWorld::init()
     
     srand((unsigned)time(NULL));
     
+    m_pGameScript = new GameScript();
+    m_pGameScript->loadInitScript();
+    
     new ClientData();
     
     //scene
@@ -38,10 +42,12 @@ bool HelloWorld::init()
     //dialog
     m_pDialogManager = DialogManager::create(this);
     //start
-    m_pSceneManager->setCurScene("gameScene");
-    m_pDialogManager->showDialog("ScoreXDialog", this);
+    m_pDialogManager->showDialog("LevelDialog", this);
     
     this->schedule(schedule_selector(HelloWorld::onUpdate), 0.1f);
+    
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterGame), EVENT_ENTER_GAME, NULL);
+    
 
     setScale(2);
     this->setAnchorPoint(ccp(0, 0));
@@ -54,3 +60,11 @@ void HelloWorld::onUpdate(float dt)
 {
     m_pSceneManager->onUpdate(dt);
 }
+
+void HelloWorld::onEnterGame(CCObject* pEvent)
+{
+    DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
+    m_pDialogManager->hideDialog("LevelDialog");
+    m_pSceneManager->setCurScene("gameScene", pDialogEvent);
+}
+

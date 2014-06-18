@@ -20,6 +20,8 @@ ScoreXDialog::~ScoreXDialog()
 
 bool ScoreXDialog::init()
 {
+    if (! BasicDialog::init()) return false;
+    
     m_lblStep = CCLabelTTF::create("0", "微软雅黑", 12);
     m_lblStep->setAnchorPoint(ccp(0, 0));
     this->addChild(m_lblStep);

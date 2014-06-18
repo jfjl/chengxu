@@ -20,7 +20,7 @@ CongratulationDialog::~CongratulationDialog()
 
 bool CongratulationDialog::init()
 {
-    if (! CCLayer::init()){
+    if (! BasicDialog::init()){
         return false;
     }
     CCBReader* reader = new CCBReader(CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary());

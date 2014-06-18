@@ -8,6 +8,12 @@
 
 #include "BasicDialog.h"
 
+
+void BasicDialog::release(void)
+{
+    CCObject::release();
+}
+
 bool BasicDialog::init()
 {
     if (! CCLayer::init())
@@ -29,4 +35,9 @@ void BasicDialog::onHide(bool bRemove)
         this->removeFromParentAndCleanup(true);
     else
         this->setVisible(false);
+}
+
+void BasicDialog::setName(const char* name)
+{
+    m_name = name;
 }

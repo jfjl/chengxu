@@ -9,10 +9,13 @@
 #include "SceneManager.h"
 #include "gameScene.h"
 
+SceneManager* g_sceneManager = 0;
+
 SceneManager::SceneManager(CCNode* pOwner)
 :m_pActivateScene(NULL),
  m_pOwner(pOwner)
 {
+    g_sceneManager = this;
 }
 
 SceneManager::~SceneManager()
@@ -40,7 +43,7 @@ void SceneManager::onUpdate(float dt)
     }
 }
 
-void SceneManager::setCurScene(const char* sSceneName)
+void SceneManager::setCurScene(const char* sSceneName, void* param)
 {
     if (m_pActivateScene)
         m_pActivateScene->onDeactivate();
@@ -48,7 +51,7 @@ void SceneManager::setCurScene(const char* sSceneName)
     if (strncmp(sSceneName, "gameScene", strlen(sSceneName)) == 0)
     {
         gameScene* gameScene = gameScene::scene();
-        gameScene->onActivate(m_pOwner);
+        gameScene->onActivate(m_pOwner, param);
         
         m_pActivateScene = gameScene;
     }

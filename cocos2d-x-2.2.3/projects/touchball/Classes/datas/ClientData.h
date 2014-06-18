@@ -18,6 +18,43 @@
 
 using namespace cocos2d;
 
+enum EventType
+{
+    ET_ONPICK   = 1,
+    ET_ONPUT    = 2,
+};
+
+inline int getEventType(const char* eventName)
+{
+    if (strcmp("OnPick", eventName) == 0)
+    {
+        return ET_ONPICK;
+    }
+    else if (strcmp("OnPut", eventName) == 0)
+    {
+        return ET_ONPUT;
+    }
+    
+    return 0;
+}
+
+const char StrFuncHeader[] = "function ";
+const char StrFuncHeader2[] = "(self, target, ...)";
+const char StrFuncEnd[] = "end;";
+const char StrNilFunc[] = "nil;";
+
+inline const char* getEventFunction(const char* funcName, const char* funcContent)
+{
+	if (funcContent != ""){
+    
+        return StrFuncHeader;
+		//return StrFuncHeader + funcName + StrFuncHeader2 + funcContent + StrFuncEnd;
+	}else{
+		return StrNilFunc;
+	}
+    
+}
+
 struct KeyValue
 {
     int key;

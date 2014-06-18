@@ -7,8 +7,3 @@
 //
 
 #include "DialogEvent.h"
-
-void DialogEvent::release(void)
-{
-    CCObject::release();
-}

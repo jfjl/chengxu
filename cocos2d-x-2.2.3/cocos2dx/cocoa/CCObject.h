@@ -75,7 +75,7 @@ public:
      */
     virtual ~CCObject(void);
     
-    virtual void release(void);
+    void release(void);
     void retain(void);
     CCObject* autorelease(void);
     CCObject* copy(void);

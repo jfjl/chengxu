@@ -1,1 +1,3 @@
-print(\"hello lua\")
+print("hello lua")
+
+writeLog('');

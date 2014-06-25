@@ -26,7 +26,7 @@ enum EventType
 };
 
 const char StrFuncHeader[] = "function ";
-const char StrFuncHeader2[] = "(self, target, ...)";
+const char StrFuncHeader2[] = "(self, gameScene, touchMap, ...)";
 const char StrFuncEnd[] = "end;";
 const char StrNilFunc[] = "nil;";
 
@@ -46,9 +46,9 @@ inline string getFuncName(string configName, string eventName, int key)
     temp<<key;
     string skey = temp.str();
     
-    configName.append("_");
+//    configName.append("_");
     configName.append(skey);
-    configName.append("_");
+//    configName.append("_");
     configName.append(eventName);
     return configName;
 }
@@ -62,10 +62,17 @@ struct KeyValue
 typedef vector<KeyValue> KeyValueVector;
 typedef map<int, KeyValue> KeyValueMap;
 
+struct StrKeyValue
+{
+    string key;
+    string value;
+};
+typedef map<string, StrKeyValue> EventMap;
+
 class EventList
 {
 public:
-    map<string, string> mEventFuncs;
+    EventMap mEventFuncs;
 public:
     EventList()
     {
@@ -76,7 +83,11 @@ public:
     {
         string funcName = getFuncName(configName, eventName, key);
         string func = getEventFunction(funcName, funcContent);
-        mEventFuncs[eventName] = func;
+        StrKeyValue keyValue;
+        keyValue.key = funcName;
+        keyValue.value = func;
+        mEventFuncs[eventName] = keyValue;
+        CCLog("eventName = %s , \n funcName = %s, \n func = %s \n", eventName.c_str(), funcName.c_str(), func.c_str());
     }
 };
 
@@ -86,6 +97,7 @@ struct levelCfg		: levelData
     vector<int> vRewardProps;
     vector<int> vCanUseProps;
     KeyValueVector vSpecialBallIds;
+    KeyValueVector vPropsPos;
     
     levelCfg()
     {
@@ -93,6 +105,7 @@ struct levelCfg		: levelData
         vRewardProps.clear();
         vCanUseProps.clear();
         vSpecialBallIds.clear();
+        vPropsPos.clear();
     }
 };
 struct ballCfg		: ballData

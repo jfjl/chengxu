@@ -1,3 +1,5 @@
 function myadd(x, y)
-    return x + y
+    print('x');
+    --x:isDirty();
+    --return x + y
 end

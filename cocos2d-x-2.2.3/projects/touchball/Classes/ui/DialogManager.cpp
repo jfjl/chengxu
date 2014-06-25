@@ -10,6 +10,7 @@
 #include "ScoreDialog.h"
 #include "ScoreXDialog.h"
 #include "LevelDialog.h"
+#include "PropsDialog.h"
 
 DialogManager* g_dialogManager = 0;
 
@@ -54,6 +55,10 @@ BasicDialog* DialogManager::createDialog(const char* dialogName)
     else if (strcasecmp(dialogName, "LevelDialog") == 0)
     {
         pDialog = LevelDialog::create();
+    }
+    else if (strcasecmp(dialogName, "PropsDialog") == 0)
+    {
+        pDialog = PropsDialog::create();
     }
     if (pDialog)
     {

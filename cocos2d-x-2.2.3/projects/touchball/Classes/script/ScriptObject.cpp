@@ -2,20 +2,17 @@
 //  ScriptObject.cpp
 //  touchball
 //
-//  Created by carlor on 14-6-17.
+//  Created by carlor on 14-6-21.
 //
 //
 
-#include <map>
 #include "ScriptObject.h"
 
+static map< string, ClassInfo*> *classInfoMap = NULL;
 using namespace std;
+IMPLEMENT_CLASS(Object)
 
-static map<string, ClassInfo*>* classInfoMap = NULL;
-
-IMPLEMENT_CLASS(ScriptObject)
-
-bool ScriptObject::Register(ClassInfo* ci)
+bool Object::Register(ClassInfo* ci)
 {
 	if(!classInfoMap)   {
 		classInfoMap = new map< string,ClassInfo*>();
@@ -27,7 +24,7 @@ bool ScriptObject::Register(ClassInfo* ci)
 	}
 	return true;
 }
-ScriptObject* ScriptObject::CreateObject(std::string name)
+Object* Object::CreateObject(std::string name)
 {
 	std::map< string,ClassInfo*>::const_iterator iter = classInfoMap->find(name);
 	if(classInfoMap->end() != iter)  {
@@ -38,20 +35,34 @@ ScriptObject* ScriptObject::CreateObject(std::string name)
 
 bool Register(ClassInfo* ci)
 {
-	return ScriptObject::Register(ci);
+	return Object::Register(ci);
 }
 
-void ScriptObject::scriptQuery(void* msg)
+int Object::script_postMessage(lua_State* L)
 {
-    
+	return 0;
+	/*
+     LuaScript* luaScript = (LuaScript*) param;
+     int result = 0;
+     
+     int paramCount = luaScript->getStackSize() - 1;
+     if (paramCount < 0) return result;
+     
+     int paramData[255];
+     int msgId = luaScript->getInteger(1);
+     for (int i = 0; i < paramCount; i++){
+     paramData[i] = luaScript->getInteger(i+2);
+     }
+     postMessage(msgId, paramData);
+     
+     return result;
+     */
 }
 
-void ScriptObject::scriptIndex(void* index)
-{
-    
-}
 
-void ScriptObject::scriptSet(void* msg)
+int Object::callFunction(lua_State* L)
 {
-    
+	const char* funcName = lua_tostring(L, 2);
+	if (strcmp(funcName, "postMessage") == 0)
+		return script_postMessage(L);
 }

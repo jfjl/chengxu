@@ -11,6 +11,7 @@
 ballMap::ballMap(void)
 : m_BallManager(NULL)
 , m_Backgound(NULL)
+, m_mapCells(NULL)
 , m_Width(0)
 , m_Height(0)
 {
@@ -34,10 +35,19 @@ bool ballMap::init(const char*fileName, int width, int height)
                            m_Backgound->boundingBox().getMaxY()-m_Backgound->boundingBox().getMinY());
     
     this->addChild(m_Backgound);
+    this->addChild(m_BallManager);
     this->setAnchorPoint(ccp(0, 0));
     
 	m_Width = width;
 	m_Height = height;
+    
+    m_mapCells = new CCArray();
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            mapCell* pMapCell = mapCell::create(j, i);
+            m_mapCells->addObject(pMapCell);
+        }
+    }
     
 	setTouchEnabled(false);
 	setKeypadEnabled(false);
@@ -65,7 +75,7 @@ bool ballMap::createBalls()
 		for (int j = 0; j < m_Width; j++){
             ball *pBall = ball::create(MAGICBALL_ID, CCPointMake(j, i));
 			m_BallManager->add(pBall);
-            this->addChild(pBall);
+            m_BallManager->addChild(pBall);
             float s = MAPCELL_SIZE * TEXTURESCALE;
             int ballx = s * pBall->getPos().x + s / 2;
             int bally = s * pBall->getPos().y + s / 2;
@@ -80,3 +90,33 @@ ball* ballMap::getBall(int x, int y)
 {
     return m_BallManager->getBall(x, y);
 }
+
+mapCell* ballMap::getMapCell(int pos)
+{
+    return (mapCell*) m_mapCells->objectAtIndex(pos);
+}
+
+bool ballMap::inBlockList(int pos)
+{
+    mapCell* pMapCell = getMapCell(pos);
+    if (! pMapCell) return false;
+    
+    return (pMapCell->getState() == MC_STATE_BLOCK);
+}
+
+
+int ballMap::getPosition(int x, int y)
+{
+    return y * getWidth() + x;
+}
+////////////////props
+void ballMap::maskMap(int pos, int maskType)
+{
+    
+}
+
+void ballMap::disMaskMap(int pos)
+{
+    
+}
+

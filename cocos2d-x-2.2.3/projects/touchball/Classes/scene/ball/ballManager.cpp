@@ -12,6 +12,7 @@
 ballManager::ballManager(void)
 : m_BallList(NULL)
 , m_SelectId(-1)
+, m_OldSelectId(-1)
 {
 }
 
@@ -99,6 +100,8 @@ bool ballManager::checkMove(int x, int y)
 
 int ballManager::select(int x, int y)
 {
+    m_OldSelectId = m_SelectId;
+    
 	ball *pball = getBall(x, y);
 	if (pball == NULL) return -1;
 	if (! pball->isVisible()) return -1;
@@ -137,7 +140,7 @@ int ballManager::show(int classId, int posKey)
 
 int ballManager::hide(int x, int y)
 {
-    return hide(x, y);
+    return hide(getKey(x, y));
 }
 
 int ballManager::hide(int posKey)
@@ -436,3 +439,16 @@ void ballManager::getRemoveBallBySame(ball* pball)
     
     return;
 }
+
+void ballManager::changePosition(int fp, int tp)
+{
+    ball* pfball = getBall(fp);
+    if (!pfball || ! pfball->isVisible()) return;
+    ball* ptball = getBall(tp);
+    if (!ptball || ! ptball->isVisible()) return;
+    
+    int classId = pfball->getClassID();
+    pfball->setBallClass(ptball->getClassID());
+    ptball->setBallClass(classId);
+}
+

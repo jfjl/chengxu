@@ -15,6 +15,8 @@ struct propsData
 	int PropsId;
 	//道具类型
 	int PropsType;
+	//选中时发生事件
+	unsigned char OnPick[1024];
 	//放置时发生事件
 	unsigned char OnPut[1024];
 	//显示时发生事件

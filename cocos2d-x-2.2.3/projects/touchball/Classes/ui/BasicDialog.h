@@ -12,12 +12,11 @@
 #include "gameConst.h"
 #include "cocos-ext.h"
 #include "DialogEvent.h"
-#include "BasicObject.h"
 
 using namespace cocos2d;
 using namespace extension;
 
-class BasicDialog : public BasicObject, public CCLayer
+class BasicDialog : public CCLayer
 {
 public:
     void release(void);

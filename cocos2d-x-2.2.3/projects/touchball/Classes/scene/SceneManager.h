@@ -11,7 +11,7 @@
 
 #include "SceneData.h"
 
-class SceneManager : public BasicObject
+class SceneManager
 {
 public:
     SceneManager(CCNode* pOwner);
@@ -25,7 +25,7 @@ public:
     void onUpdate(float dt);
 
     void setCurScene(const char* sSceneName, void* param = NULL);
-    
+    SceneData* getCurScene();
 private:
     CCNode* m_pOwner;
     std::map<const char*, SceneData*> m_mSceneList;

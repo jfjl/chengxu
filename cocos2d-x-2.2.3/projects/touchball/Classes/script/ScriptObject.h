@@ -2,21 +2,22 @@
 //  ScriptObject.h
 //  touchball
 //
-//  Created by carlor on 14-6-17.
+//  Created by carlor on 14-6-21.
 //
 //
 
 #ifndef __touchball__ScriptObject__
 #define __touchball__ScriptObject__
 
-#include <string>
+#include "LuaRegDef.h"
 
-class ScriptObject;
+using namespace std;
+
+class Object;
 class ClassInfo;
 
-typedef ScriptObject* (*ObjectConstructorFn)(void);
+typedef Object* (*ObjectConstructorFn)(void);
 bool Register(ClassInfo* ci);
-
 
 class ClassInfo
 {
@@ -27,12 +28,12 @@ public:
 		Register(this);
 	}
 	virtual ~ClassInfo(){}
-	ScriptObject* CreateObject()const { return m_objectConstructor ? (*m_objectConstructor)() : 0;    }
+	Object* CreateObject()const { return m_objectConstructor ? (*m_objectConstructor)() : 0;    }
 	bool IsDynamic()const { return NULL != m_objectConstructor;}
 	const std::string GetClassName()const { return m_className;}
 	ObjectConstructorFn GetConstructor()const{ return m_objectConstructor;}
 public:
-    std::string m_className;
+	string m_className;
 	ObjectConstructorFn m_objectConstructor;
 };
 
@@ -41,7 +42,7 @@ protected: \
 static ClassInfo ms_classinfo; \
 public:  \
 virtual ClassInfo* GetClassInfo() const; \
-static ScriptObject* CreateObject();
+static Object* CreateObject();
 
 #define IMPLEMENT_CLASS_COMMON(name,func) \
 ClassInfo name::ms_classinfo((#name), \
@@ -52,24 +53,26 @@ ClassInfo *name::GetClassInfo() const \
 
 #define IMPLEMENT_CLASS(name)            \
 IMPLEMENT_CLASS_COMMON(name,name::CreateObject) \
-ScriptObject* name::CreateObject()                   \
+Object* name::CreateObject()                   \
 { return new name;}
 
-class ScriptObject;
-typedef int (ScriptObject::*ScriptMethod)(void* param);
+class Object;
+typedef int (Object::*ScriptMethod)(void* param);
 
-class ScriptObject
+class Object
 {
-	DECLARE_CLASS(ScriptObject)
+	DECLARE_CLASS(Object)
 public:
-	ScriptObject(){};
-	virtual ~ScriptObject(){};
-    
+	Object(){}
+	virtual ~Object(){}
 	static bool Register(ClassInfo* ci);
-	static ScriptObject* CreateObject(std::string name);
+	static Object* CreateObject(string name);
+
+////////script
+private:
+	int script_postMessage(lua_State* L);
 public:
-	virtual void scriptQuery(void* msg);
-	virtual void scriptIndex(void* index);
-	virtual void scriptSet(void* msg);
+	virtual int callFunction(lua_State* L);
 };
+
 #endif /* defined(__touchball__ScriptObject__) */

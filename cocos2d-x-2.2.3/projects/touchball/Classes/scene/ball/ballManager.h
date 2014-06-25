@@ -14,7 +14,7 @@
 
 typedef std::vector<ball*> ballVector;
 
-class ballManager
+class ballManager : public CCLayer
 {
 private:
 	CC_SYNTHESIZE_READONLY(int, m_seed, Seed);
@@ -35,6 +35,7 @@ public:
     
 	CC_SYNTHESIZE(ballVector*, m_BallList, BallList);
     CC_SYNTHESIZE(int, m_SelectId, SelectId);
+    CC_SYNTHESIZE(int, m_OldSelectId, OldSelectId);
 	CC_SYNTHESIZE_READONLY(int, m_Width, Width);
 	CC_SYNTHESIZE_READONLY(int, m_Height, Height);
     
@@ -61,6 +62,8 @@ public:
 	ball* getBall(int x, int y);
     ball* getBall(int pos);
     void getVisibleBall(bool vis, CCArray *balls);
+    
+    void changePosition(int fp, int tp);
 private:
     void getRemoveBallByRow(ball* pball);
     void getRemoveBallByCol(ball* pball);

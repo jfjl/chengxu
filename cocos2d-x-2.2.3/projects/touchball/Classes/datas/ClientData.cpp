@@ -171,6 +171,7 @@ bool ClientData::loadLevelData()
                     sCfg.vRewardProps = splitUchar2Int(sCfg.RewardsProps);
                     sCfg.vCanUseProps = splitUchar2Int(sCfg.CanUseProps);
                     sCfg.vSpecialBallIds = spliteUchar2KeyValue(sCfg.SpecialBallIds);
+                    sCfg.vPropsPos = spliteUchar2KeyValue(sCfg.PropsPos, ';', ',', false);
                     
                     m_mLevelCfg[sCfg.Level]=sCfg;
                 }
@@ -249,13 +250,25 @@ bool ClientData::loadPropsData()
                 propsCfg sCfg;
                 if (sReader.Read(&sCfg,sizeof(propsData)))
                 {
+                    if (sCfg.OnPick) {
+                        sCfg.pEventList->addEventFunction("PropsConfig", "OnPick", sCfg.PropsId, (char*)sCfg.OnPick);
+                    }
                     if (sCfg.OnPut)
                     {
+//                        if (sCfg.PropsId == 1005)
+//                        {
+//                            char buf[1024] = "local selectPos = callFunction(self, 'getSelectPos');local ball = callFunction(touchMap, 'getBall', selectPos);if (ball) then print('ball ball');callFunction(touchMap, 'clearSelectProps'); else print('nonono'); callFunction(touchMap, 'moveto', selectPos, 1); end;";
+//                            sCfg.pEventList->addEventFunction("PropsConfig", "OnPut", sCfg.PropsId, (char*)buf);
+//                            
+//                        }else
                         sCfg.pEventList->addEventFunction("PropsConfig", "OnPut", sCfg.PropsId, (char*)sCfg.OnPut);
                     }
                     if (sCfg.OnShow)
                     {
                         sCfg.pEventList->addEventFunction("PropsConfig", "OnShow", sCfg.PropsId, (char*)sCfg.OnShow);
+                    }
+                    if (sCfg.OnAroundRemove) {
+                        sCfg.pEventList->addEventFunction("PropsConfig", "OnAroundRemove", sCfg.PropsId, (char*)sCfg.OnAroundRemove);
                     }
                     m_mPropsCfg[sCfg.PropsId]=sCfg;
                 }
@@ -345,8 +358,8 @@ bool ClientData::loadAwardBallData()
 void ClientData::loadScript()
 {
     for (map<int, propsCfg>::iterator it = m_mPropsCfg.begin(); it != m_mPropsCfg.end(); it++) {
-        for (map<string, string>::iterator it2 = it->second.pEventList->mEventFuncs.begin(); it2 != it->second.pEventList->mEventFuncs.end(); it2++) {
-            g_gameScript->loadScript("test", it2->second.c_str());
+        for (map<string, StrKeyValue>::iterator it2 = it->second.pEventList->mEventFuncs.begin(); it2 != it->second.pEventList->mEventFuncs.end(); it2++) {
+            g_gameScript->loadScript("config", it2->second.value.c_str());
         }
     }
 }

@@ -41,6 +41,8 @@ using namespace cocos2d;
 
 #define EVENT_ENTER_GAME "EVENT_ENTER_GAME"
 
+#define EVENT_SELECT_PROPS "EVENT_SELECT_PROPS"
+
 #define MAGICBALL_ID 1000
 
 #define GAMELEVEL {6, 6, 6}

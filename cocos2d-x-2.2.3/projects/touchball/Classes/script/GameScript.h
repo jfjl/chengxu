@@ -2,24 +2,17 @@
 #ifndef __GAMESCRIPT_H__
 #define __GAMESCRIPT_H__
 
-#include "cocos2d.h"
-#include "LuaScript.h"
+#include "LuaReg.h"
+#include "ScriptObject.h"
 
-class GameScript: public ScriptObject
+class GameScript: public Object
 {
-private:
-	LuaScript* m_luaScript;
-
 public:
 	GameScript();
 	~GameScript(void);
 
-	LuaScript* getScript();
-
-    void loadInitScript();
-    void registerObject(const char* name, ScriptObject* scriptObject);
 	int loadScript(const char* name, const char* strScript);
-	int excuteFunction(const char* funcName, ScriptObject* self, ScriptObject* target);
+	int excuteFunction(const char* funcName, Object* self, Object* gameScene, Object* touchMap);
 };
 
 extern GameScript* g_gameScript;

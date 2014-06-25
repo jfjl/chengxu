@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B4684819557E4800B5C5A8 /* testObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01B4684619557E4800B5C5A8 /* testObject.cpp */; };
 		150CD3911872B4F0007F1964 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150CD38F1872B4F0007F1964 /* UITouchGroup.cpp */; };
 		150E36F417F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */; };
 		1515AC291847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */; };
@@ -236,6 +237,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01B4684619557E4800B5C5A8 /* testObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testObject.cpp; path = ../Classes/testObject.cpp; sourceTree = "<group>"; };
+		01B4684719557E4800B5C5A8 /* testObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testObject.h; path = ../Classes/testObject.h; sourceTree = "<group>"; };
 		150CD38F1872B4F0007F1964 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		150CD3901872B4F0007F1964 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extensions_manual.cpp; sourceTree = "<group>"; };
@@ -1362,6 +1365,8 @@
 			children = (
 				BF82F41513A864D700616D55 /* AppDelegate.cpp */,
 				BF82F41613A864D700616D55 /* AppDelegate.h */,
+				01B4684619557E4800B5C5A8 /* testObject.cpp */,
+				01B4684719557E4800B5C5A8 /* testObject.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */,
 				BF82F42113A8652A00616D55 /* AppController.mm in Sources */,
 				BF82F42213A8652A00616D55 /* main.m in Sources */,
+				01B4684819557E4800B5C5A8 /* testObject.cpp in Sources */,
 				ED531452183311CE008CD8A5 /* UIPageView.cpp in Sources */,
 				ED531440183311CE008CD8A5 /* CCTweenFunction.cpp in Sources */,
 				D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */,

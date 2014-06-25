@@ -15,6 +15,7 @@ gameScene::gameScene()
     : m_Level(0)
 	, m_Score(NULL)
 	, m_Top(NULL)
+    , m_stepAffected(0)
 {
 	
 }
@@ -34,7 +35,6 @@ gameScene * gameScene::scene()
     gameScene* pRet = new gameScene;
     ballMap *pBallMap   = ballMap::create("next.png", NEXTMAPSIZE_WIDTH, NEXTMAPSIZE_HEIGHT);
     touchMap *pTouchMap = touchMap::create("back.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
-    g_gameScript->registerObject("touchMap", pTouchMap);
     
     pRet->init(pBallMap, pTouchMap);
     pRet->autorelease();
@@ -69,8 +69,6 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
 
 	srand(time(0));
     
-    g_gameScript->registerObject("gameScene", this);
-        
     return true;
 }
 
@@ -168,7 +166,14 @@ int gameScene::getRandomType()
 
 void gameScene::getRandomPosition(touchMap *ballMap, std::vector<int> *pos, int count)
 {
-    ballMap->getRandomPosition(pos, count);
+    if (m_vStepPosition.size() > 0) {
+        for (int i = 0; i < m_vStepPosition.size(); i++) {
+            pos->push_back(m_vStepPosition[i]);
+            m_TouchMap->disMaskMap(m_vStepPosition[i]);
+        }
+    }else{
+        ballMap->getRandomPosition(pos, count);
+    }
 }
 
 void gameScene::randomShowMask(vector<int>* pos)
@@ -244,39 +249,86 @@ void gameScene::start(int level)
 
 void gameScene::next()
 {
+    if (m_stepAffected > 0 && ! m_bStepEnabled) {
+        decStepAffected();
+        return;
+    };
+    
 	ballVector *balls = m_BallMap->getBallManager()->getBallList();
-    CCLOG("%p", balls);
 	randomShowBall(balls);
+    
+    decStepAffected();
 }
-////////////////////////////////////
 
-int gameScene::script_start(void* param)
+int gameScene::decStepAffected()
 {
-	LuaScript* luaScript = (LuaScript*) param;
+    if (m_stepAffected <= 0) return 0;
+    
+    int result = m_stepAffected--;
+    if (m_stepAffected <= 0) {
+        m_bStepEnabled = true;
+        m_vStepPosition.clear();
+        m_TouchMap->setTouchEnabled(true);
+    }else{
+        if (m_vStepPosition.size() > 0) {
+            m_vStepPosition.clear();
+            getRandomPosition(m_TouchMap, &m_vStepPosition);
+        }
+    }
+    
+    return result;
+}
+
+
+int gameScene::script_disableBallMap(lua_State* L)
+{
 	int result = 0;
 	
-	int paramCount = luaScript->getStackSize() - 1;
-	if (paramCount < 0) return result;
+	int paramCount = lua_gettop(L) - 2;
+	if (paramCount < 0) {
+        lua_pushboolean(L, result);
+        return result;
+    }
     
-	int paramData[255];
-	int msgId = luaScript->getInteger(1);
-	for (int i = 0; i < paramCount; i++){
-		paramData[i] = luaScript->getInteger(i+2);
-	}
-	//postMessage(msgId, paramData);
+    m_stepAffected = lua_tonumber(L, 3);
+    m_bStepEnabled = false;
     
-	return result;
-    
+    result = 1;
+    return result;
 }
 
-void gameScene::scriptQuery(void* msg)
+int gameScene::script_showNextPosition(lua_State* L)
 {
-	ScriptMessage* sm = (ScriptMessage*) msg;
-	if (sm->query == "start"){
-//		DispatcherScriptMethod edsm = & gameScene::script_start;
-//		sm->script->pushMethod(this, static_cast<ScriptMethod>(edsm));
-	}
+	int result = 0;
+	
+	int paramCount = lua_gettop(L) - 2;
+	if (paramCount < 0) {
+        lua_pushboolean(L, result);
+        return result;
+    }
+    
+    m_stepAffected = lua_tonumber(L, 3);
+    m_vStepPosition.clear();
+	getRandomPosition(m_TouchMap, &m_vStepPosition);
+
+    for (int i = 0; i < m_vStepPosition.size(); i++ ) {
+        m_TouchMap->maskMap(m_vStepPosition[i], MC_STATE_FLAG);
+    }
+    result = 1;
+    
+    return result;
 }
 
+
+int gameScene::callFunction(lua_State* L)
+{
+	const char* funcName = lua_tostring(L, 2);
+	if (strcmp(funcName, "disableBallMap") == 0)
+		return script_disableBallMap(L);
+    else if (strcmp(funcName, "showNextPosition") == 0)
+        return script_showNextPosition(L);
+    
+    return 1;
+}
 
 

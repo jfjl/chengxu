@@ -50,19 +50,16 @@ pathFinder::pathFinder(void)
     , m_MapSize(NULL)
     , m_DestPosition(0)
     , m_Owner(NULL)
-    , m_mBlackList(NULL)
 {
 }
 
 pathFinder::~pathFinder(void)
 {
     clear();
-    m_mBlackList->removeAllObjects();
     CC_SAFE_DELETE(m_MapSize);
     CC_SAFE_DELETE(m_OpenList);
     CC_SAFE_DELETE(m_CloseList);
     CC_SAFE_DELETE(m_PathArray);
-    CC_SAFE_DELETE(m_mBlackList);
 }
 
 void pathFinder::clear()
@@ -83,14 +80,12 @@ bool pathFinder::init(ballMap* owner, int width, int height)
     m_OpenList->retain();
     m_PathArray = CCArray::create();
     m_PathArray->retain();
-    m_mBlackList = CCDictionary::create();
-    m_mBlackList->retain();
     
     setDestPosition(-1);
     
     return true;
 }
-
+/*
 void pathFinder::initBlockList(int level)
 {
     const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
@@ -110,7 +105,7 @@ void pathFinder::initBlockList(int level)
         m_mBlackList->setObject(pNode, i);
     }
 }
-
+*/
 pathFinder* pathFinder::create(ballMap* owner, int width, int height)
 {
     pathFinder* pRet = new pathFinder();
@@ -199,7 +194,7 @@ int pathFinder::getOrder(CCArray *path, pathNode *node)
 
 bool pathFinder::inBlockList(int p)
 {
-    return m_mBlackList->objectForKey(p);
+    return m_Owner->inBlockList(p);
 }
 
 bool pathFinder::inCloselist(int p)
@@ -356,13 +351,12 @@ void pathFinder::collectMovedPos(int destPosKey)
 
 bool pathFinder::toMoveBall(int srcPosKey, int destPosKey)
 {
-    CCLog("from p = %d", srcPosKey);
-    CCLog("to p = %d", destPosKey);
+//    CCLog("from p = %d", srcPosKey);
+//    CCLog("to p = %d", destPosKey);
     addOpenNode(srcPosKey, 0, 0, -1);
 
     if (moveBall(srcPosKey, destPosKey)){
         collectMovedPos(destPosKey);
-        CCLOG("set dest %d", m_DestPosition);
         return true;
     }
     

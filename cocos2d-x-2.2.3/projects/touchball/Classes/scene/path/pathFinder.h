@@ -60,7 +60,7 @@ public:
     CC_SYNTHESIZE(int, m_DestPosition, DestPosition);
     
     bool init(ballMap* owner, int widht, int height);
-    void initBlockList(int level);
+//    void initBlockList(int level);
     static pathFinder* create(ballMap* owner, int width, int height);
     
     bool inBlockList(int p);
@@ -68,8 +68,8 @@ public:
 
     bool onMoveBall(int srcPosKey, int destPosKey);
     int getNextNode();
-private:
-    CCDictionary* m_mBlackList;
+//private:
+//    CCDictionary* m_mBlackList;
 };
 
 #endif /* defined(__ppball__pathFinder__) */

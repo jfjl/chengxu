@@ -21,6 +21,11 @@ private:
     CC_SYNTHESIZE(ballMap*, m_BallMap, BallMap);
     CC_SYNTHESIZE(touchMap*, m_TouchMap, TouchMap);
     
+    CC_SYNTHESIZE(bool, m_bStepEnabled, StepEnabled);
+    CC_SYNTHESIZE(vector<int>, m_vStepPosition, StepPosition);
+    CC_SYNTHESIZE(int, m_stepAffected, StepAffected);
+    
+    
 	void onSceneRemove(CCObject *ptouchMap);
 	void onSceneNext(CCObject *ptouchMap);
 	void onGameOver(CCObject *ptouchMap);
@@ -35,11 +40,13 @@ private:
     void randomShowBall();
     void randomShowMask(std::vector<int>* pos);
     void randomShowBall(ballVector *balls);
-
+    
+    int decStepAffected();
 private:
-	int script_start(void* param);
-protected:
-	virtual void scriptQuery(void* msg);
+	int script_disableBallMap(lua_State* L);
+    int script_showNextPosition(lua_State* L);
+public:
+	int callFunction(lua_State* L);
 
 public:
     gameScene();

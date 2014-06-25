@@ -10,14 +10,20 @@
 #define __ppball__ballMap__
 
 #include "ballManager.h"
-#include "BasicObject.h"
+#include "ScriptObject.h"
+#include "mapCell.h"
 
-class ballMap : public BasicObject, public CCLayer
+class ballMap : public Object, public CCLayer
 {
 protected:
 	CC_SYNTHESIZE(CCSprite*, m_Backgound, BackGround);
+    
+    //mapcell
+    CC_SYNTHESIZE(CCArray, *m_mapCells, MapCells);
 
 	virtual void addEventLister(CCObject *pball);
+
+    int getPosition(int x, int y);
 public:
 	ballMap(void);
 	~ballMap(void);
@@ -32,6 +38,11 @@ public:
 	virtual bool createBalls();
 
     ball* getBall(int x, int y);
+    mapCell* getMapCell(int pos);
+    bool inBlockList(int pos);
+    //props
+    virtual void maskMap(int pos, int maskType);
+    virtual void disMaskMap(int pos);
     
 	void next();
 };

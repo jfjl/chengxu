@@ -56,3 +56,9 @@ void SceneManager::setCurScene(const char* sSceneName, void* param)
         m_pActivateScene = gameScene;
     }
 }
+
+SceneData* SceneManager::getCurScene()
+{
+    return m_pActivateScene;
+}
+

@@ -29,12 +29,12 @@ gameScene::~gameScene(void)
 
 gameScene * gameScene::scene()
 {
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("1.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("scene.plist");
     //CCScene * scene = CCScene::create();
     
     gameScene* pRet = new gameScene;
     ballMap *pBallMap   = ballMap::create("next.png", NEXTMAPSIZE_WIDTH, NEXTMAPSIZE_HEIGHT);
-    touchMap *pTouchMap = touchMap::create("back.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
+    touchMap *pTouchMap = touchMap::create("background.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
     
     pRet->init(pBallMap, pTouchMap);
     pRet->autorelease();
@@ -115,6 +115,7 @@ void gameScene::onUpdate(float dt)
 void gameScene::onActivate(CCNode* pNode, void* param)
 {
     SceneData::onActivate(pNode, param);
+    this->setPosition(ccp(SCENEMARGIN_LEFT, SCENEMARGIN_TOP));
     DialogEvent* pDialogEvent = (DialogEvent* ) param;
     start(pDialogEvent->getvalue());
 }

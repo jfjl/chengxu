@@ -55,7 +55,7 @@ bool LevelDialog::init()
 void LevelDialog::onShow(CCNode* pParent)
 {
     BasicDialog::onShow(pParent);
-    this->setPosition(ccp(50, 100));
+    this->setPosition(ccp(50, 20));
 }
 
 void LevelDialog::editBoxReturn(CCEditBox* editBox)

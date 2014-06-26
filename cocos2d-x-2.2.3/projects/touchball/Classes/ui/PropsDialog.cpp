@@ -35,7 +35,7 @@ bool PropsDialog::init()
         btnProps->setContentSize(ssPrite->getContentSize());
         m_btnArray->addObject(btnProps);
         btnProps->addTargetWithActionForControlEvents(this, cccontrol_selector(PropsDialog::onClickProps), CCControlEventTouchUpInside);
-        btnProps->setPosition(0, 40* (i - 1001));
+        btnProps->setPosition(60 * (i - 1001), 0);
         this->addChild(btnProps);
     }
     
@@ -45,7 +45,7 @@ bool PropsDialog::init()
 void PropsDialog::onShow(CCNode* pParent)
 {
     BasicDialog::onShow(pParent);
-    this->setPosition(ccp(450, 50));
+    this->setPosition(ccp(50, 100));
 }
 
 void PropsDialog::onClickProps(CCObject * sender, CCControlEvent controlEvent)

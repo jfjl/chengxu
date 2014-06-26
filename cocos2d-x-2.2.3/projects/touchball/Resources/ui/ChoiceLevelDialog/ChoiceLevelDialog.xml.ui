@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>/Users/carlor/work/jfjl/chengxu/cocos2d-x-2.2.3/projects/touchball/Resources/ui/ChoiceLevelDialog</ProjectDir>
+  <Version>1.0.0.0</Version>
+  <Resources>/Users/carlor/work/jfjl/chengxu/cocos2d-x-2.2.3/projects/touchball/Resources/ui/ChoiceLevelDialog/Resources</Resources>
+  <Name>ChoiceLevelDialog</Name>
+  <JsonFileName>ChoiceLevelDialog.json</JsonFileName>
+  <JsonFolder>/Users/carlor/work/jfjl/chengxu/cocos2d-x-2.2.3/projects/touchball/Resources/ui/ChoiceLevelDialog/Json</JsonFolder>
+  <JsonList>
+    <string>ChoiceLevelDialog_1.json</string>
+  </JsonList>
+  <filePath>/Users/carlor/work/jfjl/chengxu/cocos2d-x-2.2.3/projects/touchball/Resources/ui/ChoiceLevelDialog/ChoiceLevelDialog.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList />
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>ChoiceLevelDialog_1.json</CurrentUIJson>
+  <CanvasSize>
+    <Width>640</Width>
+    <Height>960</Height>
+  </CanvasSize>
+</UIProject>

@@ -11,7 +11,7 @@
 
 #include "SceneData.h"
 
-class SceneManager
+class SceneManager : public CCLayer
 {
 public:
     SceneManager(CCNode* pOwner);

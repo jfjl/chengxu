@@ -35,7 +35,7 @@ bool ScoreXDialog::init()
 void ScoreXDialog::onShow(CCNode* pParent)
 {
     BasicDialog::onShow(pParent);
-    this->setPosition(ccp(360, 160));
+    this->setPosition(ccp(100, 850));
 }
 
 void ScoreXDialog::onBallMove(CCObject* pObj)

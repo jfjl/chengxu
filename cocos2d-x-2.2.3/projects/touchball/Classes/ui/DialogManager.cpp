@@ -93,6 +93,9 @@ BasicDialog* DialogManager::showDialog(const char* dialogName, CCNode* pParent)
         }
     };
     
+    if (! pParent) {
+        pParent = this;
+    }
     pnode->onShow(pParent);
     return pnode;
 }

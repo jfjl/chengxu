@@ -43,6 +43,8 @@ bool touchMap::init(const char*fileName, int width, int height)
         m_actionBalls = CCDictionary::create();
 		m_actionBalls->retain();
 
+        m_BallManager->setPosition(ccp(BALLMARGIN_LEFT, BALLMARGIN_TOP));
+        
         m_pPropsManager = PropsManager::create(this, width, height);
         this->addChild(m_pPropsManager);
         m_mMaskSprite.clear();
@@ -258,8 +260,8 @@ void touchMap::registerWithTouchDispatcher(void)
 
 CCPoint touchMap::getLocalPoint(CCPoint value)
 {
-	float s = MAPCELL_SIZE * TEXTURESCALE * GAMESCALE;
-	return CCPointMake(floor(value.x / s), floor(value.y / s));
+	float s = MAPCELL_SIZE * GAMESCALE;
+	return CCPointMake(floor((value.x - BALLMARGIN_LEFT - SCENEMARGIN_LEFT) / s), floor((value.y - BALLMARGIN_TOP - SCENEMARGIN_TOP) / s));
 }
 
 bool touchMap::checkMove(int srcPos, int x, int y)
@@ -312,7 +314,7 @@ void touchMap::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 void touchMap::createMask(int pos, int r, int g, int b)
 {
-    float s = MAPCELL_SIZE * TEXTURESCALE;
+    float s = MAPCELL_SIZE;// * TEXTURESCALE;
     int w = getWidth();
     
 
@@ -323,7 +325,8 @@ void touchMap::createMask(int pos, int r, int g, int b)
     
     int x = pos % w;
     int y = pos / w;
-    pSprite->setPosition(ccp(s * x, s * y));
+    pSprite->setPosition(ccp(s * x + BALLMARGIN_LEFT, s * y + BALLMARGIN_TOP
+                             ));
     
     this->addChild(pSprite);
     m_mMaskSprite[pos] = pSprite;

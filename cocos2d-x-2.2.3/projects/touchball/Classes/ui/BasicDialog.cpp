@@ -24,8 +24,6 @@ bool BasicDialog::init()
 
 void BasicDialog::onShow(CCNode* pParent)
 {
-    if (! pParent) return;
-    
     pParent->addChild(this, 1000);
 }
 

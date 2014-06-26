@@ -28,7 +28,7 @@ bool ballMap::init(const char*fileName, int width, int height)
 {
     m_BallManager = ballManager::create(width, height);
 	m_Backgound  = CCSprite::createWithSpriteFrameName(fileName);
-    m_Backgound->setScale(TEXTURESCALE);
+//    m_Backgound->setScale(TEXTURESCALE);
     m_Backgound->setAnchorPoint(ccp(0, 0));
     
     m_MapSize = CCSizeMake(m_Backgound->boundingBox().getMaxX()-m_Backgound->boundingBox().getMinX(),
@@ -76,7 +76,7 @@ bool ballMap::createBalls()
             ball *pBall = ball::create(MAGICBALL_ID, CCPointMake(j, i));
 			m_BallManager->add(pBall);
             m_BallManager->addChild(pBall);
-            float s = MAPCELL_SIZE * TEXTURESCALE;
+            float s = MAPCELL_SIZE;// * TEXTURESCALE;
             int ballx = s * pBall->getPos().x + s / 2;
             int bally = s * pBall->getPos().y + s / 2;
             pBall->setPosition(ccp(ballx, bally));

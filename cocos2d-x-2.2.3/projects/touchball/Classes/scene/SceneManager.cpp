@@ -51,7 +51,7 @@ void SceneManager::setCurScene(const char* sSceneName, void* param)
     if (strncmp(sSceneName, "gameScene", strlen(sSceneName)) == 0)
     {
         gameScene* gameScene = gameScene::scene();
-        gameScene->onActivate(m_pOwner, param);
+        gameScene->onActivate(this, param);
         
         m_pActivateScene = gameScene;
     }

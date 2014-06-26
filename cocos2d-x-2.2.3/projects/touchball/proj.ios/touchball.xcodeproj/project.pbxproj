@@ -61,6 +61,8 @@
 		0136FEC0195AE58B00756419 /* levelData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBB195AE58B00756419 /* levelData.bin */; };
 		0136FEC1195AE58B00756419 /* mapData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBC195AE58B00756419 /* mapData.bin */; };
 		0136FEC2195AE58B00756419 /* propsData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBD195AE58B00756419 /* propsData.bin */; };
+		0136FEC7195C064B00756419 /* scene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEC5195C064B00756419 /* scene.plist */; };
+		0136FEC8195C064B00756419 /* scene.png in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEC6195C064B00756419 /* scene.png */; };
 		018502131941990A00AFB4C9 /* HawkBinCfgFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018502111941990A00AFB4C9 /* HawkBinCfgFile.cpp */; };
 		018502161941996D00AFB4C9 /* HawkMemoryFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018502141941996D00AFB4C9 /* HawkMemoryFile.cpp */; };
 		0185021919419A8800AFB4C9 /* HawkFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0185021719419A8800AFB4C9 /* HawkFile.cpp */; };
@@ -445,6 +447,8 @@
 		0136FEBB195AE58B00756419 /* levelData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = levelData.bin; sourceTree = "<group>"; };
 		0136FEBC195AE58B00756419 /* mapData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mapData.bin; sourceTree = "<group>"; };
 		0136FEBD195AE58B00756419 /* propsData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = propsData.bin; sourceTree = "<group>"; };
+		0136FEC5195C064B00756419 /* scene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = scene.plist; sourceTree = "<group>"; };
+		0136FEC6195C064B00756419 /* scene.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.png; sourceTree = "<group>"; };
 		018502111941990A00AFB4C9 /* HawkBinCfgFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HawkBinCfgFile.cpp; sourceTree = "<group>"; };
 		018502121941990A00AFB4C9 /* HawkBinCfgFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HawkBinCfgFile.h; sourceTree = "<group>"; };
 		018502141941996D00AFB4C9 /* HawkMemoryFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HawkMemoryFile.cpp; sourceTree = "<group>"; };
@@ -2393,6 +2397,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0136FEC5195C064B00756419 /* scene.plist */,
+				0136FEC6195C064B00756419 /* scene.png */,
 				019150311950441D00B042EA /* images */,
 				019150301950433C00B042EA /* bin */,
 				0191501619502A9E00B042EA /* script */,
@@ -2476,6 +2482,7 @@
 				0136FEBE195AE58B00756419 /* awardBallData.bin in Resources */,
 				0136FEC0195AE58B00756419 /* levelData.bin in Resources */,
 				019150371950457B00B042EA /* btn_confirm_normal_01.png in Resources */,
+				0136FEC7195C064B00756419 /* scene.plist in Resources */,
 				019150381950457B00B042EA /* edt_input_01.png in Resources */,
 				01DC50E719455C2F00375ABF /* 1.png in Resources */,
 				0191501A19502AF000B042EA /* utils.lua in Resources */,
@@ -2487,6 +2494,7 @@
 				0136FEBF195AE58B00756419 /* ballData.bin in Resources */,
 				0191501819502ACE00B042EA /* init.lua in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
+				0136FEC8195C064B00756419 /* scene.png in Resources */,
 				019AFB7B194E9C3B00668C7F /* ScoreDialog.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

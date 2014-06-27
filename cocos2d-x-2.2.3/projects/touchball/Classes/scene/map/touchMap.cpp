@@ -90,7 +90,6 @@ bool touchMap::checkRemove()
 	if (pLevelCfg)
         removeCount = pLevelCfg->RemoveCount;
     
-    
     m_mShapes.clear();
     
     CCArray *balls = new CCArray();
@@ -119,7 +118,7 @@ bool touchMap::checkRemove()
 	bool result = balls->count() >= removeCount;
 	if (result){
         m_BallManager->getRemoveBall(balls);
-        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
+//        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
         remove(balls);
 	}
 	balls->removeAllObjects();

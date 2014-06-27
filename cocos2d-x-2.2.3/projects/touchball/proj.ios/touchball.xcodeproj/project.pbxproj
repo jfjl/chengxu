@@ -116,8 +116,6 @@
 		019150371950457B00B042EA /* btn_confirm_normal_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 019150341950457B00B042EA /* btn_confirm_normal_01.png */; };
 		019150381950457B00B042EA /* edt_input_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 019150351950457B00B042EA /* edt_input_01.png */; };
 		0191506B1952BFED00B042EA /* mapCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019150691952BFED00B042EA /* mapCell.cpp */; };
-		019AFB7B194E9C3B00668C7F /* ScoreDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */; };
-		019AFB7E194EA41A00668C7F /* ScoreDialog.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */; };
 		019AFB81194EA9C000668C7F /* ScoreXDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019AFB7F194EA9C000668C7F /* ScoreXDialog.cpp */; };
 		019AFB87194FE22100668C7F /* PropsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019AFB85194FE22100668C7F /* PropsDialog.cpp */; };
 		01B4683D19552F3600B5C5A8 /* tolua_fix.c in Sources */ = {isa = PBXBuildFile; fileRef = 01B4683B19552F3600B5C5A8 /* tolua_fix.c */; };
@@ -554,8 +552,6 @@
 		019150351950457B00B042EA /* edt_input_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edt_input_01.png; sourceTree = "<group>"; };
 		019150691952BFED00B042EA /* mapCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapCell.cpp; path = ../../../Classes/scene/map/mapCell.cpp; sourceTree = "<group>"; };
 		0191506A1952BFED00B042EA /* mapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapCell.h; path = ../../../Classes/scene/map/mapCell.h; sourceTree = "<group>"; };
-		019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = ScoreDialog.ccbi; sourceTree = "<group>"; };
-		019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ScoreDialog.ccb; sourceTree = "<group>"; };
 		019AFB7F194EA9C000668C7F /* ScoreXDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreXDialog.cpp; path = ../../Classes/ui/ScoreXDialog.cpp; sourceTree = "<group>"; };
 		019AFB80194EA9C000668C7F /* ScoreXDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreXDialog.h; path = ../../Classes/ui/ScoreXDialog.h; sourceTree = "<group>"; };
 		019AFB85194FE22100668C7F /* PropsDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropsDialog.cpp; path = ../../Classes/ui/PropsDialog.cpp; sourceTree = "<group>"; };
@@ -1394,15 +1390,6 @@
 				019150351950457B00B042EA /* edt_input_01.png */,
 			);
 			path = ui;
-			sourceTree = "<group>";
-		};
-		019AFB79194E9C3B00668C7F /* ccb */ = {
-			isa = PBXGroup;
-			children = (
-				019AFB7D194EA41A00668C7F /* ScoreDialog.ccb */,
-				019AFB7A194E9C3B00668C7F /* ScoreDialog.ccbi */,
-			);
-			path = ccb;
 			sourceTree = "<group>";
 		};
 		019AFB8F194FEFC600668C7F /* script */ = {
@@ -2528,7 +2515,6 @@
 				019150311950441D00B042EA /* images */,
 				019150301950433C00B042EA /* bin */,
 				0191501619502A9E00B042EA /* script */,
-				019AFB79194E9C3B00668C7F /* ccb */,
 				01DC50E419455C2F00375ABF /* 1.plist */,
 				01DC50E519455C2F00375ABF /* 1.png */,
 			);
@@ -2623,7 +2609,6 @@
 				0136022F195D0DC900756419 /* ChoiceLevelDialog_1.json in Resources */,
 				0191501A19502AF000B042EA /* utils.lua in Resources */,
 				019150361950457B00B042EA /* btn_confirm_down_01.png in Resources */,
-				019AFB7E194EA41A00668C7F /* ScoreDialog.ccb in Resources */,
 				0136020E195D0DC900756419 /* background_01.png in Resources */,
 				01360216195D0DC900756419 /* btn_pagedown_normal_01.png in Resources */,
 				0136020D195D0DC900756419 /* backbar_01.png in Resources */,
@@ -2653,7 +2638,6 @@
 				0136022D195D0DC900756419 /* res_02.png in Resources */,
 				0136022A195D0DC900756419 /* rect_02.png in Resources */,
 				0136FEC8195C064B00756419 /* scene.png in Resources */,
-				019AFB7B194E9C3B00668C7F /* ScoreDialog.ccbi in Resources */,
 				0136021A195D0DC900756419 /* btn_signin_normal_01.png in Resources */,
 				0136022E195D0DC900756419 /* res_03.png in Resources */,
 				01360215195D0DC900756419 /* btn_pagedown_disable_01.png in Resources */,

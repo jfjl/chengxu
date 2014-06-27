@@ -62,7 +62,6 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
     pTouchMap->createBalls();
 
 	//event
-	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onSceneRemove), EVENT_SCENE_REMOVE, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onSceneNext), EVENT_SCENE_NEXT, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onGameOver), EVENT_GAME_COMPLETE, NULL);
     pTouchMap->setTouchEnabled(true);
@@ -70,30 +69,6 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
 	srand(time(0));
     
     return true;
-}
-
-void gameScene::onSceneRemove(CCObject *balls)
-{
-    DialogEvent* dialogEvent = new DialogEvent();
-    dialogEvent->setkey("Score");
-    
-    int score = 100;
-	CCArray *temp = (CCArray*) balls;
-    
-    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(m_Level);
-    int removeCount = REMOVECOUNT;
-    if (pLevelCfg)
-        removeCount = pLevelCfg->RemoveCount;
-    
-    if (temp->count() - removeCount > 0){
-        for (int i = 0; i < temp->count() - removeCount; i++){
-            score += i * 30;
-        }
-    }
-    dialogEvent->setvalue(score);
-    
-    //CCNode* pnode = m_dialogManger->getDialog("ScoreDialog");
-	//CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCORE_CHANGE, (CCObject *)dialogEvent);
 }
 
 void gameScene::onSceneNext(CCObject *ptouchMap)

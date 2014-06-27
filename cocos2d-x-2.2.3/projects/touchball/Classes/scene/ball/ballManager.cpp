@@ -275,7 +275,7 @@ CCArray* ballManager::checkRemove(ball* pball, int removeCount, int& nshape)
         {
             if (! it->second.BallType) continue; //不是万能球
             if (it->second.nBasicBall != it->second.BallId) continue;
-            
+           
 			CCArray *dirRemove = collectRemoveBalls(it->second.nBasicBall, pos.x, pos.y, p.x, p.y);
 			if (dirRemove->count() >= removeCount - 1) {
                 int temp = getRemoveShape(i, dirRemove->count()+1, it->second.nBasicBall);

@@ -26,7 +26,6 @@ private:
     CC_SYNTHESIZE(int, m_stepAffected, StepAffected);
     
     
-	void onSceneRemove(CCObject *ptouchMap);
 	void onSceneNext(CCObject *ptouchMap);
 	void onGameOver(CCObject *ptouchMap);
 

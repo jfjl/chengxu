@@ -44,11 +44,11 @@ DialogManager* DialogManager::create(CCLayer* owner)
 BasicDialog* DialogManager::createDialog(const char* dialogName)
 {
     BasicDialog* pDialog;
-    if (strcasecmp(dialogName, "ScoreDialog") == 0)
-    {
-        pDialog = ScoreDialog::create();
-    }
-    else if (strcasecmp(dialogName, "ScoreXDialog") == 0)
+//    if (strcasecmp(dialogName, "ScoreDialog") == 0)
+//    {
+//        pDialog = ScoreDialog::create();
+//    }
+    if (strcasecmp(dialogName, "ScoreXDialog") == 0)
     {
         pDialog = ScoreXDialog::create();
     }

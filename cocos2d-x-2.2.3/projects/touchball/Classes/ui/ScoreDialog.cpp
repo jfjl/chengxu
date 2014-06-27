@@ -12,6 +12,7 @@
 
 ScoreDialog::ScoreDialog()
 {
+    CCLOG("CREATE SCOREDIALOG");
     
 }
 

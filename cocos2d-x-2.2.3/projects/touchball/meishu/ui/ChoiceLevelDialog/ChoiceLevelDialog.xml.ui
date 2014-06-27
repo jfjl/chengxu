@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ChoiceLevelDialog</ProjectDir>
+  <Version>1.4.0.1</Version>
+  <Resources>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ChoiceLevelDialog\Resources</Resources>
+  <Name>ChoiceLevelDialog</Name>
+  <JsonFileName>ChoiceLevelDialog.json</JsonFileName>
+  <JsonFolder>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ChoiceLevelDialog\Json</JsonFolder>
+  <JsonList>
+    <string>ChoiceLevelDialog_1.json</string>
+  </JsonList>
+  <CanvasSize>
+    <Width>640</Width>
+    <Height>960</Height>
+  </CanvasSize>
+  <filePath>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ChoiceLevelDialog\ChoiceLevelDialog.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList>
+    <string>background_02.png</string>
+    <string>backbar_01.png</string>
+    <string>res_01.png</string>
+    <string>frame_01.png</string>
+    <string>res_03.png</string>
+    <string>res_02.png</string>
+    <string>progressbar_frame_01.png</string>
+    <string>progressbar_bold_01.png</string>
+    <string>btn_add_normal_01.png</string>
+    <string>btn_add_down_01.png</string>
+    <string>background_01.png</string>
+    <string>btn_help.png</string>
+    <string>btn_pagedown_normal_01.png</string>
+    <string>btn_pagedown_disable_01.png</string>
+    <string>btn_pageup_normal_01.png</string>
+    <string>btn_pageup_disable_01.png</string>
+    <string>rect_01.png</string>
+    <string>img_star_00.png</string>
+    <string>rect_02.png</string>
+    <string>img_star_01.png</string>
+    <string>img_star_02.png</string>
+    <string>img_star_03.png</string>
+    <string>img_flower_01.png</string>
+    <string>img_flower_02.png</string>
+    <string>rect_03.png</string>
+    <string>img_lock_01.png</string>
+    <string>btn_signin_normal_01.png</string>
+    <string>btn_signin_down_01.png</string>
+    <string>btn_award_normal_01.png</string>
+    <string>btn_award_down_01.png</string>
+    <string>btn_store_normal_01.png</string>
+    <string>btn_store_down_01.png</string>
+  </imagePngList>
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>ChoiceLevelDialog_1.json</CurrentUIJson>
+</UIProject>

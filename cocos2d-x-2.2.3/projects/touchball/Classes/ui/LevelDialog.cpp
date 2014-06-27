@@ -8,12 +8,11 @@
 
 #include "LevelDialog.h"
 #include "ClientData.h"
+#include "UserLocalData.h"
 
 LevelDialog::LevelDialog()
-: m_edtLevel(NULL)
-, m_btnConfirm(NULL)
 {
-    
+    CCLOG("CREATE LEVELDIALOG");
 }
 
 LevelDialog::~LevelDialog()
@@ -26,57 +25,229 @@ bool LevelDialog::init()
 {
     if (! BasicDialog::init()) return false;
     
-    m_edtLevel = CCEditBox::create(CCSizeMake(200, 40), CCScale9Sprite::create("edt_input_01.png"));
-    m_edtLevel->setPosition(ccp(0, 0));
-    m_edtLevel->setAnchorPoint(ccp(0, 0.5));
-    m_edtLevel->setFont("", 25);
-    m_edtLevel->setInputMode(kEditBoxInputModeNumeric);
-    m_edtLevel->setMaxLength(2);
-    m_edtLevel->setText("1");
-    m_edtLevel->setColor(ccc3(255, 255, 255));
-    this->addChild(m_edtLevel);
+    m_pLevelDialog =dynamic_cast<ui::Layout*>(GUIReader::shareReader()->widgetFromJsonFile("ChoiceLevelDialog_1.json"));
+    if (! m_pLevelDialog) return false;
+    if (! initInterface(m_pLevelDialog)) return false;
+
+    m_pUILayer = ui::TouchGroup::create();
+    this->addChild(m_pUILayer);
+    m_pUILayer->addWidget(m_pLevelDialog);
+
     
-    CCScale9Sprite * btnNormal = CCScale9Sprite::create("btn_confirm_normal_01.png");
-    CCScale9Sprite * btnDown = CCScale9Sprite::create("btn_confirm_down_01.png");
+    return true;
+}
+
+void LevelDialog::buildLevelInfo()
+{
+    m_vLevelInfo.clear();
+    int maxLevel = UserLocalData::getMaxLevel();
     
-    m_btnConfirm = CCControlButton::create(btnNormal);
-    m_btnConfirm->setBackgroundSpriteForState(btnDown, CCControlStateSelected);
-    m_btnConfirm->setAnchorPoint(ccp(0, 0.5f));
-    m_btnConfirm->setContentSize(btnNormal->getOriginalSize());
-    m_btnConfirm->setPreferredSize(btnNormal->getOriginalSize());
+    bool isOver = true;
+    for (int i = 0; i < maxLevel; i++) {
+        int score = 0;
+        int star = 0;
+        
+        bool had = UserLocalData::getLevelInfo(i+1, score, star);
+        
+        levelInfo info;
+        info.level = i + 1;
+        info.score = score;
+        info.star = star;
+
+        m_vLevelInfo.push_back(info);
+        if (i + 1 == maxLevel && had) {
+            const levelCfg* plevelCfg = g_clientData->getLevelCfg(i + 1);
+            if (! plevelCfg) continue;
+            isOver = plevelCfg && plevelCfg->Score1 <= score && maxLevel + 1 <= g_clientData->getMaxLevel();
+        }
+    }
     
-    m_btnConfirm->setPosition(ccp(230, 0));
-    m_btnConfirm->addTargetWithActionForControlEvents(this, cccontrol_selector(LevelDialog::onClickConfirm), CCControlEventTouchUpInside);
-    this->addChild(m_btnConfirm);
+    if (isOver) {
+        levelInfo info;
+        info.level = maxLevel + 1;
+        info.score = 0;
+        info.star = 0;
+        m_vLevelInfo.push_back(info);
+    }
     
+    
+    
+    int temp = m_vLevelInfo.size() % m_nPageSize != 0 ? 1 : 0;
+    m_nMaxPage = m_vLevelInfo.size() / m_nPageSize + temp;
+}
+
+void LevelDialog::drawLock(ui::Button* btnLevel, int level)
+{
+    btnLevel->setVisible(strcasecmp(btnLevel->getName(), "btnLock") == 0);
+}
+
+void LevelDialog::drawOpen(ui::Button* btnLevel, int level)
+{
+    btnLevel->setVisible(strcasecmp(btnLevel->getName(), "btnOpen") == 0);
+    if (! btnLevel->isVisible()) return;
+    
+    char buflevel[4] = {0};
+    sprintf(buflevel, "%d", level);
+    string slevel = buflevel;
+
+    ui::LabelAtlas* lblLevel = static_cast<ui::LabelAtlas*>(ui::UIHelper::seekWidgetByName(btnLevel, "lblLevel"));
+    lblLevel->setStringValue(slevel);
+}
+
+void LevelDialog::drawOver(ui::Button* btnLevel, int level)
+{
+    btnLevel->setVisible(strcasecmp(btnLevel->getName(), "btnOver") == 0);
+    
+    if (! btnLevel->isVisible()) return;
+    
+    char buflevel[4] = {0};
+    sprintf(buflevel, "%d", level);
+    string slevel = buflevel;
+    ui::LabelAtlas* lblLevel = static_cast<ui::LabelAtlas*>(ui::UIHelper::seekWidgetByName(btnLevel, "lblLevel"));
+    lblLevel->setStringValue(slevel);
+
+    const levelCfg* plevelCfg = g_clientData->getLevelCfg(level);
+    
+    ui::Layout* pnlFlower = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(btnLevel, "pnlFlower"));
+    ui::ImageView* imgFlower0 = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlFlower, "imgFlower0"));
+    ui::ImageView* imgFlower1 = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlFlower, "imgFlower1"));
+    imgFlower0->setVisible(m_vLevelInfo[level-1].score >= plevelCfg->Score3);
+    imgFlower1->setVisible(m_vLevelInfo[level-1].score < plevelCfg->Score3);
+    
+    ui::Layout* pnlStar = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(btnLevel, "pnlStar"));
+    ui::ImageView* imgStar0 = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlStar, "imgStar0"));
+    ui::ImageView* imgStar1 = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlStar, "imgStar1"));
+    ui::ImageView* imgStar2 = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlStar, "imgStar2"));
+    imgStar0->setVisible(m_vLevelInfo[level-1].star == 1);
+    imgStar1->setVisible(m_vLevelInfo[level-1].star == 2);
+    imgStar2->setVisible(m_vLevelInfo[level-1].star == 3);
+    
+}
+
+void LevelDialog::drawLevelInfo(ui::Button* btnLevel, int level)
+{
+    const levelCfg* plevelCfg = g_clientData->getLevelCfg(level);
+    
+    if (level > m_vLevelInfo.size() || plevelCfg == NULL) {
+        drawLock(btnLevel, level);
+    }else if (m_vLevelInfo[level-1].score < plevelCfg->Score1) {
+        drawOpen(btnLevel, level);
+    }else{
+        drawOpen(btnLevel, level);
+    }
+    
+}
+
+void LevelDialog::drawLevel(ui::Layout* pParent, int index, int level)
+{
+    char buf[10] = {0};
+    sprintf(buf, "pnlLevel%d", index);
+    ui::Layout* pnlLevel = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(pParent, buf));
+
+    int maxLevel = g_clientData->getMaxLevel();
+    if (level > maxLevel){
+        pnlLevel->setVisible(false);
+        return;
+    }
+    pnlLevel->setVisible(true);
+    const levelCfg* plevelCfg = g_clientData->getLevelCfg(level);
+    
+    for (int i = 0; i < pnlLevel->getChildrenCount(); i++) {
+        ui::Button* btnLevel = static_cast<ui::Button *>(pnlLevel->getChildren()->objectAtIndex(i));
+        drawLevelInfo(btnLevel, level);
+    }
+    
+}
+
+void LevelDialog::setCurPage(int value)
+{
+    if (value == m_nCurPage) return;
+    if (value <= 0 || value > m_nMaxPage) return;
+    
+    m_nCurPage = value;
+
+    ui::Layout* back = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(m_pLevelDialog, "background" ));
+    ui::Layout* backMiddle = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(back, "backMiddle" ));
+    for (int i = 0; i < m_nPageSize; i++)
+    {
+        drawLevel(backMiddle, i, (m_nCurPage - 1) * m_nPageSize + i + 1);
+    }
+}
+
+bool LevelDialog::initInterface(ui::Layout* dialogUI)
+{
+    ui::Layout* back = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(dialogUI, "background" ));
+    if (! back) {
+        CCLOG("not find background");
+        return false;
+    }
+    ui::Layout* backMiddle = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(back, "backMiddle" ));
+    if (! backMiddle)
+    {
+        CCLOG("not find backmiddle");
+        return false;
+    }
+    
+    buildLevelInfo();
+    for (int i = 0; i < m_nPageSize; i++)
+    {
+        char buf[10] = {0};
+        sprintf(buf, "pnlLevel%d", i);
+        ui::Layout* pnlLevel = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(backMiddle, buf));
+        pnlLevel->setTag(i+1);
+        ui::Layout* pnlEvent = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(pnlLevel, "pnlEvent"));
+        pnlEvent->setTag(i+1);
+        pnlEvent->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickLevel));
+    }
+                                        
+    ui::Button* btnPageDown = static_cast<ui::Button*>(ui::UIHelper::seekWidgetByName(backMiddle, "btnPageDown"));
+                                        btnPageDown->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickPageDown));
+    ui::Button* btnPageUp = static_cast<ui::Button*>(ui::UIHelper::seekWidgetByName(backMiddle, "btnPageUp"));
+    btnPageUp->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickPageUp));
+    
+                                        
     return true;
 }
 
 void LevelDialog::onShow(CCNode* pParent)
 {
     BasicDialog::onShow(pParent);
-    this->setPosition(ccp(50, 20));
+    setCurPage(1);
 }
 
-void LevelDialog::editBoxReturn(CCEditBox* editBox)
+void LevelDialog::onHide(bool bRemove)
 {
-    
+    m_pUILayer->removeFromParent();
+    SceneReader::sharedSceneReader()->purge();
+    GUIReader::shareReader()->purge();
+    cocos2d::extension:: ActionManager ::shareManager()->purge();
+    BasicDialog::onHide(bRemove);
 }
 
-void LevelDialog::onClickConfirm(CCObject * sender, CCControlEvent controlEvent)
+void LevelDialog::onClickLevel(CCObject* sender, ui::TouchEventType type)
 {
-    int level = (atoi)(m_edtLevel->getText());
-    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
-    if (! pLevelCfg)
-    {
-        return;
-    }
+    if (type != ui::TOUCH_EVENT_ENDED) return;
+    ui::Layout* pnlLevel = dynamic_cast<ui::Layout*>(sender);
+    int index = pnlLevel->getTag();
+    int level = (m_nCurPage - 1) * m_nPageSize + index;
+    if (level > m_vLevelInfo.size()) return;
     
     DialogEvent* pDialogEvent = new DialogEvent();
     pDialogEvent->setkey("level");
     pDialogEvent->setvalue(level);
     pDialogEvent->autorelease();
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ENTER_GAME, (CCObject*)pDialogEvent);    
+    
+	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ENTER_GAME, (CCObject *)pDialogEvent);
+}
+
+void LevelDialog::onClickPageDown(CCObject* sender, ui::TouchEventType type)
+{
+    setCurPage(m_nCurPage - 1);
+}
+
+void LevelDialog::onClickPageUp(CCObject* sender, ui::TouchEventType type)
+{
+    setCurPage(m_nCurPage + 1);
 }
 
 

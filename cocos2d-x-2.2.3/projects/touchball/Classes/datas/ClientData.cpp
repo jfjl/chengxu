@@ -151,6 +151,7 @@ KeyValueVector ClientData::spliteUchar2KeyValue(unsigned char* data, char C1, ch
 
 bool ClientData::loadLevelData()
 {
+    m_nMaxLevel = 0;
     HawkBinCfgFile sReader;
     unsigned long len=0;
     unsigned char * buffer =CCFileUtils::sharedFileUtils()->getFileData("levelData.bin", "rb", &len);
@@ -173,6 +174,7 @@ bool ClientData::loadLevelData()
                     sCfg.vSpecialBallIds = spliteUchar2KeyValue(sCfg.SpecialBallIds);
                     sCfg.vPropsPos = spliteUchar2KeyValue(sCfg.PropsPos, ';', ',', false);
                     
+                    m_nMaxLevel = m_nMaxLevel < sCfg.Level ? sCfg.Level : m_nMaxLevel;
                     m_mLevelCfg[sCfg.Level]=sCfg;
                 }
                 else
@@ -418,6 +420,11 @@ const awardBallCfg* ClientData::getAwardBallCfgByBallType(int key)
         return getAwardBallCfg(iter->second);
     }
     return NULL;
+}
+
+int ClientData::getMaxLevel()
+{
+    return m_nMaxLevel;
 }
 
 const map<int, levelCfg>& ClientData::getLevelList()

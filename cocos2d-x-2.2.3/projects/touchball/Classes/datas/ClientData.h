@@ -87,7 +87,7 @@ public:
         keyValue.key = funcName;
         keyValue.value = func;
         mEventFuncs[eventName] = keyValue;
-        CCLog("eventName = %s , \n funcName = %s, \n func = %s \n", eventName.c_str(), funcName.c_str(), func.c_str());
+//        CCLog("eventName = %s , \n funcName = %s, \n func = %s \n", eventName.c_str(), funcName.c_str(), func.c_str());
     }
 };
 
@@ -146,10 +146,10 @@ public:
     
     bool init();
 public:
-    vector<int>     splitUchar2Int(unsigned char * data,char C = ';');
-    vector<string>  splitUchar2String(unsigned char * data,char C = ';');
-    vector<float>   spliteUchar2Float(unsigned char *data,char C = ';');
-    KeyValueVector  spliteUchar2KeyValue(unsigned char* data, char C1 = ';', char C2 = ',', bool bCalcRate = true);
+    static vector<int>     splitUchar2Int(unsigned char * data,char C = ';');
+    static vector<string>  splitUchar2String(unsigned char * data,char C = ';');
+    static vector<float>   spliteUchar2Float(unsigned char *data,char C = ';');
+    static KeyValueVector  spliteUchar2KeyValue(unsigned char* data, char C1 = ';', char C2 = ',', bool bCalcRate = true);
 public:
     const levelCfg*     getLevelCfg(int key);
     const ballCfg*      getBallCfg(int key);
@@ -157,6 +157,7 @@ public:
     const mapCfg*       getMapCfg(int key);
     const awardBallCfg* getAwardBallCfg(int key);
     const awardBallCfg* getAwardBallCfgByBallType(int key); 
+    int                 getMaxLevel();
     
     const map<int, levelCfg>&       getLevelList();
     const map<int, ballCfg>&        getBallList();
@@ -181,6 +182,8 @@ private:
     map<int, mapCfg>        m_mMapCfg;
     map<int, awardBallCfg>  m_mAwardBallCfg;
     map<int, int>           m_mBallKeyAwardBallCfg;
+    
+    int                     m_nMaxLevel;
 };
 
 extern	ClientData* g_clientData;

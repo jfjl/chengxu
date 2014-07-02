@@ -18,10 +18,10 @@ public:
     pathNode(void);
     ~pathNode(void);
     
+    CC_SYNTHESIZE(int, m_F, F);
     CC_SYNTHESIZE_READONLY(int, m_PosKey, PosKey);
     CC_SYNTHESIZE(int, m_G, G);
     CC_SYNTHESIZE(int, m_H, H);
-    CC_SYNTHESIZE(int, m_F, F);
     CC_SYNTHESIZE(int, m_ParentKey, ParentKey);
     
     bool init(int posKey);
@@ -34,7 +34,7 @@ private:
     CC_SYNTHESIZE(ballMap, *m_Owner, Owner);
     CC_SYNTHESIZE(CCDictionary, *m_CloseList, CloseList);
     CC_SYNTHESIZE(CCDictionary, *m_OpenList, OpenList);
-    CC_SYNTHESIZE(CCArray, *m_PathArray, PathArray);
+    CC_SYNTHESIZE(vector<int>, m_PathArray, PathArray);
     CC_SYNTHESIZE(CCSize, *m_MapSize, MapSize);
     
     void clear();
@@ -47,7 +47,9 @@ private:
     int compareF(pathNode *node1, pathNode *node2);
     
     pathNode* addOpenNode(int posKey, int g, int h, int parentKey);
-    pathNode* addCloseNode(int posKey);
+    void removeOpenNode(int posKey);
+    pathNode* addCloseNode(int posKey,  int g, int h, int parentKey);
+    void removeCloseNode(int posKey);
     
     bool moveBall(int srcPosKey, int destPosKey);
     bool toMoveBall(int srcPosKey, int destPosKey);
@@ -65,6 +67,7 @@ public:
     
     bool inBlockList(int p);
     bool inCloselist(int p);
+    pathNode* inOpenList(int p);
 
     bool onMoveBall(int srcPosKey, int destPosKey);
     int getNextNode();

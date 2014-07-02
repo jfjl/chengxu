@@ -12,29 +12,18 @@
 
 LevelDialog::LevelDialog()
 {
-    CCLOG("CREATE LEVELDIALOG");
 }
 
 LevelDialog::~LevelDialog()
 {
-//    CC_SAFE_RELEASE(m_edtLevel);
-//    CC_SAFE_RELEASE(m_btnConfirm);
+    m_vLevelInfo.clear();
 }
 
-bool LevelDialog::init()
+void LevelDialog::initDialog()
 {
-    if (! BasicDialog::init()) return false;
-    
-    m_pLevelDialog =dynamic_cast<ui::Layout*>(GUIReader::shareReader()->widgetFromJsonFile("ChoiceLevelDialog_1.json"));
-    if (! m_pLevelDialog) return false;
-    if (! initInterface(m_pLevelDialog)) return false;
-
-    m_pUILayer = ui::TouchGroup::create();
-    this->addChild(m_pUILayer);
-    m_pUILayer->addWidget(m_pLevelDialog);
-
-    
-    return true;
+    BasicDialog::initDialog();
+    m_pDialog =dynamic_cast<ui::Layout*>(GUIReader::shareReader()->widgetFromJsonFile("ChoiceLevelDialog_1.json"));
+    initInterface(getDialog());
 }
 
 void LevelDialog::buildLevelInfo()
@@ -150,13 +139,11 @@ void LevelDialog::drawLevel(ui::Layout* pParent, int index, int level)
         return;
     }
     pnlLevel->setVisible(true);
-    const levelCfg* plevelCfg = g_clientData->getLevelCfg(level);
     
     for (int i = 0; i < pnlLevel->getChildrenCount(); i++) {
         ui::Button* btnLevel = static_cast<ui::Button *>(pnlLevel->getChildren()->objectAtIndex(i));
         drawLevelInfo(btnLevel, level);
     }
-    
 }
 
 void LevelDialog::setCurPage(int value)
@@ -166,8 +153,9 @@ void LevelDialog::setCurPage(int value)
     
     m_nCurPage = value;
 
-    ui::Layout* back = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(m_pLevelDialog, "background" ));
+    ui::Layout* back = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(getDialog(), "background" ));
     ui::Layout* backMiddle = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(back, "backMiddle" ));
+
     for (int i = 0; i < m_nPageSize; i++)
     {
         drawLevel(backMiddle, i, (m_nCurPage - 1) * m_nPageSize + i + 1);
@@ -201,27 +189,14 @@ bool LevelDialog::initInterface(ui::Layout* dialogUI)
     }
                                         
     ui::Button* btnPageDown = static_cast<ui::Button*>(ui::UIHelper::seekWidgetByName(backMiddle, "btnPageDown"));
-                                        btnPageDown->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickPageDown));
+    btnPageDown->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickPageDown));
     ui::Button* btnPageUp = static_cast<ui::Button*>(ui::UIHelper::seekWidgetByName(backMiddle, "btnPageUp"));
     btnPageUp->addTouchEventListener(this, ui::SEL_TouchEvent(&LevelDialog::onClickPageUp));
     
-                                        
-    return true;
-}
-
-void LevelDialog::onShow(CCNode* pParent)
-{
-    BasicDialog::onShow(pParent);
+    
     setCurPage(1);
-}
 
-void LevelDialog::onHide(bool bRemove)
-{
-    m_pUILayer->removeFromParent();
-    SceneReader::sharedSceneReader()->purge();
-    GUIReader::shareReader()->purge();
-    cocos2d::extension:: ActionManager ::shareManager()->purge();
-    BasicDialog::onHide(bRemove);
+    return true;
 }
 
 void LevelDialog::onClickLevel(CCObject* sender, ui::TouchEventType type)
@@ -237,7 +212,7 @@ void LevelDialog::onClickLevel(CCObject* sender, ui::TouchEventType type)
     pDialogEvent->setvalue(level);
     pDialogEvent->autorelease();
     
-	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ENTER_GAME, (CCObject *)pDialogEvent);
+	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_ENTER_LEVEL, (CCObject *)pDialogEvent);
 }
 
 void LevelDialog::onClickPageDown(CCObject* sender, ui::TouchEventType type)

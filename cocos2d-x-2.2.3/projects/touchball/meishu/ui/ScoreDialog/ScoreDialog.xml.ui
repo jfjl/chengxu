@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ScoreDialog</ProjectDir>
+  <Version>1.4.0.1</Version>
+  <Resources>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ScoreDialog\Resources</Resources>
+  <Name>ScoreDialog</Name>
+  <JsonFileName>ScoreDialog.json</JsonFileName>
+  <JsonFolder>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ScoreDialog\Json</JsonFolder>
+  <JsonList>
+    <string>ScoreDialog_1.json</string>
+  </JsonList>
+  <CanvasSize>
+    <Width>640</Width>
+    <Height>960</Height>
+  </CanvasSize>
+  <filePath>C:\Users\whm\Desktop\fangjing\cocostudio\ui\ScoreDialog\ScoreDialog.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList>
+    <string>img_back_02.png</string>
+    <string>progressbar_02.png</string>
+  </imagePngList>
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>ScoreDialog_1.json</CurrentUIJson>
+</UIProject>

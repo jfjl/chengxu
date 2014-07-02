@@ -49,6 +49,10 @@ bool ballMap::init(const char*fileName, int width, int height)
         }
     }
     
+    m_MarginX = 40;
+    m_MarginY = 30;
+    m_Margin = MAPCELL_SIZE - 8;
+    
 	setTouchEnabled(false);
 	setKeypadEnabled(false);
     
@@ -76,10 +80,11 @@ bool ballMap::createBalls()
             ball *pBall = ball::create(MAGICBALL_ID, CCPointMake(j, i));
 			m_BallManager->add(pBall);
             m_BallManager->addChild(pBall);
-            float s = MAPCELL_SIZE;// * TEXTURESCALE;
-            int ballx = s * pBall->getPos().x + s / 2;
-            int bally = s * pBall->getPos().y + s / 2;
+            float s = m_Margin;// * TEXTURESCALE;
+            int ballx = s * pBall->getPos().x + s / 2 + m_MarginX;
+            int bally = s * pBall->getPos().y + s / 2 + m_MarginY;
             pBall->setPosition(ccp(ballx, bally));
+//            pBall->setVisible(true, false);
 			addEventLister(pBall);
 		}
 	}

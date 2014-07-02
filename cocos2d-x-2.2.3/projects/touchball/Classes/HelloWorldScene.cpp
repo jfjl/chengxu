@@ -47,41 +47,87 @@ bool HelloWorld::init()
     
     new ClientData();
     
+    m_nLayerCount = 0;
     //scene
     m_pSceneManager = new SceneManager(this);
     m_pSceneManager->init();
     this->addChild(m_pSceneManager);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterGame),
+                                                                  EVENT_ENTER_SCENELAYER, NULL);
     
     //dialog
     m_pDialogManager = DialogManager::create(this);
     this->addChild(m_pDialogManager);
-    //start
-    m_pDialogManager->showDialog("LevelDialog");
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterGame),
+                                                                  EVENT_ENTER_DIALOGLAYER, NULL);
     
-    this->schedule(schedule_selector(HelloWorld::onUpdate), 0.1f);
-    
-	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterGame), EVENT_ENTER_GAME, NULL);
-    
+    //present
+    m_pPresentManager = PresentManager::create(this);
+    this->addChild(m_pPresentManager);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterGame),
+                                                                  EVENT_ENTER_PRESENTLAYER, NULL);
 
     setScale(GAMESCALE);
     this->setAnchorPoint(ccp(0, 0));
     this->setPosition(ccp(0, 0));
-
+    
     return true;
 }
 
-void HelloWorld::onUpdate(float dt)
+void HelloWorld::update(float dt)
 {
     m_pSceneManager->onUpdate(dt);
+    m_pDialogManager->onUpdate(dt);
 }
 
 void HelloWorld::onEnterGame(CCObject* pEvent)
 {
-    DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
-    m_pDialogManager->hideDialog("LevelDialog");
-    m_pDialogManager->showDialog("ScoreXDialog");
-    m_pDialogManager->showDialog("PropsDialog");
-    m_pSceneManager->setCurScene("gameScene", pDialogEvent);
-//    m_pGameScript->loadInitScript();
+    if (++m_nLayerCount == 3){
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_ENTER_SCENELAYER);
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_ENTER_DIALOGLAYER);
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_ENTER_PRESENTLAYER);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onExitGame),
+                                                                      EVENT_EXIT_SCENELAYER, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onExitGame),
+                                                                      EVENT_EXIT_DIALOGLAYER, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onExitGame),
+                                                                      EVENT_EXIT_PRESENTLAYER, NULL);
+        //start
+        m_pDialogManager->showDialog("LevelDialog");
+        //this->schedule(schedule_selector(HelloWorld::onUpdate), 0.001f);
+        scheduleUpdate();
+
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterLevel), EVENT_ENTER_LEVEL, NULL);
+    }
 }
 
+void HelloWorld::onExitGame(CCObject* pEvent)
+{
+    if (--m_nLayerCount == 0) {
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_EXIT_SCENELAYER);
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_EXIT_DIALOGLAYER);
+    }
+}
+
+void HelloWorld::onEnterLevel(CCObject* pEvent)
+{
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_ENTER_LEVEL);
+
+    DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
+    m_pDialogManager->hideDialog("LevelDialog");
+    m_pDialogManager->showDialog("ScoreDialog", pDialogEvent);
+    m_pDialogManager->showDialog("PropsDialog");
+    m_pSceneManager->setCurScene("gameScene", pDialogEvent);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onStartLevel), EVENT_START_LEVEL, NULL);
+}
+
+void HelloWorld::onStartLevel(CCObject* pEvent)
+{
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_START_LEVEL);
+
+    DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
+    SceneData* pSceneData = m_pSceneManager->getCurScene();
+    if (pSceneData) {
+        pSceneData->start(pDialogEvent);
+    }
+}

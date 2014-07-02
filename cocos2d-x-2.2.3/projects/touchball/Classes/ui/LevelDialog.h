@@ -26,13 +26,11 @@ public:
     LevelDialog();
     ~LevelDialog();
     
-    bool init();
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(LevelDialog, create);
-    
-    void onShow(CCNode* pParent);
-    void onHide(bool bRemove);
-private:
+protected:
+    void initDialog();
     bool initInterface(ui::Layout* dialogUI);
+private:
     void buildLevelInfo();
     void setCurPage(int value);
     void drawLevel(ui::Layout* pParent, int index, int level);
@@ -47,9 +45,6 @@ private:
     
     
 private:
-    ui::TouchGroup* m_pUILayer;
-    ui::Layout*     m_pLevelDialog;
-    
     LevelInfoVector m_vLevelInfo;
     int             m_nCurPage;
     int             m_nPageSize = 16;

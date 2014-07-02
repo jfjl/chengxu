@@ -34,7 +34,7 @@ gameScene * gameScene::scene()
     
     gameScene* pRet = new gameScene;
     ballMap *pBallMap   = ballMap::create("next.png", NEXTMAPSIZE_WIDTH, NEXTMAPSIZE_HEIGHT);
-    touchMap *pTouchMap = touchMap::create("background.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
+    touchMap *pTouchMap = touchMap::create("map_01.png", GAMEMAPSIZE_WIDTH, GAMEMAPSIZE_HEIGHT);
     
     pRet->init(pBallMap, pTouchMap);
     pRet->autorelease();
@@ -46,13 +46,18 @@ gameScene * gameScene::scene()
 
 bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
 {
+    m_nRefreshTime = 0.01;
+    
+	CCSprite* back = CCSprite::createWithSpriteFrameName("background.png");
+    back->setAnchorPoint(ccp(0, 0));
+    this->addChild(back);
+    
 	//map
     setTouchMap(pTouchMap);
     addChild(pTouchMap, 1);
 
     setBallMap(pBallMap);
-    pBallMap->setPosition(ccp(pTouchMap->getMapSize().width + pBallMap->getMapSize().width / pBallMap->getWidth(),
-                              pTouchMap->getMapSize().height - pBallMap->getMapSize().height));
+    pBallMap->setPosition(ccp(350, 830));
     addChild(pBallMap, 2);
     
     this->setAnchorPoint(ccp(0, 0));
@@ -64,6 +69,8 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
 	//event
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onSceneNext), EVENT_SCENE_NEXT, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onGameOver), EVENT_GAME_COMPLETE, NULL);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(gameScene::onBallRemove), EVENT_SCENE_REMOVE, NULL);
+    
     pTouchMap->setTouchEnabled(true);
 
 	srand(time(0));
@@ -76,30 +83,31 @@ void gameScene::onSceneNext(CCObject *ptouchMap)
 	next();
 }
 
+void gameScene::onBallRemove(CCObject* balls)
+{
+    DialogEvent* pDialogEvent = new DialogEvent();
+    pDialogEvent->setkey("count");
+    pDialogEvent->setvalue(((CCArray*) balls)->count());
+    pDialogEvent->autorelease();
+    
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCORE_CHANGE, pDialogEvent);
+}
+
 void gameScene::onGameOver(CCObject *ptouchMap)
 {
 
 }
 
-void gameScene::onUpdate(float dt)
+bool gameScene::onUpdate(float dt)
 {
-    SceneData::onUpdate(dt);
-    m_TouchMap->onUpate(dt);
+    bool result = SceneData::onUpdate(dt);
+        
+    if (result) {
+        m_TouchMap->onUpate(dt);
+    }
+    
+    return result;
 }
-
-void gameScene::onActivate(CCNode* pNode, void* param)
-{
-    SceneData::onActivate(pNode, param);
-    this->setPosition(ccp(SCENEMARGIN_LEFT, SCENEMARGIN_TOP));
-    DialogEvent* pDialogEvent = (DialogEvent* ) param;
-    start(pDialogEvent->getvalue());
-}
-
-void gameScene::onDeactivate()
-{
-    SceneData::onDeactivate();
-}
-
 
 int gameScene::getXByPosKey(int posKey, int width)
 {
@@ -214,10 +222,11 @@ void gameScene::randomShowBall(ballVector *balls)
 	}
 }
 
-void gameScene::start(int level)
+void gameScene::start(void* param)
 {
-    //m_dialogManger->showDialog("ScoreDialog");
-    
+    DialogEvent* pDialogEvent = (DialogEvent* ) param;
+    int level = pDialogEvent->getvalue();
+
     setLevel(level);
     m_TouchMap->setLevel(level);
     randomShowBall();

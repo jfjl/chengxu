@@ -21,15 +21,20 @@ public:
     DialogManager(void);
     ~DialogManager(void);
 
+    virtual void onEnter();
+    virtual void onExit();
     bool init(CCLayer* owner);
 	static DialogManager* create(CCLayer* owner);
     
     BasicDialog* getDialog(const char* dialogName);
-    BasicDialog* showDialog(const char* dialogName, CCNode* pParent=NULL);
+    BasicDialog* showDialog(const char* dialogName, void* param=NULL);
+    void hideDialog(const char* dialogName, void* param=NULL);
     BasicDialog* createDialog(const char* dialogName);
-    void hideDialog(const char* dialogName);
-private:
-    void onHideDialog(BasicDialog* pDialog);
+    void removeDialog(const char* dialogName);
+    
+    void onUpdate(float dt);
+
+    CC_SYNTHESIZE_READONLY(ui::TouchGroup*, m_pUILayer, UILayer);
 private:
     CCLayer* m_pOwner;
     std::map<std::string, BasicDialog*> m_mDialogList;

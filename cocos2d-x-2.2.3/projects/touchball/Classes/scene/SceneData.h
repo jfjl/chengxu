@@ -22,10 +22,15 @@ public:
     CREATE_FUNC(SceneData);
     static SceneData * scene();
 
-    virtual void onUpdate(float dt);
+    virtual bool onUpdate(float dt);
 
     virtual void onActivate(CCNode* pNode, void* param);
     virtual void onDeactivate();
+    
+    virtual void start(void* param);
+protected:
+    float m_nRefreshTime;
+    float m_nLastRefreshTime;
 };
 
 #endif /* defined(__touchball__SceneData__) */

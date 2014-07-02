@@ -21,6 +21,8 @@ private:
     void clear();
     
 public:
+    virtual void onEnter();
+    virtual void onExit();
     bool init();
     void onUpdate(float dt);
 

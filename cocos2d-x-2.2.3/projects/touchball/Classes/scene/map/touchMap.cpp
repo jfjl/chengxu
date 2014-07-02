@@ -48,6 +48,12 @@ bool touchMap::init(const char*fileName, int width, int height)
         m_pPropsManager = PropsManager::create(this, width, height);
         this->addChild(m_pPropsManager);
         m_mMaskSprite.clear();
+        
+        this->setPosition(ccp(SCENEMARGIN_LEFT, SCENEMARGIN_TOP));
+        
+        m_MarginX = 0;
+        m_MarginY = 0;
+        m_Margin = MAPCELL_SIZE;
 		return true;
 	}
     
@@ -118,7 +124,7 @@ bool touchMap::checkRemove()
 	bool result = balls->count() >= removeCount;
 	if (result){
         m_BallManager->getRemoveBall(balls);
-//        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_SCENE_REMOVE, (CCObject*)balls);
         remove(balls);
 	}
 	balls->removeAllObjects();

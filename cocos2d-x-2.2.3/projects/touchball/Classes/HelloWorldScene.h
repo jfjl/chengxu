@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "SceneManager.h"
 #include "DialogManager.h"
+#include "PresentManager.h"
 #include "GameScript.h"
 
 class HelloWorld : public cocos2d::CCLayer
@@ -18,12 +19,16 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 private:
-    void onUpdate(float dt);
+    void update(float dt);
     void onEnterGame(CCObject* pEvent);
-    
+    void onExitGame(CCObject* pEvent);
+    void onEnterLevel(CCObject* pEvent);
+    void onStartLevel(CCObject* pEvent);
 private:
+    int m_nLayerCount;
     SceneManager* m_pSceneManager;
     DialogManager* m_pDialogManager;
+    PresentManager* m_pPresentManager;
     GameScript* m_pGameScript;
 };
 

@@ -30,6 +30,9 @@ public:
     
 	CC_SYNTHESIZE_READONLY(int, m_Width, Width);
 	CC_SYNTHESIZE_READONLY(int, m_Height, Height);
+	CC_SYNTHESIZE_READONLY(int, m_MarginX, MarginX);
+	CC_SYNTHESIZE_READONLY(int, m_MarginY, MarginY);
+	CC_SYNTHESIZE_READONLY(int, m_Margin, Margin);
 	CC_SYNTHESIZE_READONLY(ballManager*, m_BallManager, BallManager);
     CC_SYNTHESIZE_READONLY(CCSize, m_MapSize, MapSize);
     

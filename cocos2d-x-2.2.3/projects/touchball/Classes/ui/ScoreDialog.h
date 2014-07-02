@@ -12,31 +12,34 @@
 #include "BasicDialog.h"
 
 
-class ScoreDialog : public BasicDialog, public CCBMemberVariableAssigner, public CCBSelectorResolver
+class ScoreDialog : public BasicDialog
 {
-private:
-    CCLabelTTF* m_Score;
-    CCLabelTTF* m_MaxScore;
-    CCLabelTTF* m_TopName;
-    
-    void doChangeScore(CCObject* data);
 public:
     ScoreDialog();
     ~ScoreDialog();
     
-    void onShow(CCNode* pParent);
-    
-    bool init();
-    
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ScoreDialog, create);
     
-    //CCBMemberVariableAssigner
-    virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char* pMemberVariableName, CCNode * pNode);
-    
-    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char* pSelectorName);
-    virtual extension::SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char* pSelectorName);
-  
-    void loadTopRecord();
+    void onShow(void* param);
+    bool onUpdate(float dt);
+protected:
+    void initDialog();
+    bool initInterface(ui::Layout* dialogUI);
+private:
+    void drawLevelScore(int level);
+    void drawCurScore();
+    void setToScore(int score);
+    int getChangeScore();
+    void onChangeScore(CCObject* data);
+private:
+    ui::LabelAtlas* m_lblNeedScore;
+    ui::LabelAtlas* m_lblCurScore;
+    ui::LoadingBar* m_proCurScore;
+    int m_nCurLevel;
+    int m_nMaxScore;
+    int m_nCurScore;
+    int m_nToScore;
+    bool m_bInit;
 };
 
 #endif /* defined(__pball__ScoreDialog__) */

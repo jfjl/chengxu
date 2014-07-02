@@ -8,7 +8,7 @@
 
 #include "ScoreDialog.h"
 #include "DialogEvent.h"
-#include <stdlib.h>
+#include "ClientData.h"
 
 ScoreDialog::ScoreDialog()
 {
@@ -21,86 +21,131 @@ ScoreDialog::~ScoreDialog()
     
 }
 
-void ScoreDialog::onShow(CCNode* pParent)
+void ScoreDialog::initDialog()
 {
-    BasicDialog::onShow(pParent);
-    this->setPosition(ccp(360, 0));
+    BasicDialog::initDialog();
+    m_pDialog = dynamic_cast<ui::Layout*>(GUIReader::shareReader()->widgetFromJsonFile("ScoreDialog_1.json"));
+    initInterface(getDialog());
 }
 
-
-bool ScoreDialog::init()
+bool ScoreDialog::initInterface(ui::Layout* dialogUI)
 {
-    if (! BasicDialog::init()){
+    ui::Layout* pnlBack = static_cast<ui::Layout*>(ui::UIHelper::seekWidgetByName(dialogUI, "pnlBack" ));
+    if (! pnlBack) {
+        CCLOG("not find background");
         return false;
     }
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-    
-    /* Create an autorelease CCBReader. */
-    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
-    
-    /* Read a ccbi file. */
-    CCNode * node = ccbReader->readNodeGraphFromFile("ScoreDialog.ccbi", this);
-    
-    ccbReader->release();
-    
-    if (! node) {
-        CCLog("load scoreDialog.ccbi failed");
+    ui::ImageView* imgBack = static_cast<ui::ImageView*>(ui::UIHelper::seekWidgetByName(pnlBack, "imgBack" ));
+    if (! imgBack)
+    {
+        CCLOG("not find imgback");
         return false;
     }
-    if(node != NULL) {
-        this->addChild(node);
+    m_proCurScore = static_cast<ui::LoadingBar*>(ui::UIHelper::seekWidgetByName(imgBack, "proScore"));
+    if (! m_proCurScore) {
+        CCLOG("not find proscore");
+        return false;
     }
+    m_lblNeedScore = static_cast<ui::LabelAtlas*>(ui::UIHelper::seekWidgetByName(imgBack, "lblNeedScore"));
+    m_lblCurScore = static_cast<ui::LabelAtlas*>(ui::UIHelper::seekWidgetByName(m_proCurScore, "lblCurScore"));
+    
+    
+    m_nRefreshTime = 0.001f;
 
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScoreDialog::onChangeScore), EVENT_SCORE_CHANGE, NULL);
+    
     return true;
 }
 
-//CCBMemberVariableAssigner
-bool ScoreDialog::onAssignCCBMemberVariable(CCObject * pTarget, const char* pMemberVariableName, CCNode * pNode)
+void ScoreDialog::drawLevelScore(int level)
 {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_Score", CCLabelTTF*, m_Score);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_MaxScore", CCLabelTTF*, m_MaxScore);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_TopName", CCLabelTTF*, m_TopName);
+    m_nCurLevel = level;
+    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
+    if (! pLevelCfg) return;
     
-    loadTopRecord();
-    
-	return false;
+    m_nMaxScore = pLevelCfg->Score1;
+    char buflevel[10] = {0};
+    sprintf(buflevel, "%d", pLevelCfg->Score1);
+    string sScore = buflevel;
+    m_lblNeedScore->setStringValue(sScore);
+
+    m_bInit = false;
+    m_nCurScore = m_nMaxScore;
+    m_nToScore = 0;
+    drawCurScore();
 }
 
-SEL_MenuHandler ScoreDialog::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char* pSelectorName)
+void ScoreDialog::setToScore(int score)
 {
-    return NULL;
+    m_nToScore = m_nCurScore + score;
 }
 
-SEL_CCControlHandler ScoreDialog::onResolveCCBCCControlSelector(CCObject * pTarget, const char* pSelectorName)
+void ScoreDialog::drawCurScore()
 {
-    return NULL;
+    char bufScore[10] = {0};
+    sprintf(bufScore, "%d", m_nCurScore);
+    string sScore = bufScore;
+    m_lblCurScore->setStringValue(sScore);
+
+    int percent = ((m_nMaxScore - (m_nMaxScore - m_nCurScore)) * 100) / 100;
+    m_proCurScore->setPercent(percent);
 }
 
-void ScoreDialog::loadTopRecord()
+int ScoreDialog::getChangeScore()
 {
-    m_MaxScore->setString("0");
-    m_TopName->setString("");
-    m_Score->setString("0");
-    
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScoreDialog::doChangeScore), EVENT_SCORE_CHANGE, NULL);
-}
-
-void ScoreDialog::doChangeScore(CCObject* data)
-{
-    DialogEvent *event = (DialogEvent*) data;
-    if (event->getkey() == "Score"){
-        CCString *str = CCString::create(std::string(m_Score->getString()));
-        int value = str->intValue();
-        CCString *temp = CCString::createWithFormat("%d",event->getvalue()+value);
-        m_Score->setString(temp->getCString());
-    }else if (event->getkey() == "MaxScore"){
-        CCString *str = CCString::create(std::string(m_MaxScore->getString()));
-        int value = str->intValue();
-        if (event->getvalue() > value){
-            CCString *temp = CCString::createWithFormat("%d",event->getvalue());
-            m_MaxScore->setString(temp->getCString());
-        }
-    }else if (event->getkey() == "TopName"){
-        m_TopName->setString(event->getstrvalue().c_str());
+    int t = abs(m_nCurScore - m_nToScore);
+    int v = 0;
+    if (t > 100) {
+        v = t;
+    }else if (t > 10) {
+        v = 10;
+    }else{
+        v = 1;
     }
+    if (m_nCurScore > m_nToScore) {
+        return -v;
+    }else{
+        return v;
+    }
+}
+
+bool ScoreDialog::onUpdate(float dt)
+{
+    bool result = BasicDialog::onUpdate(dt);
+    if (! result) return result;
+
+    if (m_nCurScore == m_nToScore) {
+        if (! m_bInit) {
+            DialogEvent* pDialogEvent = new DialogEvent();
+            pDialogEvent->setkey("level");
+            pDialogEvent->setvalue(m_nCurLevel);
+            pDialogEvent->autorelease();
+            
+            CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_START_LEVEL, (CCObject *)pDialogEvent);
+            
+            m_bInit = true;
+        }
+        return result;
+    }
+    
+    m_nCurScore += getChangeScore();
+    drawCurScore();
+    
+    return result;
+}
+
+void ScoreDialog::onShow(void* param)
+{
+    BasicDialog::onShow(param);
+    DialogEvent* pDialogEvent = (DialogEvent* ) param;
+    
+    drawLevelScore(pDialogEvent->getvalue());
+    
+    getDialog()->setPosition(ccp(0, 720));
+}
+
+void ScoreDialog::onChangeScore(CCObject* data)
+{
+    DialogEvent* pDialogEvent = (DialogEvent*) data;
+    setToScore(pDialogEvent->getvalue());
 }

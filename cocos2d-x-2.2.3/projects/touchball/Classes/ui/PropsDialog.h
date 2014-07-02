@@ -17,12 +17,13 @@ public:
     PropsDialog();
     ~PropsDialog();
     
-    bool init();
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(PropsDialog, create);
-    
-    void onShow(CCNode* pParent);
+protected:
+    void initDialog();
+    bool initInterface(ui::Layout* dialogUI);
 private:
-    void onClickProps(CCObject * sender, CCControlEvent controlEvent);
+    void onClickProps(CCObject* sender,  ui::TouchEventType type);    
+private:
     CCArray* m_btnArray;
 };
 #endif /* defined(__touchball__PropsDialog__) */

@@ -28,6 +28,7 @@ private:
     
 	void onSceneNext(CCObject *ptouchMap);
 	void onGameOver(CCObject *ptouchMap);
+    void onBallRemove(CCObject* balls);
 
     int getXByPosKey(int posKey, int width);
     int getYByPosKey(int posKey, int width);
@@ -57,11 +58,9 @@ public:
     
     bool init(ballMap *pBallMap, touchMap *pTouchMap);
     
-    void onUpdate(float dt);
-    void onActivate(CCNode* pNode, void* param);
-    void onDeactivate();
+    bool onUpdate(float dt);
     
-    void start(int level);
+    void start(void* param);
 	void next();
 };
 

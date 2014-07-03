@@ -24,6 +24,9 @@ private:
     void onExitGame(CCObject* pEvent);
     void onEnterLevel(CCObject* pEvent);
     void onStartLevel(CCObject* pEvent);
+    
+    void onEnterSetLevel(CCObject* pEvent);
+    void onEnterMainMenu(CCObject* pEvent);
 private:
     int m_nLayerCount;
     SceneManager* m_pSceneManager;

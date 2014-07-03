@@ -92,6 +92,14 @@ void HelloWorld::onEnterGame(CCObject* pEvent)
                                                                       EVENT_EXIT_DIALOGLAYER, NULL);
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onExitGame),
                                                                       EVENT_EXIT_PRESENTLAYER, NULL);
+        
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterSetLevel),
+                                                                      EVENT_ENTER_SETLEVEL, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onEnterMainMenu),
+                                                                      EVENT_ENTER_MAINMENU, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onStartLevel),
+                                                                      EVENT_START_LEVEL, NULL);
+        
         //start
         m_pDialogManager->showDialog("LevelDialog");
         //this->schedule(schedule_selector(HelloWorld::onUpdate), 0.001f);
@@ -118,16 +126,32 @@ void HelloWorld::onEnterLevel(CCObject* pEvent)
     m_pDialogManager->showDialog("ScoreDialog", pDialogEvent);
     m_pDialogManager->showDialog("PropsDialog");
     m_pSceneManager->setCurScene("gameScene", pDialogEvent);
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onStartLevel), EVENT_START_LEVEL, NULL);
 }
 
 void HelloWorld::onStartLevel(CCObject* pEvent)
 {
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_START_LEVEL);
-
     DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
     SceneData* pSceneData = m_pSceneManager->getCurScene();
     if (pSceneData) {
         pSceneData->start(pDialogEvent);
     }
+}
+
+void HelloWorld::onEnterSetLevel(CCObject* pEvent)
+{
+    DialogEvent* pDialogEvent = (DialogEvent*) pEvent;
+
+    m_pDialogManager->hideDialog("LevelDialog");
+    m_pDialogManager->hideDialog("BattleResultDialog");
+    m_pDialogManager->showDialog("ScoreDialog", pDialogEvent);
+    m_pDialogManager->showDialog("PropsDialog");
+    
+}
+
+void HelloWorld::onEnterMainMenu(CCObject* pEvent)
+{
+    m_pDialogManager->hideDialog("BattleResultDialog");
+    m_pDialogManager->hideDialog("scoreDialog");
+    m_pDialogManager->hideDialog("PropsDialog");
+    m_pDialogManager->showDialog("LevelDialog");
 }

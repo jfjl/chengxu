@@ -10,6 +10,7 @@
 #include "ScoreDialog.h"
 #include "LevelDialog.h"
 #include "PropsDialog.h"
+#include "BattleResultDialog.h"
 
 DialogManager* g_dialogManager = 0;
 
@@ -60,7 +61,7 @@ DialogManager* DialogManager::create(CCLayer* owner)
 
 BasicDialog* DialogManager::createDialog(const char* dialogName)
 {
-    BasicDialog* pDialog;
+    BasicDialog* pDialog = NULL;
     if (strcasecmp(dialogName, "ScoreDialog") == 0)
     {
         pDialog = ScoreDialog::create();
@@ -72,6 +73,10 @@ BasicDialog* DialogManager::createDialog(const char* dialogName)
     else if (strcasecmp(dialogName, "PropsDialog") == 0)
     {
         pDialog = PropsDialog::create();
+    }
+    else if (strcasecmp(dialogName, "BattleResultDialog") == 0)
+    {
+        pDialog = BattleResultDialog::create();
     }
     if (pDialog)
     {
@@ -105,9 +110,10 @@ BasicDialog* DialogManager::showDialog(const char* dialogName, void* param)
     if (! pnode)
     {
         pnode = createDialog(dialogName);
-        
-        if (! pnode)
-        {
+        if (pnode->getDialog()) {
+            pnode->retain();
+            getUILayer()->addWidget(pnode->getDialog());
+        }else{
             CCLog("create dialog failed: %s", dialogName);
             return NULL;
             
@@ -116,8 +122,6 @@ BasicDialog* DialogManager::showDialog(const char* dialogName, void* param)
     
     if (pnode->getDialog()) {
         pnode->onShow(param);
-        pnode->retain();
-        getUILayer()->addWidget(pnode->getDialog());
     }
     return pnode;
 }

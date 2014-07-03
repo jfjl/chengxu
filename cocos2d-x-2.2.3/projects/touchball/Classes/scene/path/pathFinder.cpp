@@ -222,6 +222,8 @@ bool compare(const pathNode* a, const pathNode* b)
 bool pathFinder::moveBall(int srcPosKey, int destPosKey)
 {
     pathNode* ptemp = inOpenList(srcPosKey);
+    if (! ptemp) return false;
+    
     int tg = ptemp->getG();
     int th = ptemp->getH();
     int tp = ptemp->getParentKey();

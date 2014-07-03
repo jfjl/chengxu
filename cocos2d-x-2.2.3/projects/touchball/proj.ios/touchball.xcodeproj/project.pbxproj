@@ -131,6 +131,9 @@
 		019615EE1963F18200783C42 /* PresentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019615EC1963F18200783C42 /* PresentManager.cpp */; };
 		019615F11963F22200783C42 /* BasicPresent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019615EF1963F22200783C42 /* BasicPresent.cpp */; };
 		019615F41963F8BD00783C42 /* FloatMumberPresent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019615F21963F8BD00783C42 /* FloatMumberPresent.cpp */; };
+		019615F91964FAFD00783C42 /* background_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 019615F71964FAFD00783C42 /* background_03.png */; };
+		019615FA1964FAFD00783C42 /* BattleResultDialog_1.json in Resources */ = {isa = PBXBuildFile; fileRef = 019615F81964FAFD00783C42 /* BattleResultDialog_1.json */; };
+		019615FD1964FB1700783C42 /* BattleResultDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019615FB1964FB1700783C42 /* BattleResultDialog.cpp */; };
 		019AFB87194FE22100668C7F /* PropsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019AFB85194FE22100668C7F /* PropsDialog.cpp */; };
 		01B4683D19552F3600B5C5A8 /* tolua_fix.c in Sources */ = {isa = PBXBuildFile; fileRef = 01B4683B19552F3600B5C5A8 /* tolua_fix.c */; };
 		01B4686F195598CA00B5C5A8 /* GameScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01B46867195598CA00B5C5A8 /* GameScript.cpp */; };
@@ -582,6 +585,10 @@
 		019615F01963F22200783C42 /* BasicPresent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPresent.h; sourceTree = "<group>"; };
 		019615F21963F8BD00783C42 /* FloatMumberPresent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatMumberPresent.cpp; sourceTree = "<group>"; };
 		019615F31963F8BD00783C42 /* FloatMumberPresent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatMumberPresent.h; sourceTree = "<group>"; };
+		019615F71964FAFD00783C42 /* background_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_03.png; sourceTree = "<group>"; };
+		019615F81964FAFD00783C42 /* BattleResultDialog_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BattleResultDialog_1.json; sourceTree = "<group>"; };
+		019615FB1964FB1700783C42 /* BattleResultDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BattleResultDialog.cpp; path = ../../Classes/ui/BattleResultDialog.cpp; sourceTree = "<group>"; };
+		019615FC1964FB1700783C42 /* BattleResultDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BattleResultDialog.h; path = ../../Classes/ui/BattleResultDialog.h; sourceTree = "<group>"; };
 		019AFB85194FE22100668C7F /* PropsDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropsDialog.cpp; path = ../../Classes/ui/PropsDialog.cpp; sourceTree = "<group>"; };
 		019AFB86194FE22100668C7F /* PropsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropsDialog.h; path = ../../Classes/ui/PropsDialog.h; sourceTree = "<group>"; };
 		01B4683B19552F3600B5C5A8 /* tolua_fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_fix.c; sourceTree = "<group>"; };
@@ -1255,6 +1262,8 @@
 				019AFB86194FE22100668C7F /* PropsDialog.h */,
 				0191502B19503D9C00B042EA /* LevelDialog.cpp */,
 				0191502C19503D9C00B042EA /* LevelDialog.h */,
+				019615FB1964FB1700783C42 /* BattleResultDialog.cpp */,
+				019615FC1964FB1700783C42 /* BattleResultDialog.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1334,6 +1343,7 @@
 		0136FECE195C260B00756419 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				019615F61964FAFD00783C42 /* BattleResultDialog_1 */,
 				019615DB1963A6AE00783C42 /* ScoreDialog_1 */,
 				0136034919629E3100756419 /* PropsDialog_1 */,
 				0136030419629E2400756419 /* ChoiceLevelDialog_1 */,
@@ -1450,6 +1460,15 @@
 			);
 			name = present;
 			path = ../Classes/present;
+			sourceTree = "<group>";
+		};
+		019615F61964FAFD00783C42 /* BattleResultDialog_1 */ = {
+			isa = PBXGroup;
+			children = (
+				019615F71964FAFD00783C42 /* background_03.png */,
+				019615F81964FAFD00783C42 /* BattleResultDialog_1.json */,
+			);
+			path = BattleResultDialog_1;
 			sourceTree = "<group>";
 		};
 		019AFB8F194FEFC600668C7F /* script */ = {
@@ -2688,6 +2707,7 @@
 				0136FEC1195AE58B00756419 /* mapData.bin in Resources */,
 				019615D81962AEB700783C42 /* props_1003.jpg in Resources */,
 				0136FEC2195AE58B00756419 /* propsData.bin in Resources */,
+				019615F91964FAFD00783C42 /* background_03.png in Resources */,
 				019615E71963F02D00783C42 /* img_number_04.png in Resources */,
 				019615E41963A6AE00783C42 /* progressbar_02.png in Resources */,
 				0136034419629E2400756419 /* rect_02.png in Resources */,
@@ -2707,6 +2727,7 @@
 				0136032A19629E2400756419 /* btn_add_down_01.png in Resources */,
 				0136034319629E2400756419 /* rect_01.png in Resources */,
 				0136032E19629E2400756419 /* btn_help.png in Resources */,
+				019615FA1964FAFD00783C42 /* BattleResultDialog_1.json in Resources */,
 				0136034119629E2400756419 /* progressbar_bold_01.png in Resources */,
 				0136033819629E2400756419 /* frame_01.png in Resources */,
 				019615E11963A6AE00783C42 /* img_back_02.png in Resources */,
@@ -2744,6 +2765,7 @@
 				15A3D90A1682F7D5002FB0C5 /* b2PolygonShape.cpp in Sources */,
 				15A3D90B1682F7D5002FB0C5 /* b2BlockAllocator.cpp in Sources */,
 				15A3D90C1682F7D5002FB0C5 /* b2Draw.cpp in Sources */,
+				019615FD1964FB1700783C42 /* BattleResultDialog.cpp in Sources */,
 				375BD4C61868411B0024609E /* TriggerObj.cpp in Sources */,
 				0117C7731955220300CB86A8 /* lundump.c in Sources */,
 				375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */,

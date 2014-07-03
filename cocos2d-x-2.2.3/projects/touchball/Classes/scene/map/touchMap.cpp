@@ -72,7 +72,18 @@ bool touchMap::checkOver()
 {
 	CCArray *visballs = new CCArray();
 	this->getBallManager()->getVisibleBall(false, visballs);
-	bool isOver = visballs->count() <= 0;
+	
+    int count = 0;
+    CCObject *pElement;
+	CCARRAY_FOREACH(visballs, pElement) {
+		ball *pball = (ball*) pElement;
+        mapCell* pCell = (mapCell*) m_mapCells->objectAtIndex(m_BallManager->getKey(pball->getPos().x, pball->getPos().y));
+        if (pCell->getState() == MC_STATE_NOMOVE || pCell->getState() == MC_STATE_BLOCK) {
+            count++;
+        }
+    }
+    
+	bool isOver = visballs->count() - count <= 0;
 	visballs->removeAllObjects();
 	
 	CC_SAFE_DELETE(visballs);

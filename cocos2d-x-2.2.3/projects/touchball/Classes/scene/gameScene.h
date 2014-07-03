@@ -16,10 +16,9 @@
 class gameScene : public SceneData
 {
 private:
-	CC_SYNTHESIZE(CCLabelTTF, *m_Score, Score);
-	CC_SYNTHESIZE(CCLabelTTF, *m_Top, Top)
     CC_SYNTHESIZE(ballMap*, m_BallMap, BallMap);
     CC_SYNTHESIZE(touchMap*, m_TouchMap, TouchMap);
+    CC_SYNTHESIZE(int, m_Score, Score);
     
     CC_SYNTHESIZE(bool, m_bStepEnabled, StepEnabled);
     CC_SYNTHESIZE(vector<int>, m_vStepPosition, StepPosition);

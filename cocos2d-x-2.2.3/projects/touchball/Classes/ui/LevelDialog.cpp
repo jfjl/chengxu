@@ -122,7 +122,7 @@ void LevelDialog::drawLevelInfo(ui::Button* btnLevel, int level)
     }else if (m_vLevelInfo[level-1].score < plevelCfg->Score1) {
         drawOpen(btnLevel, level);
     }else{
-        drawOpen(btnLevel, level);
+        drawOver(btnLevel, level);
     }
     
 }

@@ -10,11 +10,11 @@
 #include "DialogEvent.h"
 #include "ClientData.h"
 #include "GameScript.h"
+#include "UserLocalData.h"
+#include "DialogManager.h"
 
 gameScene::gameScene()
     : m_Level(0)
-	, m_Score(NULL)
-	, m_Top(NULL)
     , m_stepAffected(0)
 {
 	
@@ -85,6 +85,7 @@ void gameScene::onSceneNext(CCObject *ptouchMap)
 
 void gameScene::onBallRemove(CCObject* balls)
 {
+    m_Score += ((CCArray*) balls)->count();
     DialogEvent* pDialogEvent = new DialogEvent();
     pDialogEvent->setkey("count");
     pDialogEvent->setvalue(((CCArray*) balls)->count());
@@ -95,7 +96,24 @@ void gameScene::onBallRemove(CCObject* balls)
 
 void gameScene::onGameOver(CCObject *ptouchMap)
 {
-
+    int star = 0;
+    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(m_Level);
+    if (pLevelCfg) {
+        if (m_Score >= pLevelCfg->Score3)
+            star = 3;
+        else if (m_Score >= pLevelCfg->Score2)
+            star = 2;
+        else if (m_Score >= pLevelCfg->Score1)
+            star = 1;
+    }
+    UserLocalData::setLevelInfo(getLevel(), m_Score, star);
+    
+    DialogEvent* pDialogEvent = new DialogEvent();
+    pDialogEvent->addKeyValue("result", star > 0 ? 1 : 0);
+    pDialogEvent->addKeyValue("score", m_Score);
+    pDialogEvent->addKeyValue("star", star);
+    pDialogEvent->autorelease();
+    g_dialogManager->showDialog("BattleResultDialog", pDialogEvent);
 }
 
 bool gameScene::onUpdate(float dt)
@@ -224,11 +242,11 @@ void gameScene::randomShowBall(ballVector *balls)
 
 void gameScene::start(void* param)
 {
+    m_Score = 0;
     DialogEvent* pDialogEvent = (DialogEvent* ) param;
-    int level = pDialogEvent->getvalue();
+    m_Level = pDialogEvent->getvalue();
 
-    setLevel(level);
-    m_TouchMap->setLevel(level);
+    m_TouchMap->setLevel(m_Level);
     randomShowBall();
 }
 

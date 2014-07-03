@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>C:\Users\whm\Desktop\fangjing\cocostudio\ui\BattleResultDialog</ProjectDir>
+  <Version>1.4.0.1</Version>
+  <Resources>C:\Users\whm\Desktop\fangjing\cocostudio\ui\BattleResultDialog\Resources</Resources>
+  <Name>BattleResultDialog</Name>
+  <JsonFileName>BattleResultDialog.json</JsonFileName>
+  <JsonFolder>C:\Users\whm\Desktop\fangjing\cocostudio\ui\BattleResultDialog\Json</JsonFolder>
+  <JsonList>
+    <string>BattleResultDialog_1.json</string>
+  </JsonList>
+  <CanvasSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CanvasSize>
+  <filePath>C:\Users\whm\Desktop\fangjing\cocostudio\ui\BattleResultDialog\BattleResultDialog.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList />
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>BattleResultDialog_1.json</CurrentUIJson>
+</UIProject>

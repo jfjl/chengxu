@@ -2,6 +2,8 @@ APPNAME="HelloCpp"
 
 # options
 
+NDK_ROOT= '/Users/carlor/work/jfjl/chengxu/android-ndk-r9d'
+
 buildexternalsfromsource=
 
 usage(){

@@ -37,6 +37,8 @@ struct levelData
 	int InitCount;
 	//遮罩道具出现位置
 	unsigned char PropsPos[128];
+	//限制步数
+	int MaxStep;
 };
 
 #pragma pack(pop)

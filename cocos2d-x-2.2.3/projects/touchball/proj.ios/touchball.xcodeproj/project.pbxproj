@@ -95,13 +95,13 @@
 		0136034819629E2400756419 /* res_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 0136032619629E2400756419 /* res_03.png */; };
 		0136034C19629E3100756419 /* img_back_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 0136034A19629E3100756419 /* img_back_01.png */; };
 		0136034D19629E3100756419 /* PropsDialog_1.json in Resources */ = {isa = PBXBuildFile; fileRef = 0136034B19629E3100756419 /* PropsDialog_1.json */; };
-		0136FEBE195AE58B00756419 /* awardBallData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEB9195AE58B00756419 /* awardBallData.bin */; };
-		0136FEBF195AE58B00756419 /* ballData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBA195AE58B00756419 /* ballData.bin */; };
-		0136FEC0195AE58B00756419 /* levelData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBB195AE58B00756419 /* levelData.bin */; };
-		0136FEC1195AE58B00756419 /* mapData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBC195AE58B00756419 /* mapData.bin */; };
-		0136FEC2195AE58B00756419 /* propsData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEBD195AE58B00756419 /* propsData.bin */; };
 		0136FEC7195C064B00756419 /* scene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEC5195C064B00756419 /* scene.plist */; };
 		0136FEC8195C064B00756419 /* scene.png in Resources */ = {isa = PBXBuildFile; fileRef = 0136FEC6195C064B00756419 /* scene.png */; };
+		01714612196BB9BF00A3F7AA /* awardBallData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0171460D196BB9BF00A3F7AA /* awardBallData.bin */; };
+		01714613196BB9BF00A3F7AA /* ballData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0171460E196BB9BF00A3F7AA /* ballData.bin */; };
+		01714614196BB9BF00A3F7AA /* levelData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0171460F196BB9BF00A3F7AA /* levelData.bin */; };
+		01714615196BB9BF00A3F7AA /* mapData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01714610196BB9BF00A3F7AA /* mapData.bin */; };
+		01714616196BB9BF00A3F7AA /* propsData.bin in Resources */ = {isa = PBXBuildFile; fileRef = 01714611196BB9BF00A3F7AA /* propsData.bin */; };
 		018502131941990A00AFB4C9 /* HawkBinCfgFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018502111941990A00AFB4C9 /* HawkBinCfgFile.cpp */; };
 		018502161941996D00AFB4C9 /* HawkMemoryFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018502141941996D00AFB4C9 /* HawkMemoryFile.cpp */; };
 		0185021919419A8800AFB4C9 /* HawkFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0185021719419A8800AFB4C9 /* HawkFile.cpp */; };
@@ -528,18 +528,18 @@
 		0136032619629E2400756419 /* res_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = res_03.png; sourceTree = "<group>"; };
 		0136034A19629E3100756419 /* img_back_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_back_01.png; sourceTree = "<group>"; };
 		0136034B19629E3100756419 /* PropsDialog_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PropsDialog_1.json; sourceTree = "<group>"; };
-		0136FE8C195ACDB500756419 /* awardBallData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = awardBallData.h; sourceTree = "<group>"; };
-		0136FE8D195ACDB500756419 /* ballData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ballData.h; sourceTree = "<group>"; };
-		0136FE8E195ACDB500756419 /* levelData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelData.h; sourceTree = "<group>"; };
-		0136FE8F195ACDB500756419 /* mapData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapData.h; sourceTree = "<group>"; };
-		0136FE90195ACDB500756419 /* propsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = propsData.h; sourceTree = "<group>"; };
-		0136FEB9195AE58B00756419 /* awardBallData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = awardBallData.bin; sourceTree = "<group>"; };
-		0136FEBA195AE58B00756419 /* ballData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ballData.bin; sourceTree = "<group>"; };
-		0136FEBB195AE58B00756419 /* levelData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = levelData.bin; sourceTree = "<group>"; };
-		0136FEBC195AE58B00756419 /* mapData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mapData.bin; sourceTree = "<group>"; };
-		0136FEBD195AE58B00756419 /* propsData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = propsData.bin; sourceTree = "<group>"; };
 		0136FEC5195C064B00756419 /* scene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = scene.plist; sourceTree = "<group>"; };
 		0136FEC6195C064B00756419 /* scene.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.png; sourceTree = "<group>"; };
+		0171460D196BB9BF00A3F7AA /* awardBallData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = awardBallData.bin; sourceTree = "<group>"; };
+		0171460E196BB9BF00A3F7AA /* ballData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ballData.bin; sourceTree = "<group>"; };
+		0171460F196BB9BF00A3F7AA /* levelData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = levelData.bin; sourceTree = "<group>"; };
+		01714610196BB9BF00A3F7AA /* mapData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mapData.bin; sourceTree = "<group>"; };
+		01714611196BB9BF00A3F7AA /* propsData.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = propsData.bin; sourceTree = "<group>"; };
+		01714617196BB9CF00A3F7AA /* awardBallData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = awardBallData.h; sourceTree = "<group>"; };
+		01714618196BB9CF00A3F7AA /* ballData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ballData.h; sourceTree = "<group>"; };
+		01714619196BB9CF00A3F7AA /* levelData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelData.h; sourceTree = "<group>"; };
+		0171461A196BB9CF00A3F7AA /* mapData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapData.h; sourceTree = "<group>"; };
+		0171461B196BB9CF00A3F7AA /* propsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = propsData.h; sourceTree = "<group>"; };
 		018502111941990A00AFB4C9 /* HawkBinCfgFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HawkBinCfgFile.cpp; sourceTree = "<group>"; };
 		018502121941990A00AFB4C9 /* HawkBinCfgFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HawkBinCfgFile.h; sourceTree = "<group>"; };
 		018502141941996D00AFB4C9 /* HawkMemoryFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HawkMemoryFile.cpp; sourceTree = "<group>"; };
@@ -1351,6 +1351,18 @@
 			path = ui;
 			sourceTree = "<group>";
 		};
+		0171460C196BB9BF00A3F7AA /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				0171460D196BB9BF00A3F7AA /* awardBallData.bin */,
+				0171460E196BB9BF00A3F7AA /* ballData.bin */,
+				0171460F196BB9BF00A3F7AA /* levelData.bin */,
+				01714610196BB9BF00A3F7AA /* mapData.bin */,
+				01714611196BB9BF00A3F7AA /* propsData.bin */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
 		01850165194192FB00AFB4C9 /* hawksdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1388,11 +1400,11 @@
 		0185F8AF19418EBF00AFB4C9 /* config */ = {
 			isa = PBXGroup;
 			children = (
-				0136FE8C195ACDB500756419 /* awardBallData.h */,
-				0136FE8D195ACDB500756419 /* ballData.h */,
-				0136FE8E195ACDB500756419 /* levelData.h */,
-				0136FE8F195ACDB500756419 /* mapData.h */,
-				0136FE90195ACDB500756419 /* propsData.h */,
+				01714617196BB9CF00A3F7AA /* awardBallData.h */,
+				01714618196BB9CF00A3F7AA /* ballData.h */,
+				01714619196BB9CF00A3F7AA /* levelData.h */,
+				0171461A196BB9CF00A3F7AA /* mapData.h */,
+				0171461B196BB9CF00A3F7AA /* propsData.h */,
 			);
 			path = config;
 			sourceTree = "<group>";
@@ -1404,18 +1416,6 @@
 				0191501719502ACE00B042EA /* init.lua */,
 			);
 			path = script;
-			sourceTree = "<group>";
-		};
-		019150301950433C00B042EA /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				0136FEB9195AE58B00756419 /* awardBallData.bin */,
-				0136FEBA195AE58B00756419 /* ballData.bin */,
-				0136FEBB195AE58B00756419 /* levelData.bin */,
-				0136FEBC195AE58B00756419 /* mapData.bin */,
-				0136FEBD195AE58B00756419 /* propsData.bin */,
-			);
-			path = bin;
 			sourceTree = "<group>";
 		};
 		019150311950441D00B042EA /* images */ = {
@@ -2589,6 +2589,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0171460C196BB9BF00A3F7AA /* bin */,
 				019615E61963F02D00783C42 /* img_number_04.png */,
 				019615D11962AEB700783C42 /* props_1001.jpg */,
 				019615D21962AEB700783C42 /* props_1002.jpg */,
@@ -2599,7 +2600,6 @@
 				0136FEC5195C064B00756419 /* scene.plist */,
 				0136FEC6195C064B00756419 /* scene.png */,
 				019150311950441D00B042EA /* images */,
-				019150301950433C00B042EA /* bin */,
 				0191501619502A9E00B042EA /* script */,
 			);
 			name = Resources;
@@ -2677,12 +2677,11 @@
 			files = (
 				019615D61962AEB700783C42 /* props_1001.jpg in Resources */,
 				0136032D19629E2400756419 /* btn_award_normal_01.png in Resources */,
-				0136FEBE195AE58B00756419 /* awardBallData.bin in Resources */,
-				0136FEC0195AE58B00756419 /* levelData.bin in Resources */,
 				019615D71962AEB700783C42 /* props_1002.jpg in Resources */,
 				0136034219629E2400756419 /* progressbar_frame_01.png in Resources */,
 				0136033D19629E2400756419 /* img_star_00.png in Resources */,
 				0136033B19629E2400756419 /* img_lock_01.png in Resources */,
+				01714613196BB9BF00A3F7AA /* ballData.bin in Resources */,
 				0136033719629E2400756419 /* ChoiceLevelDialog_1.json in Resources */,
 				019150371950457B00B042EA /* btn_confirm_normal_01.png in Resources */,
 				019615DA1962AEB700783C42 /* props_1005.jpg in Resources */,
@@ -2704,15 +2703,14 @@
 				0136033919629E2400756419 /* img_flower_01.png in Resources */,
 				0136033E19629E2400756419 /* img_star_01.png in Resources */,
 				019150361950457B00B042EA /* btn_confirm_down_01.png in Resources */,
-				0136FEC1195AE58B00756419 /* mapData.bin in Resources */,
+				01714615196BB9BF00A3F7AA /* mapData.bin in Resources */,
 				019615D81962AEB700783C42 /* props_1003.jpg in Resources */,
-				0136FEC2195AE58B00756419 /* propsData.bin in Resources */,
 				019615F91964FAFD00783C42 /* background_03.png in Resources */,
 				019615E71963F02D00783C42 /* img_number_04.png in Resources */,
+				01714612196BB9BF00A3F7AA /* awardBallData.bin in Resources */,
 				019615E41963A6AE00783C42 /* progressbar_02.png in Resources */,
 				0136034419629E2400756419 /* rect_02.png in Resources */,
 				0136034619629E2400756419 /* res_01.png in Resources */,
-				0136FEBF195AE58B00756419 /* ballData.bin in Resources */,
 				0136034C19629E3100756419 /* img_back_01.png in Resources */,
 				0191501819502ACE00B042EA /* init.lua in Resources */,
 				0136032F19629E2400756419 /* btn_pagedown_disable_01.png in Resources */,
@@ -2727,7 +2725,9 @@
 				0136032A19629E2400756419 /* btn_add_down_01.png in Resources */,
 				0136034319629E2400756419 /* rect_01.png in Resources */,
 				0136032E19629E2400756419 /* btn_help.png in Resources */,
+				01714616196BB9BF00A3F7AA /* propsData.bin in Resources */,
 				019615FA1964FAFD00783C42 /* BattleResultDialog_1.json in Resources */,
+				01714614196BB9BF00A3F7AA /* levelData.bin in Resources */,
 				0136034119629E2400756419 /* progressbar_bold_01.png in Resources */,
 				0136033819629E2400756419 /* frame_01.png in Resources */,
 				019615E11963A6AE00783C42 /* img_back_02.png in Resources */,

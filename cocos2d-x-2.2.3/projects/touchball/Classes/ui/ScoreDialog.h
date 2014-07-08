@@ -26,11 +26,13 @@ protected:
     void initDialog();
     bool initInterface(ui::Layout* dialogUI);
 private:
-    void drawLevelScore(int level);
+    void drawLevelScore(int score);
     void drawCurScore();
     void setToScore(int score);
     int getChangeScore();
     void onChangeScore(CCObject* data);
+    void drawCurStep(int step);
+    void onChangeStep(CCObject* data);
 private:
     ui::LabelAtlas* m_lblNeedScore;
     ui::LabelAtlas* m_lblCurScore;

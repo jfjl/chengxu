@@ -53,21 +53,14 @@ bool ScoreDialog::initInterface(ui::Layout* dialogUI)
     m_nRefreshTime = 0.001f;
 
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScoreDialog::onChangeScore), EVENT_SCORE_CHANGE, NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScoreDialog::onChangeStep), EVENT_STEP_CHANGE, NULL);
     
     return true;
 }
 
-void ScoreDialog::drawLevelScore(int level)
+void ScoreDialog::drawLevelScore(int score)
 {
-    m_nCurLevel = level;
-    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(level);
-    if (! pLevelCfg) return;
-    
-    m_nMaxScore = pLevelCfg->Score1;
-    char buflevel[10] = {0};
-    sprintf(buflevel, "%d", pLevelCfg->Score1);
-    string sScore = buflevel;
-    m_lblNeedScore->setStringValue(sScore);
+    m_nMaxScore = score;
 
     m_bInit = false;
     m_nCurScore = m_nMaxScore;
@@ -89,6 +82,14 @@ void ScoreDialog::drawCurScore()
 
     int percent = ((m_nMaxScore - (m_nMaxScore - m_nCurScore)) * 100) / 100;
     m_proCurScore->setPercent(percent);
+}
+
+void ScoreDialog::drawCurStep(int step)
+{
+    char bufstep[10] = {0};
+    sprintf(bufstep, "%d", step);
+    m_lblNeedScore->setStringValue(bufstep);
+    
 }
 
 int ScoreDialog::getChangeScore()
@@ -138,9 +139,12 @@ void ScoreDialog::onShow(void* param)
 {
     BasicDialog::onShow(param);
     DialogEvent* pDialogEvent = (DialogEvent* ) param;
+    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(pDialogEvent->getvalue());
+    if (! pLevelCfg) return;
     
-    drawLevelScore(pDialogEvent->getvalue());
-    
+    m_nCurLevel = pLevelCfg->Level;
+    drawLevelScore(pLevelCfg->Score1);
+    drawCurStep(pLevelCfg->MaxStep);
     getDialog()->setPosition(ccp(0, 720));
 }
 
@@ -148,4 +152,10 @@ void ScoreDialog::onChangeScore(CCObject* data)
 {
     DialogEvent* pDialogEvent = (DialogEvent*) data;
     setToScore(pDialogEvent->getvalue());
+}
+
+void ScoreDialog::onChangeStep(CCObject* data)
+{
+    DialogEvent* pDialogEvent = (DialogEvent*) data;
+    drawCurStep(pDialogEvent->getvalue());
 }

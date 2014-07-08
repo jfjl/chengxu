@@ -19,6 +19,7 @@ private:
     CC_SYNTHESIZE(ballMap*, m_BallMap, BallMap);
     CC_SYNTHESIZE(touchMap*, m_TouchMap, TouchMap);
     CC_SYNTHESIZE(int, m_Score, Score);
+    CC_SYNTHESIZE(int, m_Step, Step);
     
     CC_SYNTHESIZE(bool, m_bStepEnabled, StepEnabled);
     CC_SYNTHESIZE(vector<int>, m_vStepPosition, StepPosition);
@@ -39,6 +40,8 @@ private:
     void randomShowBall();
     void randomShowMask(std::vector<int>* pos);
     void randomShowBall(ballVector *balls);
+    
+    bool checkOverStep();
     
     int decStepAffected();
 private:

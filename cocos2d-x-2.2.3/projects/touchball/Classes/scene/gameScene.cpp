@@ -78,8 +78,23 @@ bool gameScene::init(ballMap* pBallMap, touchMap* pTouchMap)
     return true;
 }
 
+bool gameScene::checkOverStep()
+{
+    return --m_Step <= 0;
+}
+
 void gameScene::onSceneNext(CCObject *ptouchMap)
 {
+    DialogEvent* pDialogEvent = new DialogEvent();
+    pDialogEvent->setkey("step");
+    pDialogEvent->setvalue(m_Step-1);
+    pDialogEvent->autorelease();
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_STEP_CHANGE, pDialogEvent);
+    
+    if (checkOverStep()) {
+        onGameOver(NULL);
+        return;
+    }
 	next();
 }
 
@@ -245,7 +260,13 @@ void gameScene::start(void* param)
     m_Score = 0;
     DialogEvent* pDialogEvent = (DialogEvent* ) param;
     m_Level = pDialogEvent->getvalue();
-
+    const levelCfg* pLevelCfg = g_clientData->getLevelCfg(m_Level);
+    if (pLevelCfg) {
+        m_Step = pLevelCfg->MaxStep;
+    }else{
+        m_Step = 10;
+    }
+    
     m_TouchMap->setLevel(m_Level);
     randomShowBall();
 }

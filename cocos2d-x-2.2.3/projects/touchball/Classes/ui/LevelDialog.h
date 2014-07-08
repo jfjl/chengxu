@@ -47,7 +47,7 @@ private:
 private:
     LevelInfoVector m_vLevelInfo;
     int             m_nCurPage;
-    int             m_nPageSize = 16;
+    int             m_nPageSize;
     int             m_nMaxPage;
 };
 

@@ -10,7 +10,11 @@
 #define __touchball__PropsManager__
 
 #include "BasicProps.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ballMap.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../map/ballMap.h"
+#endif
 
 typedef std::map<int, BasicProps*> PropsMap;
 

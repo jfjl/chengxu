@@ -7,9 +7,15 @@
 //
 
 #include "BasicProps.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "GameScript.h"
 #include "ClientData.h"
 #include "SceneManager.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../../script/GameScript.h"
+#include "../../datas/ClientData.h"
+#include "../SceneManager.h"
+#endif
 
 BasicProps::BasicProps()
 : m_Owner(NULL)

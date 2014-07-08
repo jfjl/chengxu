@@ -9,8 +9,13 @@
 #ifndef __ppball__touchMap__
 #define __ppball__touchMap__
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../path/pathFinder.h"
+#include "../props/PropsManager.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "pathFinder.h"
 #include "PropsManager.h"
+#endif
 
 enum
 {

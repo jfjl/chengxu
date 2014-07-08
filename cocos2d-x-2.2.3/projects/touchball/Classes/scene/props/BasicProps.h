@@ -9,15 +9,15 @@
 #ifndef __touchball__BasicProps__
 #define __touchball__BasicProps__
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../../utils/gameConst.h"
+#include "../../script/ScriptObject.h"
+#include "../map/ballMap.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "gameConst.h"
 #include "ScriptObject.h"
 #include "ballMap.h"
-
-using namespace cocos2d;
-
-class BasicProps;
-typedef int (BasicProps::*DispatcherPropsScriptMethod)(void* param);
-
+#endif
 
 class BasicProps : public Object, public CCSprite
 {

@@ -2,7 +2,11 @@
 #ifndef __TOLUA_FIX_H_
 #define __TOLUA_FIX_H_
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../tolua/tolua++.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "tolua++.h"
+#endif
 
 #ifdef __cplusplus
 extern "C"

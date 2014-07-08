@@ -13,8 +13,11 @@
 */
 
 #include "tolua++.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../lua/lauxlib.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "lauxlib.h"
-
+#endif
 #include <stdlib.h>
 #include <string.h>
 

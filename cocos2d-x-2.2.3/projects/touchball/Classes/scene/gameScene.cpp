@@ -7,11 +7,17 @@
 //
 
 #include "gameScene.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "DialogEvent.h"
 #include "ClientData.h"
 #include "GameScript.h"
 #include "UserLocalData.h"
-#include "DialogManager.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../ui/DialogEvent.h"
+#include "../datas/ClientData.h"
+#include "../script/GameScript.h"
+#include "../utils/UserLocalData.h"
+#endif
 
 gameScene::gameScene()
     : m_Level(0)

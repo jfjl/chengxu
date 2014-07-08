@@ -10,8 +10,13 @@
 #define __ppball__gameScene__
 
 #include "SceneData.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "touchMap.h"
 #include "DialogManager.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "map/touchMap.h"
+#include "../ui/DialogManager.h"
+#endif
 
 class gameScene : public SceneData
 {

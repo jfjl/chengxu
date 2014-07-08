@@ -6,10 +6,15 @@
 //
 //
 
-#include "gameConst.h"
 #include "PresentManager.h"
 #include "FloatMumberPresent.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "gameConst.h"
 #include "DialogEvent.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../utils/gameConst.h"
+#include "../ui/DialogEvent.h"
+#endif
 
 PresentManager* g_presentManager = 0;
 

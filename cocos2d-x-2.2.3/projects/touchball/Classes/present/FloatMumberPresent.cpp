@@ -7,8 +7,13 @@
 //
 
 #include "FloatMumberPresent.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "DialogEvent.h"
 #include "gameConst.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../ui/DialogEvent.h"
+#include "../utils/gameConst.h"
+#endif
 
 FloatNumberPresent::FloatNumberPresent()
 : m_lblNumber(NULL)

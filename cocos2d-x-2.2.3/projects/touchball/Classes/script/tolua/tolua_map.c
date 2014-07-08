@@ -14,8 +14,11 @@
 
 #include "tolua++.h"
 #include "tolua_event.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../lua/lauxlib.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "lauxlib.h"
-
+#endif
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

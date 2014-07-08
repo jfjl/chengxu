@@ -7,7 +7,11 @@
 //
 
 #include "ball.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ClientData.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../../datas/ClientData.h"
+#endif
 
 ball::ball(void)
 : m_pos(CCPointZero)

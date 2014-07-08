@@ -45,8 +45,13 @@ extern "C" {
 
 typedef int lua_Object;
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../lua/lua.h"
+#include "../lua/lauxlib.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "lua.h"
 #include "lauxlib.h"
+#endif
 
 struct tolua_Error
 {

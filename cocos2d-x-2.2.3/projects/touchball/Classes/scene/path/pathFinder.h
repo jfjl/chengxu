@@ -9,8 +9,11 @@
 #ifndef __ppball__pathFinder__
 #define __ppball__pathFinder__
 
-#include <iostream>
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../map/ballMap.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ballMap.h"
+#endif
 
 class pathNode : public CCObject
 {

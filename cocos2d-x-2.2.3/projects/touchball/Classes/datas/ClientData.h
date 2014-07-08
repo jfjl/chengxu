@@ -10,11 +10,19 @@
 #define __pball__ClientData__
 
 #include "cocos2d.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "levelData.h"
 #include "ballData.h"
 #include "propsData.h"
 #include "mapData.h"
 #include "awardBallData.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "config/levelData.h"
+#include "config/ballData.h"
+#include "config/propsData.h"
+#include "config/mapData.h"
+#include "config/awardBallData.h"
+#endif
 
 using namespace cocos2d;
 

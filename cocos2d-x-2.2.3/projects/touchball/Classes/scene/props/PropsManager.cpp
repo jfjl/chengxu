@@ -7,10 +7,17 @@
 //
 
 #include "PropsManager.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ClientData.h"
 #include "SceneManager.h"
 #include "GameScript.h"
 #include "DialogEvent.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../../datas/ClientData.h"
+#include "../SceneManager.h"
+#include "../../script/GameScript.h"
+#include "../../ui/DialogEvent.h"
+#endif
 
 PropsManager::PropsManager()
 : m_Owner(NULL)

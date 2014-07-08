@@ -7,8 +7,13 @@
 //
 
 #include "LevelDialog.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ClientData.h"
 #include "UserLocalData.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../datas/ClientData.h"
+#include "../utils/UserLocalData.h"
+#endif
 
 LevelDialog::LevelDialog()
 {
@@ -175,7 +180,7 @@ bool LevelDialog::initInterface(ui::Layout* dialogUI)
         CCLOG("not find backmiddle");
         return false;
     }
-    
+    m_nPageSize = 16;
     buildLevelInfo();
     for (int i = 0; i < m_nPageSize; i++)
     {

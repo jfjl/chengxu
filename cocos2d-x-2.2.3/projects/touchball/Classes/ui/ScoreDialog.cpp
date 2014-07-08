@@ -8,7 +8,11 @@
 
 #include "ScoreDialog.h"
 #include "DialogEvent.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ClientData.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../datas/ClientData.h"
+#endif
 
 ScoreDialog::ScoreDialog()
 {
@@ -77,8 +81,7 @@ void ScoreDialog::drawCurScore()
 {
     char bufScore[10] = {0};
     sprintf(bufScore, "%d", m_nCurScore);
-    string sScore = bufScore;
-    m_lblCurScore->setStringValue(sScore);
+    m_lblCurScore->setStringValue(bufScore);
 
     int percent = ((m_nMaxScore - (m_nMaxScore - m_nCurScore)) * 100) / 100;
     m_proCurScore->setPercent(percent);

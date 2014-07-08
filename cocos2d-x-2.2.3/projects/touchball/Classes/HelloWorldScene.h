@@ -2,10 +2,17 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "SceneManager.h"
 #include "DialogManager.h"
 #include "PresentManager.h"
 #include "GameScript.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "scene/SceneManager.h"
+#include "ui/DialogManager.h"
+#include "present/PresentManager.h"
+#include "script/GameScript.h"
+#endif
 
 class HelloWorld : public cocos2d::CCLayer
 {

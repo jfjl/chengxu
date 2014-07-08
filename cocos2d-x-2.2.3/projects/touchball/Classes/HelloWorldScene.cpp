@@ -1,17 +1,9 @@
 #include "HelloWorldScene.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ClientData.h"
-#include "LevelDialog.h"
-#include "BasicProps.h"
-
-extern "C" {
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-#include "tolua_fix.h"
-    
-    //’‚¿ÔæÕ «πÿ¡™metatableµƒ__index”Ú£¨Œ“√«À˘”–µƒ≤Ÿ◊˜∂ºª·◊™ªªµΩ∫Ø ˝class_index_eventΩ¯––
-    extern int class_index_event(lua_State *ls);
-}
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "datas/ClientData.h"
+#endif
 
 USING_NS_CC;
 

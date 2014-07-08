@@ -7,7 +7,11 @@
 //
 
 #include "ClientData.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "GameScript.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../script/GameScript.h"
+#endif
 
 ClientData* g_clientData = 0;
 

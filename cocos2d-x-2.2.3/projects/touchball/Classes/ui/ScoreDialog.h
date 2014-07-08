@@ -26,7 +26,7 @@ protected:
     void initDialog();
     bool initInterface(ui::Layout* dialogUI);
 private:
-    void drawLevelScore(int score);
+    void drawLevelScore(int level);
     void drawCurScore();
     void setToScore(int score);
     int getChangeScore();

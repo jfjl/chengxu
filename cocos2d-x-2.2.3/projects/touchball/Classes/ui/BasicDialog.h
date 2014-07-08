@@ -9,9 +9,13 @@
 #ifndef __touchball__BasicDialog__
 #define __touchball__BasicDialog__
 
-#include "gameConst.h"
 #include "cocos-ext.h"
 #include "DialogEvent.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "gameConst.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../utils/gameConst.h"
+#endif
 
 using namespace cocos2d;
 using namespace extension;

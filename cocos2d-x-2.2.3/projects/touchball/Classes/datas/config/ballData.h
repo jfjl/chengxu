@@ -1,10 +1,11 @@
 #ifndef CFG_BALLDATA_H
 #define CFG_BALLDATA_H
 
-/************************************************************************/
-/* Author: daijunhua                                                    */
-/************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "HawkUtil.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../../hawksdk/HawkUtil.h"
+#endif
 
 #pragma pack(push)
 #pragma pack(1)

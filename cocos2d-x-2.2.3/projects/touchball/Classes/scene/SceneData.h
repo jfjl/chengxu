@@ -10,7 +10,11 @@
 #define __touchball__SceneData__
 
 #include "cocos2d.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ScriptObject.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../script/ScriptObject.h"
+#endif
 
 using namespace cocos2d;
 

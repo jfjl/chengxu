@@ -2,12 +2,21 @@
 #define _LUA_REG_DEF_
 
 #include "cocos2d.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
 #include "tolua_fix.h"
 }
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+extern "C" {
+#include "lua/lua.h"
+#include "lua/lualib.h"
+#include "lua/lauxlib.h"
+#include "lua/tolua_fix.h"
+}
+#endif
 #include "stdint.h"
 
 #define NS_LUAREG luareg

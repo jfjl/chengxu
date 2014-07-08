@@ -9,8 +9,13 @@
 #ifndef __ppball__ballMap__
 #define __ppball__ballMap__
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../ball/ballManager.h"
+#include "../../script/ScriptObject.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ballManager.h"
 #include "ScriptObject.h"
+#endif
 #include "mapCell.h"
 
 class ballMap : public Object, public CCLayer

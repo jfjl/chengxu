@@ -97,7 +97,7 @@ struct levelCfg		: levelData
     vector<int> vRewardProps;
     vector<int> vCanUseProps;
     KeyValueVector vSpecialBallIds;
-    KeyValueVector vPropsPos;
+//    KeyValueVector vPropsPos;
     
     levelCfg()
     {
@@ -105,7 +105,7 @@ struct levelCfg		: levelData
         vRewardProps.clear();
         vCanUseProps.clear();
         vSpecialBallIds.clear();
-        vPropsPos.clear();
+//        vPropsPos.clear();
     }
 };
 struct ballCfg		: ballData

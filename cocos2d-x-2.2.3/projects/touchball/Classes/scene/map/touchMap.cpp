@@ -385,14 +385,15 @@ void touchMap::setLevel(int level)
         if (pMapCfg->vMapCell[i] == 0) continue;
         mapCell* pMapCell = getMapCell(i);
         if (! pMapCell) continue;
-        pMapCell->setState(MC_STATE_BLOCK);
-        createMask(i, 255, 0, 0);
-    }
-    
-    for (size_t i = 0; i < pLevelCfg->vPropsPos.size(); i++) {
-        if (pLevelCfg->vPropsPos[i].key >= m_mapCells->count()) continue;
-        if (m_PathFinder->inBlockList(pLevelCfg->vPropsPos[i].key)) continue;
-        m_pPropsManager->show(pLevelCfg->vPropsPos[i].key, pLevelCfg->vPropsPos[i].value);
+        switch (pMapCfg->vMapCell[i]) {
+            case 1:
+                pMapCell->setState(MC_STATE_BLOCK);
+                createMask(i, 255, 0, 0);
+                break;
+            default:
+                m_pPropsManager->show(i, pMapCfg->vMapCell[i]);
+                break;
+        }
     }
 }
 
@@ -499,7 +500,7 @@ int touchMap::script_changePosition(lua_State* L)
 
 int touchMap::script_disableSpecialBall(lua_State* L)
 {
-    
+    return 0;
 }
 
 int touchMap::script_clearSelectProps(lua_State* L)

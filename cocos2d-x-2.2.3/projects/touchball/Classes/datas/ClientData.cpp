@@ -172,7 +172,7 @@ bool ClientData::loadLevelData()
                     sCfg.vRewardProps = splitUchar2Int(sCfg.RewardsProps);
                     sCfg.vCanUseProps = splitUchar2Int(sCfg.CanUseProps);
                     sCfg.vSpecialBallIds = spliteUchar2KeyValue(sCfg.SpecialBallIds);
-                    sCfg.vPropsPos = spliteUchar2KeyValue(sCfg.PropsPos, ';', ',', false);
+//                    sCfg.vPropsPos = spliteUchar2KeyValue(sCfg.PropsPos, ';', ',', false);
                     
                     m_nMaxLevel = m_nMaxLevel < sCfg.Level ? sCfg.Level : m_nMaxLevel;
                     m_mLevelCfg[sCfg.Level]=sCfg;
